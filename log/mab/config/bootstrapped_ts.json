@@ -1,0 +1,143 @@
+{
+    "models": [
+        {
+            "name": "bootstrapped_ts.2022.01.28.23.34.36",
+            "path": "/home/lorenzo/Desktop/mimic-0/log/mab/model/bootstrapped_ts.2022.01.28.23.34.36.h5",
+            "prod_score": 8522.623612306987,
+            "score": 88071924.54554,
+            "timestamp": "2022.02.08.13.54.06"
+        }
+    ],
+    "runs": [
+        {
+            "model_name": "bootstrapped_ts.2022.01.28.23.34.36",
+            "path": "/home/lorenzo/Desktop/mimic-0/log/mab/history/bootstrapped_ts.2022.01.28.18.33.48.json",
+            "timestamp": "2022.01.28.18.33.48"
+        },
+        {
+            "model_name": "bootstrapped_ts.2022.01.28.23.34.36",
+            "path": "/home/lorenzo/Desktop/mimic-0/log/mab/history/bootstrapped_ts.2022.01.28.23.34.36.2022.02.01.20.58.34.json",
+            "timestamp": "2022.02.01.20.58.34"
+        },
+        {
+            "model_name": "bootstrapped_ts.2022.01.28.23.34.36",
+            "path": "/home/lorenzo/Desktop/mimic-0/log/mab/history/bootstrapped_ts.2022.01.28.23.34.36.2022.02.02.12.52.19.json",
+            "timestamp": "2022.02.02.12.52.19"
+        },
+        {
+            "model_name": "bootstrapped_ts.2022.01.28.23.34.36",
+            "path": "/home/lorenzo/Desktop/mimic-0/log/mab/history/bootstrapped_ts.2022.01.28.23.34.36.2022.02.02.22.07.54.json",
+            "timestamp": "2022.02.02.22.07.54"
+        },
+        {
+            "model_name": "bootstrapped_ts.2022.01.28.23.34.36",
+            "path": "/home/lorenzo/Desktop/mimic-0/log/mab/history/bootstrapped_ts.2022.01.28.23.34.36.2022.02.03.10.30.22.json",
+            "timestamp": "2022.02.03.10.30.22"
+        },
+        {
+            "model_name": "bootstrapped_ts.2022.01.28.23.34.36",
+            "path": "/home/lorenzo/Desktop/mimic-0/log/mab/history/bootstrapped_ts.2022.01.28.23.34.36.2022.02.03.23.46.16.json",
+            "timestamp": "2022.02.03.23.46.16"
+        },
+        {
+            "model_name": "bootstrapped_ts.2022.01.28.23.34.36",
+            "path": "/home/lorenzo/Desktop/mimic-0/log/mab/history/bootstrapped_ts.2022.01.28.23.34.36.2022.02.04.10.39.01.json",
+            "timestamp": "2022.02.04.10.39.01"
+        },
+        {
+            "model_name": "bootstrapped_ts.2022.01.28.23.34.36",
+            "path": "/home/lorenzo/Desktop/mimic-0/log/mab/history/bootstrapped_ts.2022.01.28.23.34.36.2022.02.04.23.24.44.json",
+            "timestamp": "2022.02.04.23.24.44"
+        },
+        {
+            "model_name": "bootstrapped_ts.2022.01.28.23.34.36",
+            "path": "/home/lorenzo/Desktop/mimic-0/log/mab/history/bootstrapped_ts.2022.01.28.23.34.36.2022.02.08.13.54.06.json",
+            "timestamp": "2022.02.08.13.54.06"
+        },
+        {
+            "model_name": "bootstrapped_ts.2022.01.28.23.34.36",
+            "path": "/home/lorenzo/Desktop/mimic-0/log/mab/history/bootstrapped_ts.2022.01.28.23.34.36.2023.01.16.11.01.22.json",
+            "timestamp": "2023.01.16.11.01.22"
+        }
+    ],
+    "traces": [
+        {
+            "model_name": "bootstrapped_ts.2022.01.28.23.34.36",
+            "path": "/home/lorenzo/Desktop/mimic-0/log/mab/trace/bootstrapped_ts.2022.01.28.18.33.48.csv",
+            "timestamp": "2022.01.28.18.33.48",
+            "trace_name": "bootstrapped_ts.2022.01.28.18.33.48.csv"
+        },
+        {
+            "model_name": "bootstrapped_ts.2022.01.28.23.34.36",
+            "path": "/home/lorenzo/Desktop/mimic-0/log/mab/trace/bootstrapped_ts.2022.02.01.20.58.34.csv",
+            "timestamp": "2022.02.01.20.58.34",
+            "trace_name": "bootstrapped_ts.2022.02.01.20.58.34.csv"
+        },
+        {
+            "model_name": "bootstrapped_ts.2022.01.28.23.34.36",
+            "path": "/home/lorenzo/Desktop/mimic-0/log/mab/trace/bootstrapped_ts.2022.02.03.10.30.22.csv",
+            "timestamp": "2022.02.03.10.30.22",
+            "trace_name": "bootstrapped_ts.2022.02.03.10.30.22.csv"
+        },
+        {
+            "model_name": "bootstrapped_ts.2022.01.28.23.34.36",
+            "path": "/home/lorenzo/Desktop/mimic-0/log/mab/trace/bootstrapped_ts.2022.02.03.23.46.16.csv",
+            "timestamp": "2022.02.03.23.46.16",
+            "trace_name": "bootstrapped_ts.2022.02.03.23.46.16.csv"
+        },
+        {
+            "model_name": "bootstrapped_ts.2022.01.28.23.34.36",
+            "path": "/home/lorenzo/Desktop/mimic-0/log/mab/trace/bootstrapped_ts.2022.02.04.10.39.01.csv",
+            "timestamp": "2022.02.04.10.39.01",
+            "trace_name": "bootstrapped_ts.2022.02.04.10.39.01.csv"
+        },
+        {
+            "model_name": "bootstrapped_ts.2022.01.28.23.34.36",
+            "path": "/home/lorenzo/Desktop/mimic-0/log/mab/trace/bootstrapped_ts.2022.02.04.23.24.44.csv",
+            "timestamp": "2022.02.04.23.24.44",
+            "trace_name": "bootstrapped_ts.2022.02.04.23.24.44.csv"
+        },
+        {
+            "model_name": "bootstrapped_ts.2022.01.28.23.34.36",
+            "path": "/home/lorenzo/Desktop/mimic-0/log/mab/trace/bootstrapped_ts.2022.02.08.13.54.06.csv",
+            "timestamp": "2022.02.08.13.54.06",
+            "trace_name": "bootstrapped_ts.2022.02.08.13.54.06.csv"
+        },
+        {
+            "model_name": "bootstrapped_ts.2022.01.28.23.34.36",
+            "path": "/home/lorenzo/Desktop/mimic-0/log/mab/trace/att.lte.driving.bootstrapped_ts.2022.03.17.23.34.24.csv",
+            "timestamp": "2022.03.17.23.34.24",
+            "trace_name": "att.lte.driving.bootstrapped_ts.2022.03.17.23.34.24.csv"
+        },
+        {
+            "model_name": "bootstrapped_ts.2022.01.28.23.34.36",
+            "path": "/home/lorenzo/Desktop/mimic-0/log/mab/trace/att.lte.driving.2016.bootstrapped_ts.2022.03.17.23.59.08.csv",
+            "timestamp": "2022.03.17.23.59.08",
+            "trace_name": "att.lte.driving.2016.bootstrapped_ts.2022.03.17.23.59.08.csv"
+        },
+        {
+            "model_name": "bootstrapped_ts.2022.01.28.23.34.36",
+            "path": "/home/lorenzo/Desktop/mimic-0/log/mab/trace/tm.lte.short.bootstrapped_ts.2022.03.18.00.24.34.csv",
+            "timestamp": "2022.03.18.00.24.34",
+            "trace_name": "tm.lte.short.bootstrapped_ts.2022.03.18.00.24.34.csv"
+        },
+        {
+            "model_name": "bootstrapped_ts.2022.01.28.23.34.36",
+            "path": "/home/lorenzo/Desktop/mimic-0/log/mab/trace/tm.lte.short.bootstrapped_ts.2022.03.18.00.42.14.csv",
+            "timestamp": "2022.03.18.00.42.14",
+            "trace_name": "tm.lte.short.bootstrapped_ts.2022.03.18.00.42.14.csv"
+        },
+        {
+            "model_name": "bootstrapped_ts.2022.01.28.23.34.36",
+            "path": "/home/lorenzo/Desktop/mimic-0/log/mab/trace/vz.lte.short.bootstrapped_ts.2022.03.18.02.01.07.csv",
+            "timestamp": "2022.03.18.02.01.07",
+            "trace_name": "vz.lte.short.bootstrapped_ts.2022.03.18.02.01.07.csv"
+        },
+        {
+            "model_name": "bootstrapped_ts.2022.01.28.23.34.36",
+            "path": "/home/lorenzo/Desktop/mimic-0/log/mab/trace/vz.lte.short.bootstrapped_ts.2022.03.18.12.35.24.csv",
+            "timestamp": "2022.03.18.12.35.24",
+            "trace_name": "vz.lte.short.bootstrapped_ts.2022.03.18.12.35.24.csv"
+        }
+    ]
+}

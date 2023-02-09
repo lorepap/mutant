@@ -1,0 +1,105 @@
+import os
+import traceback
+from typing import Any
+from helper.subprocess_wrappers import call, Popen, check_output, print_output
+from helper.moderator import Moderator
+
+from runner.iperf_client import IperfClient
+from helper import context, utils
+from model.mahimahi_trace import MahimahiTrace
+from network.netlink_communicator import NetlinkCommunicator
+
+
+class Base():
+
+    def __init__(self, args: Any) -> None:
+        self.args = args
+
+        self.init_kernel()
+
+        self.netlink_communicator = NetlinkCommunicator()
+
+        # init communication
+        self.init_communication()
+
+        self.client: IperfClient = None
+        self.moderator: Moderator = Moderator(self.args.iperf == 1)
+
+    def is_kernel_initialized(self) -> bool:
+        cmd = ['cat', '/proc/sys/net/ipv4/tcp_congestion_control']
+
+        res = check_output(cmd)
+
+        protocol = res.strip().decode('utf-8')
+
+        return protocol == 'mimic'
+
+    def init_kernel(self):
+
+        if self.is_kernel_initialized():
+            print('Kernel has already been initialized\n')
+            return
+
+        cmd = os.path.join(context.entry_dir, 'scripts/init_kernel.sh')
+
+        # make script runnable
+        res = call(['chmod', '755', cmd])
+        if res != 0:
+            raise Exception('Unable to set run permission\n')
+
+        res = call(cmd)
+        if res != 0:
+            raise Exception('Unable to init kernel\n')
+
+    def start_client(self, tag: str) -> str:
+
+        if self.args.iperf != 1:
+            self.moderator.start()
+            return
+
+        base_path = os.path.join(context.entry_dir, self.args.iperf_dir)
+        utils.check_dir(base_path)
+
+        filename = f'{tag}.{utils.time_to_str()}.json'
+        log_filename = f'{base_path}/{filename}'
+
+        self.client = IperfClient(MahimahiTrace.fromString(
+            self.args.trace), self.args.ip, self.args.time, log_filename, self.moderator)
+
+        self.client.start()
+        return log_filename
+
+    def change_iperf_logfile_name(old_name: str, new_name: str) -> None:
+        try:
+            new_file = new_name.replace("csv", "json")
+            os.rename(old_name, new_file)
+
+        except Exception as _:
+            print('\n')
+            print(traceback.print_exc())
+
+    def init_communication(self):
+        print("Initiating communication...")
+
+        msg = self.netlink_communicator.create_netlink_msg(
+            'INIT_COMMUNICATION', msg_flags=self.netlink_communicator.INIT_COMM_FLAG)
+
+        self.netlink_communicator.send_msg(msg)
+
+        print("Communication initiated")
+
+        self.nchoices, self.nprotocols = utils.get_number_of_actions(
+            self.netlink_communicator)
+
+        print(
+            f'\n\n----- We have {self.nchoices} arms to choose from ----- \n\n')
+
+    def close_communication(self) -> None:
+
+        msg = self.netlink_communicator.create_netlink_msg(
+            'END_COMMUNICATION', msg_flags=self.netlink_communicator.END_COMM_FLAG)
+
+        self.netlink_communicator.send_msg(msg)
+        self.netlink_communicator.close_socket()
+
+        print("Communication closed")

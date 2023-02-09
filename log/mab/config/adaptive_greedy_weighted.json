@@ -1,0 +1,171 @@
+{
+    "models": [
+        {
+            "name": "adaptive_greedy_weighted.2022.01.28.21.54.26",
+            "path": "/home/lorenzo/Desktop/mimic-0/log/mab/model/adaptive_greedy_weighted.2022.01.28.21.54.26.h5",
+            "prod_score": 4932.941502138605,
+            "score": 71857368.31789999,
+            "timestamp": "2022.02.08.13.54.06"
+        }
+    ],
+    "runs": [
+        {
+            "model_name": "adaptive_greedy_weighted.2022.01.28.21.54.26",
+            "path": "/home/lorenzo/Desktop/mimic-0/log/mab/history/adaptive_greedy_weighted.2022.01.28.18.33.48.json",
+            "timestamp": "2022.01.28.18.33.48"
+        },
+        {
+            "model_name": "adaptive_greedy_weighted.2022.01.28.21.54.26",
+            "path": "/home/lorenzo/Desktop/mimic-0/log/mab/history/adaptive_greedy_weighted.2022.01.28.21.54.26.2022.02.01.20.58.34.json",
+            "timestamp": "2022.02.01.20.58.34"
+        },
+        {
+            "model_name": "adaptive_greedy_weighted.2022.01.28.21.54.26",
+            "path": "/home/lorenzo/Desktop/mimic-0/log/mab/history/adaptive_greedy_weighted.2022.01.28.21.54.26.2022.02.02.12.52.19.json",
+            "timestamp": "2022.02.02.12.52.19"
+        },
+        {
+            "model_name": "adaptive_greedy_weighted.2022.01.28.21.54.26",
+            "path": "/home/lorenzo/Desktop/mimic-0/log/mab/history/adaptive_greedy_weighted.2022.01.28.21.54.26.2022.02.02.22.07.54.json",
+            "timestamp": "2022.02.02.22.07.54"
+        },
+        {
+            "model_name": "adaptive_greedy_weighted.2022.01.28.21.54.26",
+            "path": "/home/lorenzo/Desktop/mimic-0/log/mab/history/adaptive_greedy_weighted.2022.01.28.21.54.26.2022.02.03.09.08.16.json",
+            "timestamp": "2022.02.03.09.08.16"
+        },
+        {
+            "model_name": "adaptive_greedy_weighted.2022.01.28.21.54.26",
+            "path": "/home/lorenzo/Desktop/mimic-0/log/mab/history/adaptive_greedy_weighted.2022.01.28.21.54.26.2022.02.03.22.02.00.json",
+            "timestamp": "2022.02.03.22.02.00"
+        },
+        {
+            "model_name": "adaptive_greedy_weighted.2022.01.28.21.54.26",
+            "path": "/home/lorenzo/Desktop/mimic-0/log/mab/history/adaptive_greedy_weighted.2022.01.28.21.54.26.2022.02.03.23.46.16.json",
+            "timestamp": "2022.02.03.23.46.16"
+        },
+        {
+            "model_name": "adaptive_greedy_weighted.2022.01.28.21.54.26",
+            "path": "/home/lorenzo/Desktop/mimic-0/log/mab/history/adaptive_greedy_weighted.2022.01.28.21.54.26.2022.02.04.10.39.01.json",
+            "timestamp": "2022.02.04.10.39.01"
+        },
+        {
+            "model_name": "adaptive_greedy_weighted.2022.01.28.21.54.26",
+            "path": "/home/lorenzo/Desktop/mimic-0/log/mab/history/adaptive_greedy_weighted.2022.01.28.21.54.26.2022.02.04.17.43.54.json",
+            "timestamp": "2022.02.04.17.43.54"
+        },
+        {
+            "model_name": "adaptive_greedy_weighted.2022.01.28.21.54.26",
+            "path": "/home/lorenzo/Desktop/mimic-0/log/mab/history/adaptive_greedy_weighted.2022.01.28.21.54.26.2022.02.04.23.24.44.json",
+            "timestamp": "2022.02.04.23.24.44"
+        },
+        {
+            "model_name": "adaptive_greedy_weighted.2022.01.28.21.54.26",
+            "path": "/home/lorenzo/Desktop/mimic-0/log/mab/history/adaptive_greedy_weighted.2022.01.28.21.54.26.2022.02.08.13.54.06.json",
+            "timestamp": "2022.02.08.13.54.06"
+        },
+        {
+            "model_name": "adaptive_greedy_weighted.2022.01.28.21.54.26",
+            "path": "/home/lorenzo/Desktop/mimic-0/log/mab/history/adaptive_greedy_weighted.2022.01.28.21.54.26.2023.01.16.11.01.22.json",
+            "timestamp": "2023.01.16.11.01.22"
+        }
+    ],
+    "traces": [
+        {
+            "model_name": "adaptive_greedy_weighted.2022.01.28.21.54.26",
+            "path": "/home/lorenzo/Desktop/mimic-0/log/mab/trace/adaptive_greedy_weighted.2022.01.28.18.33.48.csv",
+            "timestamp": "2022.01.28.18.33.48",
+            "trace_name": "adaptive_greedy_weighted.2022.01.28.18.33.48.csv"
+        },
+        {
+            "model_name": "adaptive_greedy_weighted.2022.01.28.21.54.26",
+            "path": "/home/lorenzo/Desktop/mimic-0/log/mab/trace/adaptive_greedy_weighted.2022.02.01.20.58.34.csv",
+            "timestamp": "2022.02.01.20.58.34",
+            "trace_name": "adaptive_greedy_weighted.2022.02.01.20.58.34.csv"
+        },
+        {
+            "model_name": "adaptive_greedy_weighted.2022.01.28.21.54.26",
+            "path": "/home/lorenzo/Desktop/mimic-0/log/mab/trace/adaptive_greedy_weighted.2022.02.03.09.08.16.csv",
+            "timestamp": "2022.02.03.09.08.16",
+            "trace_name": "adaptive_greedy_weighted.2022.02.03.09.08.16.csv"
+        },
+        {
+            "model_name": "adaptive_greedy_weighted.2022.01.28.21.54.26",
+            "path": "/home/lorenzo/Desktop/mimic-0/log/mab/trace/adaptive_greedy_weighted.2022.02.03.22.02.00.csv",
+            "timestamp": "2022.02.03.22.02.00",
+            "trace_name": "adaptive_greedy_weighted.2022.02.03.22.02.00.csv"
+        },
+        {
+            "model_name": "adaptive_greedy_weighted.2022.01.28.21.54.26",
+            "path": "/home/lorenzo/Desktop/mimic-0/log/mab/trace/adaptive_greedy_weighted.2022.02.03.23.46.16.csv",
+            "timestamp": "2022.02.03.23.46.16",
+            "trace_name": "adaptive_greedy_weighted.2022.02.03.23.46.16.csv"
+        },
+        {
+            "model_name": "adaptive_greedy_weighted.2022.01.28.21.54.26",
+            "path": "/home/lorenzo/Desktop/mimic-0/log/mab/trace/adaptive_greedy_weighted.2022.02.04.10.39.01.csv",
+            "timestamp": "2022.02.04.10.39.01",
+            "trace_name": "adaptive_greedy_weighted.2022.02.04.10.39.01.csv"
+        },
+        {
+            "model_name": "adaptive_greedy_weighted.2022.01.28.21.54.26",
+            "path": "/home/lorenzo/Desktop/mimic-0/log/mab/trace/adaptive_greedy_weighted.2022.02.04.17.43.54.csv",
+            "timestamp": "2022.02.04.17.43.54",
+            "trace_name": "adaptive_greedy_weighted.2022.02.04.17.43.54.csv"
+        },
+        {
+            "model_name": "adaptive_greedy_weighted.2022.01.28.21.54.26",
+            "path": "/home/lorenzo/Desktop/mimic-0/log/mab/trace/adaptive_greedy_weighted.2022.02.04.23.24.44.csv",
+            "timestamp": "2022.02.04.23.24.44",
+            "trace_name": "adaptive_greedy_weighted.2022.02.04.23.24.44.csv"
+        },
+        {
+            "model_name": "adaptive_greedy_weighted.2022.01.28.21.54.26",
+            "path": "/home/lorenzo/Desktop/mimic-0/log/mab/trace/adaptive_greedy_weighted.2022.02.08.13.54.06.csv",
+            "timestamp": "2022.02.08.13.54.06",
+            "trace_name": "adaptive_greedy_weighted.2022.02.08.13.54.06.csv"
+        },
+        {
+            "model_name": "adaptive_greedy_weighted.2022.01.28.21.54.26",
+            "path": "/home/lorenzo/Desktop/mimic-0/log/mab/trace/att.lte.driving.adaptive_greedy_weighted.2022.03.17.23.34.24.csv",
+            "timestamp": "2022.03.17.23.34.24",
+            "trace_name": "att.lte.driving.adaptive_greedy_weighted.2022.03.17.23.34.24.csv"
+        },
+        {
+            "model_name": "adaptive_greedy_weighted.2022.01.28.21.54.26",
+            "path": "/home/lorenzo/Desktop/mimic-0/log/mab/trace/att.lte.driving.2016.adaptive_greedy_weighted.2022.03.17.23.59.08.csv",
+            "timestamp": "2022.03.17.23.59.08",
+            "trace_name": "att.lte.driving.2016.adaptive_greedy_weighted.2022.03.17.23.59.08.csv"
+        },
+        {
+            "model_name": "adaptive_greedy_weighted.2022.01.28.21.54.26",
+            "path": "/home/lorenzo/Desktop/mimic-0/log/mab/trace/tm.lte.short.adaptive_greedy_weighted.2022.03.18.00.24.34.csv",
+            "timestamp": "2022.03.18.00.24.34",
+            "trace_name": "tm.lte.short.adaptive_greedy_weighted.2022.03.18.00.24.34.csv"
+        },
+        {
+            "model_name": "adaptive_greedy_weighted.2022.01.28.21.54.26",
+            "path": "/home/lorenzo/Desktop/mimic-0/log/mab/trace/vz.lte.short.adaptive_greedy_weighted.2022.03.18.02.01.07.csv",
+            "timestamp": "2022.03.18.02.01.07",
+            "trace_name": "vz.lte.short.adaptive_greedy_weighted.2022.03.18.02.01.07.csv"
+        },
+        {
+            "model_name": "adaptive_greedy_weighted.2022.01.28.21.54.26",
+            "path": "/home/lorenzo/Desktop/mimic-0/log/mab/trace/vz.lte.short.adaptive_greedy_weighted.2022.03.18.12.35.24.csv",
+            "timestamp": "2022.03.18.12.35.24",
+            "trace_name": "vz.lte.short.adaptive_greedy_weighted.2022.03.18.12.35.24.csv"
+        },
+        {
+            "model_name": "adaptive_greedy_weighted.2022.01.28.21.54.26",
+            "path": "/home/lorenzo/Desktop/mimic-0/log/mab/trace/tm.lte.short.adaptive_greedy_weighted.2022.05.12.12.32.10.csv",
+            "timestamp": "2022.05.12.12.32.10",
+            "trace_name": "tm.lte.short.adaptive_greedy_weighted.2022.05.12.12.32.10.csv"
+        },
+        {
+            "model_name": "adaptive_greedy_weighted.2022.01.28.21.54.26",
+            "path": "/home/lorenzo/Desktop/mimic-0/log/mab/trace/tm.lte.short.adaptive_greedy_weighted.2022.05.12.12.42.05.csv",
+            "timestamp": "2022.05.12.12.42.05",
+            "trace_name": "tm.lte.short.adaptive_greedy_weighted.2022.05.12.12.42.05.csv"
+        }
+    ]
+}

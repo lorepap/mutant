@@ -1,0 +1,22 @@
+{
+	"start":	{
+		"connected":	[],
+		"version":	"iperf 3.7",
+		"system_info":	"Linux princeUbuntu 5.13.0-39-generic #44~20.04.1-Ubuntu SMP Thu Mar 24 16:43:35 UTC 2022 x86_64"
+	},
+	"intervals":	[],
+	"end":	{
+	},
+	"error":	"error - unable to connect to server: Connection refused"
+}
+{
+	"start":	{
+		"connected":	[],
+		"version":	"iperf 3.7",
+		"system_info":	"Linux princeUbuntu 5.13.0-39-generic #44~20.04.1-Ubuntu SMP Thu Mar 24 16:43:35 UTC 2022 x86_64"
+	},
+	"intervals":	[],
+	"end":	{
+	},
+	"error":	"error - unable to connect to server: Connection refused"
+}
