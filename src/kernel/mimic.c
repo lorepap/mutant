@@ -3,8 +3,8 @@
 #include "protocol/cubic.h"
 #include "protocol/hybla.h"
 #include "protocol/bbr.h"
-
 #include "protocol/mimic.h"
+
 
 #define NETLINK_USER 25
 
@@ -21,19 +21,8 @@ hybla 2
 */
 
 /*
- BBR does not implement cong_avoid but only cong_control. All protocols have 
- cong_avoid but not cong_control. In tcp_input.c you can see how they are used.
- Both APIs are mutually exclusive, meaning that they cannot live in the same
- tcp_congestion_ops structure.
-
- Sol 1: protocol registration at runtime? testing in progress. In this case we
-		will need a different congestion_ops for bbr to implement. It is not a problem
-		as long as we can really unregister the previous structure and register a new one.
-
- Sol 2: using a single congestion function for both and modify the kernel file tcp_input.c.
-		It means that we have to correct the input parameters as cong_control takes the sock and rate_sample
-		whereas cong_avoid takes sock, ack value and acked (# acked packets). In tcp.h we
-		will need to modify tcp_congestion_ops functions declarations.
+ 
+ 
 */
 
 // Netlink comm APIs
@@ -84,6 +73,7 @@ static void __exit netlink_exit(void)
 }
 
 //////////////////////////////////////////////////////////
+
 
 static void onInit(struct sock *sk)
 {
@@ -158,25 +148,120 @@ static void onSetState (struct sock *sk, __u8 new_state)
 	switch (selectedProtocolId)
 	{
 		case 0:	bictcp_state(sk, new_state);
-		// case 1:	tcp_vegas_state(sk, new_state);
 		case 1: bbr_set_state(sk, new_state);
 		case 2: hybla_state(sk, new_state);
 		default: bictcp_state(sk, new_state);
 	}
 }
 
-// static void onCongControl(struct sock *sk, const struct rate_sample *rs)
-// {
-// 	// bbr has not cong_avoid but only cong_control (for pacing rate)
-// 	// we will use default API to update pacing rate and be responsive to cong_control API
-// 	switch (selectedProtocolId)
-// 	{
-// 		case 0:	return tcp_update_pacing_rate(sk);
-// 		case 1: bbr_main(sk, rs);
-// 		case 2:	return tcp_update_pacing_rate(sk);
-// 		default: return tcp_update_pacing_rate(sk);
-// 	}
-// }
+/* Mimic cong control */
+static void onMimicCongControl(struct sock *sk, const struct rate_sample *rs, u32 ack, u32 acked, int flag)
+{
+
+	/* bbr support */
+	if (selectedProtocolId == 1)
+	{
+		// printk(KERN_INFO "Running bbr %s", __FUNCTION__);
+		bbr_main(sk, rs);
+		return;
+	}
+	
+	// printk(KERN_INFO "Running cubic %s", __FUNCTION__);
+	/* tcp_cong_avoid */
+	if (tcp_in_cwnd_reduction(sk)) {
+		/* Reduce cwnd if state mandates */
+		tcp_cwnd_reduction(sk, acked, flag);
+	} else if (tcp_may_raise_cwnd(sk, flag)) {
+		/* Advance cwnd if state allows */
+		tcp_cong_avoid(sk, ack, acked);
+	}
+	tcp_update_pacing_rate(sk);
+}
+
+static void tcp_cong_avoid(struct sock *sk, u32 ack, u32 acked)
+{
+	const struct inet_connection_sock *icsk = inet_csk(sk);
+
+	icsk->icsk_ca_ops->cong_avoid(sk, ack, acked);
+	tcp_sk(sk)->snd_cwnd_stamp = tcp_jiffies32;
+}
+
+/* Decide wheather to run the increase function of congestion control. */
+static inline bool tcp_may_raise_cwnd(const struct sock *sk, const int flag)
+{
+	/* If reordering is high then always grow cwnd whenever data is
+	 * delivered regardless of its ordering. Otherwise stay conservative
+	 * and only grow cwnd on in-order delivery (RFC5681). A stretched ACK w/
+	 * new SACK or ECE mark may first advance cwnd here and later reduce
+	 * cwnd in tcp_fastretrans_alert() based on more states.
+	 */
+	if (tcp_sk(sk)->reordering >
+	    READ_ONCE(sock_net(sk)->ipv4.sysctl_tcp_reordering))
+		return flag & FLAG_FORWARD_PROGRESS;
+
+	return flag & FLAG_DATA_ACKED;
+}
+
+static void tcp_update_pacing_rate(struct sock *sk)
+{
+	const struct tcp_sock *tp = tcp_sk(sk);
+	u64 rate;
+
+	/* set sk_pacing_rate to 200 % of current rate (mss * cwnd / srtt) */
+	rate = (u64)tp->mss_cache * ((USEC_PER_SEC / 100) << 3);
+
+	/* current rate is (cwnd * mss) / srtt
+	 * In Slow Start [1], set sk_pacing_rate to 200 % the current rate.
+	 * In Congestion Avoidance phase, set it to 120 % the current rate.
+	 *
+	 * [1] : Normal Slow Start condition is (tp->snd_cwnd < tp->snd_ssthresh)
+	 *	 If snd_cwnd >= (tp->snd_ssthresh / 2), we are approaching
+	 *	 end of slow start and should slow down.
+	 */
+	if (tp->snd_cwnd < tp->snd_ssthresh / 2)
+		rate *= sock_net(sk)->ipv4.sysctl_tcp_pacing_ss_ratio;
+	else
+		rate *= sock_net(sk)->ipv4.sysctl_tcp_pacing_ca_ratio;
+
+	rate *= max(tp->snd_cwnd, tp->packets_out);
+
+	if (likely(tp->srtt_us))
+		do_div(rate, tp->srtt_us);
+
+	/* WRITE_ONCE() is needed because sch_fq fetches sk_pacing_rate
+	 * without any lock. We want to make sure compiler wont store
+	 * intermediate values in this location.
+	 */
+	WRITE_ONCE(sk->sk_pacing_rate, min_t(u64, rate,
+					     sk->sk_max_pacing_rate));
+}
+
+void tcp_cwnd_reduction(struct sock *sk, int newly_acked_sacked, int flag)
+{
+	struct tcp_sock *tp = tcp_sk(sk);
+	int sndcnt = 0;
+	int delta = tp->snd_ssthresh - tcp_packets_in_flight(tp);
+
+	if (newly_acked_sacked <= 0 || WARN_ON_ONCE(!tp->prior_cwnd))
+		return;
+
+	tp->prr_delivered += newly_acked_sacked;
+	if (delta < 0) {
+		u64 dividend = (u64)tp->snd_ssthresh * tp->prr_delivered +
+			       tp->prior_cwnd - 1;
+		sndcnt = div_u64(dividend, tp->prior_cwnd) - tp->prr_out;
+	} else if ((flag & (FLAG_RETRANS_DATA_ACKED | FLAG_LOST_RETRANS)) ==
+		   FLAG_RETRANS_DATA_ACKED) {
+		sndcnt = min_t(int, delta,
+			       max_t(int, tp->prr_delivered - tp->prr_out,
+				     newly_acked_sacked) + 1);
+	} else {
+		sndcnt = min(delta, newly_acked_sacked);
+	}
+	/* Force a fast retransmit upon entering fast recovery */
+	sndcnt = max(sndcnt, (tp->prr_out ? 0 : 1));
+	tp->snd_cwnd = tcp_packets_in_flight(tp) + sndcnt;
+}
 
 // check this
 static u32 onSndbuf_expand(struct sock *sk)
@@ -206,21 +291,7 @@ static struct tcp_congestion_ops tcp_mimic __read_mostly = {
     .pkts_acked = onPacketsAcked,
     .undo_cwnd = onUndoCwnd,
     .ssthresh = onSshthresh,
-    .cong_avoid = onAvoidCongestion,
-    .cwnd_event = onCongestionEvent,
-	.set_state	= onSetState,
-	// .cong_control = onCongControl,
-	// .sndbuf_expand	= onSndbuf_expand,
-	// .min_tso_segs	= onMintso_segs,
-    .owner = THIS_MODULE,
-    .name = "mimic"
-};
-
-static struct tcp_congestion_ops tcp_mimic_test __read_mostly = {
-    .init = onInit,
-    .pkts_acked = onPacketsAcked,
-    .undo_cwnd = onUndoCwnd,
-    .ssthresh = onSshthresh,
+	.mimic_cong_control = onMimicCongControl,
     .cong_avoid = onAvoidCongestion,
     .cwnd_event = onCongestionEvent,
 	.set_state	= onSetState,

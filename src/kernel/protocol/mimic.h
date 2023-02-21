@@ -1,10 +1,25 @@
 #ifndef __MIMIC_H
 #define __MIMIC_H 1
 
-// Cubic variables
-static u32 cube_rtt_scale __read_mostly;
-static u32 beta_scale __read_mostly;
-static u64 cube_factor __read_mostly;
+#define FLAG_DATA_ACKED		0x04 /* This ACK acknowledged new data.		*/
+#define FLAG_RETRANS_DATA_ACKED	0x08 /* "" "" some of which was retransmitted.	*/
+#define FLAG_SYN_ACKED		0x10 /* This ACK acknowledged SYN.		*/
+#define FLAG_DATA_SACKED	0x20 /* New SACK.				*/
+#define FLAG_LOST_RETRANS	0x80 /* This ACK marks some retransmission lost */
+#define FLAG_ACKED		(FLAG_DATA_ACKED|FLAG_SYN_ACKED)
+#define FLAG_FORWARD_PROGRESS	(FLAG_ACKED|FLAG_DATA_SACKED)
+
+
+#include <net/tcp.h>
+
+/* original in tcp_input.c 
+declared here and defined in mimic.c
+TODO: import directly from tcp_input.c
+-- possible overhead issues --
+*/
+static void tcp_cong_avoid(struct sock *sk, u32 ack, u32 acked);
+static inline bool tcp_may_raise_cwnd(const struct sock *sk, const int flag);
+static void tcp_update_pacing_rate(struct sock *sk);
 
 struct arm {
 
@@ -87,35 +102,6 @@ struct arm {
 		unused_c:6;
 
 };
-
-// Cubic headers
-static inline void bictcp_reset(struct arm *ca);
-static inline u32 bictcp_clock(void);
-static inline void bictcp_hystart_reset(struct sock *sk);
-static void bictcp_init(struct sock *sk);
-static void bictcp_cwnd_event(struct sock *sk, enum tcp_ca_event event);
-static u32 cubic_root(u64 a);
-static inline void bictcp_update(struct arm *ca, u32 cwnd, u32 acked);
-static void bictcp_cong_avoid(struct sock *sk, u32 ack, u32 acked);
-static u32 bictcp_recalc_ssthresh(struct sock *sk);
-static void bictcp_state(struct sock *sk, u8 new_state);
-static void hystart_update(struct sock *sk, u32 delay);
-static void bictcp_acked(struct sock *sk, const struct ack_sample *sample);
-
-// // Vegas headers
-// void tcp_vegas_init(struct sock *sk);
-// void tcp_vegas_state(struct sock *sk, u8 ca_state);
-// void tcp_vegas_pkts_acked(struct sock *sk, const struct ack_sample *sample);
-// void tcp_vegas_cwnd_event(struct sock *sk, enum tcp_ca_event event);
-// size_t tcp_vegas_get_info(struct sock *sk, u32 ext, int *attr,
-// 			  union tcp_cc_info *info);
-
-// Hybla headers
-static inline void hybla_recalc_param (struct sock *sk);
-static void hybla_init(struct sock *sk);
-static void hybla_state(struct sock *sk, u8 ca_state);
-static inline u32 hybla_fraction(u32 odds);
-static void hybla_cong_avoid(struct sock *sk, u32 ack, u32 acked);
 
 
 
