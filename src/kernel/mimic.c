@@ -3,15 +3,15 @@
 #include "protocol/cubic.h"
 #include "protocol/hybla.h"
 #include "protocol/bbr.h"
-#include "protocol/mimic.h"
 
+#include "protocol/mimic.h"
 
 #define NETLINK_USER 25
 
 // Netlink comm variables
 struct sock *nl_sk = NULL;
 
-static u32 selectedProtocolId = 0;
+static u32 selectedProtocolId = 1;
 
 /*
 protocols:
@@ -78,7 +78,6 @@ static void __exit netlink_exit(void)
 static void onInit(struct sock *sk)
 {
     bictcp_init(sk);
-    // tcp_vegas_init(sk);
 	bbr_init(sk);
 	hybla_init(sk);
 }
@@ -90,7 +89,6 @@ static void onPacketsAcked(struct sock *sk, const struct ack_sample *sample)
 	switch (selectedProtocolId) 
 	{
 		case 0: bictcp_acked(sk, sample);
-		// case 1: tcp_vegas_pkts_acked(sk, sample);
 		case 1: return;
 		case 2: return;
 		default: bictcp_acked(sk, sample);
@@ -101,7 +99,6 @@ static u32 onUndoCwnd(struct sock *sk){
 	switch (selectedProtocolId)
 	{
 		case 0: return tcp_reno_undo_cwnd(sk);
-		// case 1: return tcp_reno_undo_cwnd(sk);
 		case 1: return bbr_undo_cwnd(sk);
 		case 2: return tcp_reno_undo_cwnd(sk);
 		default: return tcp_reno_undo_cwnd(sk);
@@ -112,7 +109,6 @@ static u32 onSshthresh(struct sock *sk){
 	switch (selectedProtocolId)
 	{
     	case 0: return bictcp_recalc_ssthresh(sk);
-		// case 1: return tcp_reno_ssthresh(sk);
 		case 1: return bbr_ssthresh(sk);
 		case 2: return tcp_reno_ssthresh(sk);
 		default: return bictcp_recalc_ssthresh(sk);
@@ -124,7 +120,6 @@ static void onAvoidCongestion(struct sock *sk, u32 ack, u32 acked){
 	switch (selectedProtocolId)
 	{
     	case 0: bictcp_cong_avoid(sk, ack, acked);
-		// case 1: tcp_vegas_cong_avoid(sk, ack, acked);
 		case 1: return;
 		case 2: hybla_cong_avoid(sk, ack, acked);
 		default: bictcp_cong_avoid(sk, ack, acked);
@@ -136,7 +131,6 @@ static void onCongestionEvent(struct sock *sk, enum tcp_ca_event event)
 	switch (selectedProtocolId)
 	{
      	case 0: bictcp_cwnd_event(sk, event);
-		// case 1: tcp_vegas_cwnd_event(sk, event);
 		case 1: bbr_cwnd_event(sk, event);
 		case 2: return;
 		default: bictcp_cwnd_event(sk, event);
@@ -296,8 +290,8 @@ static struct tcp_congestion_ops tcp_mimic __read_mostly = {
     .cwnd_event = onCongestionEvent,
 	.set_state	= onSetState,
 	// .cong_control = onCongControl,
-	// .sndbuf_expand	= onSndbuf_expand,
-	// .min_tso_segs	= onMintso_segs,
+	.sndbuf_expand	= onSndbuf_expand,
+	.min_tso_segs	= onMintso_segs,
     .owner = THIS_MODULE,
     .name = "mimic"
 };
