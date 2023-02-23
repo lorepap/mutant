@@ -1,6 +1,11 @@
 #ifndef __MIMIC_H
 #define __MIMIC_H 1
 
+/* user communication */
+#define ARM_COUNT 4
+#define INIT_MSG "0:cubic;1:bbr;2:hybla;"
+
+/* tcp_input.c flags */
 #define FLAG_DATA_ACKED		0x04 /* This ACK acknowledged new data.		*/
 #define FLAG_RETRANS_DATA_ACKED	0x08 /* "" "" some of which was retransmitted.	*/
 #define FLAG_SYN_ACKED		0x10 /* This ACK acknowledged SYN.		*/
@@ -9,13 +14,12 @@
 #define FLAG_ACKED		(FLAG_DATA_ACKED|FLAG_SYN_ACKED)
 #define FLAG_FORWARD_PROGRESS	(FLAG_ACKED|FLAG_DATA_SACKED)
 
-
 #include <net/tcp.h>
+
 
 /* original in tcp_input.c 
 declared here and defined in mimic.c
-TODO: import directly from tcp_input.c
--- possible overhead issues --
+TODO: import directly from tcp_input.c -- possible overhead issues --
 */
 static void tcp_cong_avoid(struct sock *sk, u32 ack, u32 acked);
 static inline bool tcp_may_raise_cwnd(const struct sock *sk, const int flag);
@@ -52,7 +56,7 @@ struct arm {
 // 	u32	minRTT;		/* min of RTTs measured within last RTT (in usec) */
 // 	u32	baseRTT;	/* the min of all Vegas RTT measurements seen (in usec) */
 
-/* Tcp Hybla structure. */
+/* Hybla struct */
 	bool  hybla_en;
 	u32   snd_cwnd_cents; /* Keeps increment values when it is <1, <<7 */
 	u32   rho;	      /* Rho parameter, integer part  */
@@ -61,7 +65,7 @@ struct arm {
 	u32   rho2_7ls;	      /* Rho^2, <<7	*/
 	u32   minrtt_us;      /* Minimum smoothed round trip time value seen */
 
-/* BBR */
+/* BBR struct */
 	u32	min_rtt_us;	        /* min RTT in min_rtt_win_sec window */
 	u32	min_rtt_stamp;	        /* timestamp of min_rtt_us */
 	u32	probe_rtt_done_stamp;   /* end time for BBR_PROBE_RTT mode */

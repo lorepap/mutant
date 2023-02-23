@@ -7,11 +7,18 @@
 #include "protocol/mimic.h"
 
 #define NETLINK_USER 25
+#define MAX_RETRY 5
+#define MAX_PAYLOAD 256 /* maximum payload size*/
+
+// Communication Flags
+#define COMM_END 0
+#define COMM_BEGIN 1
+#define COMM_SELECT_ARM 2
 
 // Netlink comm variables
 struct sock *nl_sk = NULL;
-
-static u32 selectedProtocolId = 1;
+static u32 socketId = -1;
+static u32 selectedProtocolId = 0;
 
 /*
 protocols:
@@ -26,34 +33,146 @@ hybla 2
 */
 
 // Netlink comm APIs
-static void nl_recv_msg(struct sk_buff *skb)
+static void sendMessageToApplicationLayer(char *message, int socketId)
 {
-    struct nlmsghdr *nlh;
-	long result;
-	int res;
-	char *msg;
-    nlh = (struct nlmsghdr*)skb->data;
+    int retryCounter = 0;
+    int messageSize;
+    int messageSentReponseCode;
+    struct sk_buff *socketMessage;
+    struct nlmsghdr *reply_nlh = NULL;
 
-	msg = (char*)nlmsg_data(nlh);
-	res = kstrtol(msg, 10, &result);
-	if (res!=0)
-		printk(KERN_ALERT "Error while converting");
-	printk(KERN_INFO "Netlink received msg payload: %ld\n", result);
-	
-	// Change protocol
-	selectedProtocolId = (int)result;
+    if (socketId == -1)
+    {
+        return;
+    }
 
-	// // Testing new congestion_ops registration
-	// tcp_unregister_congestion_control(&tcp_mimic);
-	// tcp_register_congestion_control(&tcp_mimic_test);
-	// printk(KERN_INFO "New registration done successfully");
+    messageSize = strlen(message);
 
+    socketMessage = nlmsg_new(messageSize, 0);
+
+    if (!socketMessage)
+    {
+        printk(KERN_ERR "mimic | %s: Failed to allocate new skb | (PID = %d)\n", __FUNCTION__, socketId);
+        return;
+    }
+
+    reply_nlh = nlmsg_put(socketMessage, 0, 0, NLMSG_DONE, messageSize, 0);
+
+    NETLINK_CB(socketMessage).dst_group = 0; /* not in mcast group */
+
+    strncpy(NLMSG_DATA(reply_nlh), message, messageSize);
+
+    messageSentReponseCode = nlmsg_unicast(nl_sk, socketMessage, socketId);
+
+    // if (messageSentReponseCode < 0)
+    // {
+    //     printk(KERN_ERR "mimic | %s: Error while sending message | (PID = %d) | (Error = %d) | (Count = %d)\n", __FUNCTION__, socketId, messageSentReponseCode, retryCounter);
+    // }
+    // else
+    // {
+    //     printk("mimic | %s: Correctly sent message to app layer | PID = %d", __FUNCTION__, socketId);
+    // }
 }
+
+static void onConnectionStarted(struct nlmsghdr *nlh)
+{
+    char message[MAX_PAYLOAD - 1];
+
+    socketId = nlh->nlmsg_pid;
+
+    // Inform application layer of the number of protocols available
+    snprintf(message, MAX_PAYLOAD - 1, "%u;%s", ARM_COUNT, INIT_MSG);
+    sendMessageToApplicationLayer(message, socketId);
+}
+
+/**
+ * @brief Handles incoming messages from the application layer
+ * 
+ * @param skb 
+ */
+static void onMessageRecievedFromApplicationLayer(struct sk_buff *skb)
+{
+    struct nlmsghdr *nlh = NULL;
+
+    if (skb == NULL)
+    {
+        printk(KERN_ERR "mimic | %s: skb is NULL\n", __FUNCTION__);
+        return;
+    }
+
+    nlh = (struct nlmsghdr *)skb->data;
+	// printk(KERN_INFO "received data");
+    switch (nlh->nlmsg_flags)
+    {
+    case COMM_END:
+        socketId = -1;
+        break;
+
+    case COMM_BEGIN:
+        onConnectionStarted(nlh);
+        break;
+
+    case COMM_SELECT_ARM:
+        selectedProtocolId = nlh->nlmsg_seq;
+        break;
+
+    case 3: // testing
+		printk(KERN_INFO "Test message received!");
+        break;
+    }
+}
+
+/**
+ * @brief Prepares and sends a response to the application layer after each acknowledgement
+ * 
+ * @param tp 
+ * @param socketId 
+ */
+static void replyToApplicationLayer(struct tcp_sock *tp, int socketId, __u32 protocolId)
+{
+    // message vars
+    char message[MAX_PAYLOAD - 1];
+
+    __u32 cwnd = tp->snd_cwnd;
+    __u32 rtt = tp->srtt_us;
+    __u32 rtt_dev = tp->mdev_us;
+    __u16 MSS = tp->advmss;
+    __u32 delivered = tp->delivered;
+    __u32 lost = tp->lost_out;
+    __u32 in_flight = tp->packets_out;
+    __u32 retransmitted = tp->retrans_out;
+    __u32 now = tcp_jiffies32;
+
+    snprintf(message, MAX_PAYLOAD - 1, "%u;%u;%u;%u;%u;%u;%u;%u;%u;%u;",
+             now, cwnd, rtt, rtt_dev, MSS, delivered, lost,
+             in_flight, retransmitted, protocolId);
+
+    sendMessageToApplicationLayer(message, socketId);
+}
+
+// static void nl_recv_msg(struct sk_buff *skb)
+// {
+//     struct nlmsghdr *nlh;
+// 	long result;
+// 	int res;
+// 	char *msg;
+//     nlh = (struct nlmsghdr*)skb->data;
+
+// 	msg = (char*)nlmsg_data(nlh);
+// 	res = kstrtol(msg, 10, &result);
+// 	if (res!=0)
+// 		printk(KERN_ALERT "Error while converting");
+// 	printk(KERN_INFO "Netlink received msg payload: %ld\n", result);
+	
+// 	// Change protocol
+// 	selectedProtocolId = (int)result;
+
+// }
 
 static int __init netlink_init(void)
 {
     struct netlink_kernel_cfg cfg = {
-        .input = nl_recv_msg,
+        .input = onMessageRecievedFromApplicationLayer,
     };
 
     nl_sk = netlink_kernel_create(&init_net, NETLINK_USER, &cfg);
@@ -84,6 +203,9 @@ static void onInit(struct sock *sk)
 
 static void onPacketsAcked(struct sock *sk, const struct ack_sample *sample)
 {
+	struct tcp_sock *tp = tcp_sk(sk);
+	replyToApplicationLayer(tp, socketId, selectedProtocolId);
+
 	// NOTE: printk increases overhead (tested with iperf3)
 	// printk(KERN_INFO "acked - protocol selected: %d\n", selectedProtocolId);
 	switch (selectedProtocolId) 
