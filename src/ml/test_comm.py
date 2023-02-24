@@ -30,27 +30,16 @@ def main():
     netcomm.send_msg(msg)    
     start = time.time()
     while (True):
-        timestamp, cwnd, rtt, rtt_dev, mss, delivered, lost, in_flight, retrans, action = kernel_thread.queue.get()
+        params = kernel_thread.queue.get()
+        print("[RECEIVED DATA]\n")
+        print(params)
         if (time.time()-start > 5):
-            prot=0
+            prot=(prot+1)%2
             print("[DEBUG] Selected protocol:", prot)
             msg = netcomm.create_netlink_msg(
                 'ACTION', msg_flags=netcomm.ACTION_FLAG, msg_seq=prot)
             netcomm.send_msg(msg)
             start = time.time()
     
-    # while(True):
-    #     # Set protocol
-    #     prot=0
-    #     print("[DEBUG] Selected protocol:", prot)
-    #     msg = netcomm.create_netlink_msg(
-    #         'ACTION', msg_flags=netcomm.ACTION_FLAG, msg_seq=prot)
-    #     netcomm.send_msg(msg)
-    #     # Get data from kernel
-    #     print("[DEBUG] current CWND=", cwnd)
-    #     kernel_thread.queue.task_done()
-
-    #     time.sleep(5)
-
 if __name__=="__main__":
     main()
