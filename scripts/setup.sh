@@ -12,9 +12,9 @@ sudo updatedb
 echo ''
 
 # install header file
-echo '--- Installing header files for your linux kernel ---'
-echo ''
-sudo apt-get install linux-headers-$(uname -r) || exit 1
+# echo '--- Installing header files for your linux kernel ---'
+# echo ''
+# sudo apt-get install linux-headers-$(uname -r) || exit 1
 
 echo ''
 
