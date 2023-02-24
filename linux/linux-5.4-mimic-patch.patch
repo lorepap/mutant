@@ -1,0 +1,30 @@
+diff -urpN linux-5.4.232-base/include/net/inet_connection_sock.h linux-5.4.232-mimic/include/net/inet_connection_sock.h
+--- linux-5.4.232-base/include/net/inet_connection_sock.h	2023-02-22 05:50:42.000000000 -0600
++++ linux-5.4.232-mimic/include/net/inet_connection_sock.h	2023-02-23 19:43:59.621516705 -0600
+@@ -138,8 +138,8 @@ struct inet_connection_sock {
+ 	u32			  icsk_probes_tstamp;
+ 	u32			  icsk_user_timeout;
+ 
+-	u64			  icsk_ca_priv[104 / sizeof(u64)];
+-#define ICSK_CA_PRIV_SIZE      (13 * sizeof(u64))
++	u64			  icsk_ca_priv[200 / sizeof(u64)];
++#define ICSK_CA_PRIV_SIZE	sizeof_field(struct inet_connection_sock, icsk_ca_priv)
+ };
+ 
+ #define ICSK_TIME_RETRANS	1	/* Retransmit timer */
+diff -urpN linux-5.4.232-base/net/ipv4/tcp_input.c linux-5.4.232-mimic/net/ipv4/tcp_input.c
+--- linux-5.4.232-base/net/ipv4/tcp_input.c	2023-02-23 19:48:00.884199828 -0600
++++ linux-5.4.232-mimic/net/ipv4/tcp_input.c	2023-02-23 19:44:23.918203180 -0600
+@@ -3352,6 +3352,12 @@ static void tcp_cong_control(struct sock
+ {
+ 	const struct inet_connection_sock *icsk = inet_csk(sk);
+ 
++	/* if Mimic congestion control is selected */
++	if (icsk->icsk_ca_ops->mimic_cong_control) {
++		icsk->icsk_ca_ops->mimic_cong_control(sk, rs, ack, acked_sacked, flag);
++		return;
++	}
++
+ 	if (icsk->icsk_ca_ops->cong_control) {
+ 		icsk->icsk_ca_ops->cong_control(sk, rs);
+ 		return;
