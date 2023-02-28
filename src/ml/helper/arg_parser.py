@@ -89,7 +89,7 @@ def parse_train_setup() -> Any:
                        help='Run all models')
 
     group.add_argument('--models', '-m', metavar='"MODEL1 MODEL2..."',
-                       help='Run only space-separated list of models')
+                       help='Run only space-separated list of models', default='active_explorer')
 
     parser.add_argument('--retrain', '-rt', type=int,
                         help='--retrain: Flag (0:false, 1:true) to retrain latest model or not', default=1)

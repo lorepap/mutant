@@ -59,6 +59,7 @@ class MabEnvironment(BaseEnvironment):
         received_jiffies = 0
 
         if self.with_kernel_thread:
+            print("[DEBUG] reading data from kernel...")
             timestamp, cwnd, rtt, rtt_dev, mss, delivered, lost, in_flight, retrans, action = self._read_data()
         else:
             timestamp, cwnd, rtt, rtt_dev, mss, delivered, lost, in_flight, retrans, action = self._recv_data()

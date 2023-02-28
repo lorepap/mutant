@@ -31,7 +31,7 @@ class MabBaseRunner(BaseRunner):
         self.model_path = os.path.join(
             context.entry_dir, f'log/mab/model')
         self.environment = MabEnvironment(num_features, window_len, num_fields_kernel, jiffies_per_state,
-                                          nchoices, steps_per_episode, delta, step_wait_seconds, comm, moderator)
+                                    nchoices, steps_per_episode, delta, step_wait_seconds, comm, moderator)
         
         self.set_latest(self.model_path)
 

@@ -9,7 +9,7 @@ from helper import context, utils
 from model.mahimahi_trace import MahimahiTrace
 from network.netlink_communicator import NetlinkCommunicator
 
-
+# Base class for Trainer
 class Base():
 
     def __init__(self, args: Any) -> None:
@@ -51,6 +51,7 @@ class Base():
         if res != 0:
             raise Exception('Unable to init kernel\n')
 
+    # Initialize an IperfClient object for the experiment with an input mahimahi trace (from args)
     def start_client(self, tag: str) -> str:
 
         if self.args.iperf != 1:
@@ -92,7 +93,7 @@ class Base():
             self.netlink_communicator)
 
         print(
-            f'\n\n----- We have {self.nchoices} arms to choose from ----- \n\n')
+            f'\n\n----- Number of protocols available is {self.nchoices} ----- \n\n')
 
     def close_communication(self) -> None:
 
