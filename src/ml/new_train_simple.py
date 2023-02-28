@@ -26,7 +26,7 @@ def main():
                         help='--trace: Name of mahimahi trace file used', default="none")
 
     parser.add_argument('--ip', '-x', type=str,
-                        help='--ip: IP of iperf server machine', default="192.168.64.1")
+                        help='--ip: IP of iperf server machine', default="10.178.17.91")
 
     parser.add_argument('--time', '-e', type=int,
                         help='--time: Number of seconds to run iperf', default=60)

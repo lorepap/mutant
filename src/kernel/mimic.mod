@@ -1,2 +1,2 @@
-/home/lorenzo/Desktop/mimic-2/src/kernel/mimic.o
+/home/lorenzo/Desktop/research-projects/mimic-2/src/kernel/mimic.o
 
