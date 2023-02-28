@@ -2,8 +2,8 @@
 #define __MIMIC_H 1
 
 /* user communication */
-#define ARM_COUNT 4
-#define INIT_MSG "0:cubic;1:bbr;2:hybla;"
+#define ARM_COUNT 3
+#define INIT_MSG "0:cubic;1:bbr;2:hybla"
 
 /* tcp_input.c flags */
 #define FLAG_DATA_ACKED		0x04 /* This ACK acknowledged new data.		*/
