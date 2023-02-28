@@ -1,6 +1,4 @@
 models:
-  owl:
-    name: 'owl'
   adaptive_greedy_threshold:
     name: 'adaptive_greedy_threshold'  
   adaptive_greedy_percentile:
