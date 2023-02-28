@@ -31,6 +31,7 @@ class Trainer(Base):
         super(Trainer, self).__init__(args)
 
         self.train_config: dict = utils.parse_training_config()
+        # Policies available
         self.model_config = utils.parse_models_config()
 
         self.train_episodes = int(self.train_config['train_episodes'])
@@ -45,18 +46,25 @@ class Trainer(Base):
         self.model_runners = self.init_runners()
 
     def init_runners(self) -> dict:
+        # Input for runners
 
         num_features = int(self.train_config['num_features'])
+        # Time in seconds for switching protocol
         window_len = int(self.train_config['window_len'])
+        # Number of jiffies for switching protocol
         jiffies_per_state = int(self.train_config['jiffies_per_state'])
+        # Number of network statistics
         num_fields_kernel = int(self.train_config['num_fields_kernel'])
+        # Number of steps per episode
         steps_per_episode = int(self.train_config['steps_per_episode'])
+        # Delta factor for reward function
         delta = float(self.train_config['delta'])
+        # Learning rate for the optimized
         lr = float(self.train_config['lr'])
+        # Time to wait for next 
         step_wait_seconds = float(self.train_config['step_wait_seconds'])
 
         runners = {
-            'owl': OwlRunner(self.nchoices, lr, num_features, window_len, num_fields_kernel, jiffies_per_state, steps_per_episode, delta, self.netlink_communicator, self.moderator),
 
             'active_explorer': ActiveExplorerRunner(self.nchoices, lr, num_features, window_len, num_fields_kernel, jiffies_per_state, steps_per_episode, delta, step_wait_seconds, self.netlink_communicator, self.moderator),
 
@@ -144,6 +152,7 @@ class Trainer(Base):
 def main():
     args = arg_parser.parse_train_setup()
 
+    # Define a Trainer object. Inherits from a Base object passing it args as attribute
     trainer = Trainer(args)
 
     for index in range(args.runs):
