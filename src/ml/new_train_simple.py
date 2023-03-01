@@ -3,12 +3,24 @@ from helper import context, utils
 from helper.subprocess_wrappers import call, check_output
 from helper.moderator import Moderator
 from network.netlink_communicator import NetlinkCommunicator
-from runner.iperf_client import IperfClient
+from iperf.iperf_client import IperfClient
+from iperf.iperf_server import IperfServer
 from model.mahimahi_trace import MahimahiTrace
 from runner.mab.policy.active_explorer import ActiveExplorerRunner
 
 import os
 import subprocess
+
+def start_communication(trace, server_ip, time, log_file, moderator):
+    client = IperfClient(trace, server_ip, time, log_file, moderator)
+    server = IperfServer()
+    server.start()
+    client.start()
+    return client, server
+
+def stop_communication(client, server):
+    client.stop()
+    server.stop()
 
 def main():
     # -- Input arguments --
@@ -23,7 +35,7 @@ def main():
                         help='--retrain: Flag (0:false, 1:true) to retrain latest model or not', default=1)
 
     parser.add_argument('--trace', '-t', type=str,
-                        help='--trace: Name of mahimahi trace file used', default="none")
+                        help='--trace: Name of mahimahi trace file used', default="att.lte.driving")
 
     parser.add_argument('--ip', '-x', type=str,
                         help='--ip: IP of iperf server machine', default=None)
@@ -49,11 +61,6 @@ def main():
         args.ip = utils.get_private_ip()
         print("\nwill connect to", args.ip,"\n")
 
-    ## From config
-    train_config: dict = utils.parse_training_config()
-    train_episodes = int(train_config['train_episodes'])
-    test_episodes = int(train_config['test_episodes'])
-    steps_per_episodes = int(train_config['steps_per_episode'])
 
     # -- Initialization --
     
@@ -85,7 +92,14 @@ def main():
     model = args.model
 
     ## Initialize runner
-    
+
+    ## From config
+    train_config: dict = utils.parse_training_config()
+
+    train_episodes = int(train_config['train_episodes'])
+
+    test_episodes = int(train_config['test_episodes'])
+
     num_features = int(train_config['num_features'])
     ### Time in seconds for switching protocol
     window_len = int(train_config['window_len'])
@@ -101,21 +115,27 @@ def main():
     lr = float(train_config['lr'])
     ### Step episode time
     step_wait_seconds = float(train_config['step_wait_seconds'])
+
     ### Train from scratch or train from a pre-existing model
     reset_model = args.retrain != 1
     
-    ## Set and start the thread client
-    moderator: Moderator = Moderator(args.iperf == 1)
+    
+    ## Set and start client-server communication
     base_path = os.path.join(context.entry_dir, args.iperf_dir)
     tag = f"{args.trace}.{model}"
     filename = f'{tag}.{utils.time_to_str()}.json'
     log_filename = f'{base_path}/{filename}'
-    client = IperfClient(MahimahiTrace.fromString(args.trace), 
-                         args.ip, args.time, log_filename, moderator)
-    client.start()
+    moderator: Moderator = Moderator(args.iperf == 1)
+    
+    client, server = start_communication(
+        trace=MahimahiTrace.fromString(args.trace),
+        server_ip=args.ip, 
+        time=args.time, 
+        log_file=log_filename, 
+        moderator=moderator
+    )
 
-
-    ## Let's try one policy
+    ## Let's try one policy for now
     runner: ActiveExplorerRunner = ActiveExplorerRunner(nchoices, lr,
                                     num_features, window_len, num_fields_kernel, jiffies_per_state, 
                                     steps_per_episode, delta, step_wait_seconds, netlink_communicator, moderator)
@@ -126,18 +146,35 @@ def main():
 
     print("Training finished")
 
+    stop_communication(client, server)
+
     ## Save model
     runner.save_history(history)
     print(f'saved training history for model: {model}')
     runner.save_model(reset_model)
 
+    # Test the model
     print(f'running test for model: {model}')
-
+    client, server = start_communication(
+        trace=MahimahiTrace.fromString(args.trace),
+        server_ip=args.ip, 
+        time=args.time, 
+        log_file=log_filename, 
+        moderator=moderator
+    )
     runner.test(test_episodes, args.trace)
+    stop_communication(client, server)
+    server.stop()
 
-    # Stop client
-    client.stop()
-    
+    # End kernel communication
+    msg = netlink_communicator.create_netlink_msg(
+    'END_COMMUNICATION', msg_flags=netlink_communicator.END_COMM_FLAG)
+    netlink_communicator.send_msg(msg)
+    netlink_communicator.close_socket()
+
+    print("Communication closed")
+
+    # End runner thread (User-level kernel thread)
     runner.close()
     
 

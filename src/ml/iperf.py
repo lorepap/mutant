@@ -1,19 +1,23 @@
 #!/usr/bin/env python3
 
+import os
+import signal
 from ast import arg
 import sys
 import time
 import traceback
-from helper.subprocess_wrappers import call, check_output
+from helper.subprocess_wrappers import call, check_output, Popen
 
 
 class IperfRunner():
 
-    def __init__(self, ip: str, time: int, log: str, scheme: str) -> None:
+    def __init__(self, ip: str, time: int, log: str, pid_file: str, scheme: str, ) -> None:
         self.ip = ip
         self.time = time
         self.log = log
         self.scheme = scheme
+        self.ps = None
+        self.pid_file = pid_file
 
     def run(self) -> None:
 
@@ -40,9 +44,17 @@ class IperfRunner():
 
                 cmd = ss_cmd + cmd
 
-                check_output(cmd)
+                self.ps = Popen(cmd)
 
-                sys.stderr.write("iperf completed successfully\n")
+                # Write the process ID to the file if the pid_file is provided
+                if self.pid_file is not None:
+                    with open(self.pid_file, 'w') as f:
+                        f.write(str(self.ps.pid))
+                
+                # Wait 'til finishes
+                self.ps.wait()
+                
+                #sys.stderr.write("iperf completed successfully\n")
 
                 break
             except Exception as _:
@@ -52,12 +64,19 @@ class IperfRunner():
                 time.sleep(10)
                 trials += 1
 
+    def stop(self) -> None:
+        if self.ps is not None and self.ps.poll() is None:
+            os.killpg(os.getpgid(self.ps.pid), signal.SIGTERM)
+            self.ps.wait()
+            self.ps = None
+            print("Iperf Runner stopped")
+
+
 
 def main():
-    scheme = None if len(sys.argv) == 4 else sys.argv[4]
-    runner = IperfRunner(sys.argv[1], str(sys.argv[2]), sys.argv[3], scheme)
+    scheme = None if len(sys.argv) == 5 else sys.argv[5]
+    runner = IperfRunner(sys.argv[1], str(sys.argv[2]), sys.argv[3], str(sys.argv[4]), scheme)
     runner.run()
-
 
 if __name__ == '__main__':
     main()
