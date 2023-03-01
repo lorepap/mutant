@@ -2,10 +2,11 @@ import os
 import sys
 import subprocess
 import traceback
-from helper import context, utils
+from helper import context
 from datetime import datetime
 import yaml
 from network.netlink_communicator import NetlinkCommunicator
+import re
 
 TIME_FORMAT = '%Y.%m.%d.%H.%M.%S'
 
@@ -97,3 +98,23 @@ def change_file_name(old_name: str, new_name: str) -> None:
 def check_dir(path: str) -> None:
     if not os.path.exists(path):
         os.makedirs(path)
+
+def get_private_ip():
+    """
+    Returns the private IP address of the host machine.
+    """
+    # Run the ifconfig command and capture the output
+    output = subprocess.check_output(['ifconfig']).decode('utf-8')
+    
+    # Search the output for the private IP address using a regular expression
+    pattern = r'inet (?:addr:)?(10(?:\.\d{1,3}){3})'
+    match = re.search(pattern, output)
+    
+    if match:
+        # If a match is found, return the IP address
+        ip_address = match.group(1)
+    else:
+        # If no match is found, set the IP address to None
+        ip_address = None
+    
+    return ip_address
