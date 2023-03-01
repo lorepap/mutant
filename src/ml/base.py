@@ -4,7 +4,7 @@ from typing import Any
 from helper.subprocess_wrappers import call, Popen, check_output, print_output
 from helper.moderator import Moderator
 
-from runner.iperf_client import IperfClient
+from iperf.iperf_client import IperfClient
 from helper import context, utils
 from model.mahimahi_trace import MahimahiTrace
 from network.netlink_communicator import NetlinkCommunicator
