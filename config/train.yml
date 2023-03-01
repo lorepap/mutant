@@ -1,11 +1,11 @@
-train_episodes: 20
+train_episodes: 1
 retrain_episodes: 5
 test_episodes: 2
 num_features: 8
 window_len: 5
 jiffies_per_state: 5
 num_fields_kernel: 10
-steps_per_episode: 500
+steps_per_episode: 10
 knowledge_percentage: 50
 delta: 0.5
 lr: 1e-3
