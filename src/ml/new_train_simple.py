@@ -15,7 +15,7 @@ def main():
 
     ## From command
     parser = ArgumentParser(
-        description='by default, run python3 ml/train.py')
+        description='by default, run python3 ml/new_train_simple.py')
 
     parser.add_argument('--model', '-m', help='Model to train', default='active_explorer')
 
@@ -26,10 +26,10 @@ def main():
                         help='--trace: Name of mahimahi trace file used', default="none")
 
     parser.add_argument('--ip', '-x', type=str,
-                        help='--ip: IP of iperf server machine', default="10.178.17.91")
+                        help='--ip: IP of iperf server machine', default=None)
 
     parser.add_argument('--time', '-e', type=int,
-                        help='--time: Number of seconds to run iperf', default=60)
+                        help='--time: Number of seconds to run iperf', default=86400)
 
     parser.add_argument('--iperf', '-u', type=int,
                         help='--iperf: Flag (0:false, 1:true) to indicate whether to use iperf or not', default=1)
@@ -44,6 +44,10 @@ def main():
                         help='--runs: Number of times to run', default=1)
     
     args = parser.parse_args()
+
+    if args.ip == None :
+        args.ip = utils.get_private_ip()
+        print("\nwill connect to", args.ip,"\n")
 
     ## From config
     train_config: dict = utils.parse_training_config()
@@ -80,16 +84,6 @@ def main():
 
     model = args.model
 
-    ## Set and start the thread client
-    moderator: Moderator = Moderator(args.iperf == 1)
-    base_path = os.path.join(context.entry_dir, args.iperf_dir)
-    tag = f"{args.trace}.{model}"
-    filename = f'{tag}.{utils.time_to_str()}.json'
-    log_filename = f'{base_path}/{filename}'
-    client = IperfClient(MahimahiTrace.fromString(args.trace), 
-                         args.ip, args.time, log_filename, moderator)
-    client.start()
-
     ## Initialize runner
     
     num_features = int(train_config['num_features'])
@@ -109,6 +103,17 @@ def main():
     step_wait_seconds = float(train_config['step_wait_seconds'])
     ### Train from scratch or train from a pre-existing model
     reset_model = args.retrain != 1
+    
+    ## Set and start the thread client
+    moderator: Moderator = Moderator(args.iperf == 1)
+    base_path = os.path.join(context.entry_dir, args.iperf_dir)
+    tag = f"{args.trace}.{model}"
+    filename = f'{tag}.{utils.time_to_str()}.json'
+    log_filename = f'{base_path}/{filename}'
+    client = IperfClient(MahimahiTrace.fromString(args.trace), 
+                         args.ip, args.time, log_filename, moderator)
+    client.start()
+
 
     ## Let's try one policy
     runner: ActiveExplorerRunner = ActiveExplorerRunner(nchoices, lr,
@@ -119,6 +124,8 @@ def main():
     ### NOTE: if runner (model) is reset, previous timestamp is change to current
     history = runner.train(train_episodes*steps_per_episode, reset_model)
 
+    print("Training finished")
+
     ## Save model
     runner.save_history(history)
     print(f'saved training history for model: {model}')
@@ -127,6 +134,9 @@ def main():
     print(f'running test for model: {model}')
 
     runner.test(test_episodes, args.trace)
+
+    # Stop client
+    client.stop()
     
     runner.close()
     
