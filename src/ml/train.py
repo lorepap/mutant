@@ -121,9 +121,8 @@ class Trainer(Base):
         try:
             print(f'\n\n#{indexer}: running training for model: {model}\n\n')
 
-            model_tag = 'owl.agent' if model == 'owl' else model
-
-            self.start_client(f'{self.args.trace}.{model_tag}')
+            # Start client and server communication (mahimahi + iperf3)
+            self.start_communication(tag=f'{self.args.trace}.{model}')
 
             runner: BaseRunner = self.model_runners[model]
             reset_model = self.args.retrain != 1
@@ -133,14 +132,20 @@ class Trainer(Base):
                 self.train_episodes * self.steps_per_episode, reset_model)
             print(f'#{indexer}: training is done for model: {model}')
 
+            self.stop_communication()
+
             runner.save_history(history)
             print(
                 f'#{indexer}: saved training history for model: {model}')
 
             runner.save_model(reset_model)
 
+            self.start_communication(tag=f'{self.args.trace}.{model}')
+
             print(f'#{indexer}: running test for model: {model}')
             runner.test(self.test_episodes, self.args.trace)
+
+            self.stop_communication()
 
             runner.close()
 
@@ -165,4 +170,4 @@ def main():
 
 if __name__ == '__main__':
     main()
-    os._exit(1)
+    os._exit(0)

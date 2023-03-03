@@ -59,10 +59,10 @@ def add_base_arguments(parser: argparse.ArgumentParser) -> None:
                         help='--trace: Name of mahimahi trace file used', default="none")
 
     parser.add_argument('--ip', '-x', type=str,
-                        help='--ip: IP of iperf server machine', default="192.168.64.1")
+                        help='--ip: IP of iperf server machine', default="10.120.8.116")
 
     parser.add_argument('--time', '-e', type=int,
-                        help='--time: Number of seconds to run iperf', default=60)
+                        help='--time: Number of seconds to run iperf', default=86400)
 
     parser.add_argument('--iperf', '-u', type=int,
                         help='--iperf: Flag (0:false, 1:true) to indicate whether to use iperf or not', default=1)

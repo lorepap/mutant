@@ -2,9 +2,12 @@ import os
 import sys
 import subprocess
 import traceback
-from helper import context
+from . import context
 from datetime import datetime
 import yaml
+
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+
 from network.netlink_communicator import NetlinkCommunicator
 import re
 

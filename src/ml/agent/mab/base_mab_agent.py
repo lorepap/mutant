@@ -52,10 +52,11 @@ class BaseMabAgent(BaseAgent):
 
         # Select an action.
         actions = self.model.predict(observation['obs']).astype('uint8')
-
+        # print("[DEBUG] actions: ", actions)
         N = len(actions)
+        # print("[DEBUG] length actions:", N)
 
-        # print(f'Observation: {observation.shape}')
+        # print(f'Observation: {observation["obs"].shape}')
 
         # Book-keeping.
         self.recent_observation = observation

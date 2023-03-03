@@ -21,7 +21,7 @@ class MiTrace(Enum):
         return MiTrace[trace.replace('.', '_')]
 
     
-     def path(self):
+    def path(self):
         paths = []
         dir = os.path.join(context.entry_dir, 'traces')
 

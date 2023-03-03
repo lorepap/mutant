@@ -24,7 +24,7 @@ import subprocess
 
 class IperfClient(threading.Thread):
 
-    def __init__(self, trace: MahimahiTrace, ip: str, time: int, log_file: str, moderator: moderator.Moderator) -> None:
+    def __init__(self, trace: MahimahiTrace, ip: str, time: int, log_file: str, moderator: moderator.Moderator, pid_file: str) -> None:
         threading.Thread.__init__(self)
 
         self.trace: MahimahiTrace = trace
@@ -33,7 +33,7 @@ class IperfClient(threading.Thread):
         self.log_file = log_file
         self.moderator = moderator
         self.ps = None
-        self._pid_file = "pid.txt" 
+        self._pid_file = pid_file 
 
     def _ip_forwarding_set(self) -> bool:
         cmd = ['sysctl', 'net.ipv4.ip_forward']

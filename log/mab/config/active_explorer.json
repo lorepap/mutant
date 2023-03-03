@@ -23,6 +23,30 @@
             "prod_score": 78687.3021,
             "score": 78687.3021,
             "timestamp": "2023.03.01.11.10.22"
+        },
+        {
+            "name": "active_explorer.2023.03.01.16.30.04",
+            "prod_score": 4096805.1686500004,
+            "score": 4096805.1686500004,
+            "timestamp": "2023.03.01.16.30.04"
+        },
+        {
+            "name": "active_explorer.2023.03.01.19.55.58",
+            "prod_score": 500320.6274,
+            "score": 500320.6274,
+            "timestamp": "2023.03.01.19.55.58"
+        },
+        {
+            "name": "active_explorer.2023.03.01.20.00.58",
+            "prod_score": 298043.8867,
+            "score": 298043.8867,
+            "timestamp": "2023.03.01.20.00.58"
+        },
+        {
+            "name": "active_explorer.2023.03.02.20.32.39",
+            "prod_score": 21674.9116,
+            "score": 21674.9116,
+            "timestamp": "2023.03.02.20.32.39"
         }
     ],
     "runs": [
@@ -50,6 +74,26 @@
             "model_name": "active_explorer.2023.03.01.11.10.22",
             "path": "/home/lorenzo/Desktop/research-projects/mimic-2/log/mab/history/active_explorer.2023.03.01.11.10.22.2023.03.01.11.10.22.json",
             "timestamp": "2023.03.01.11.10.22"
+        },
+        {
+            "model_name": "active_explorer.2023.03.01.16.30.04",
+            "path": "/home/lorenzo/Desktop/research-projects/mimic-2/log/mab/history/active_explorer.2023.03.01.16.30.04.2023.03.01.16.30.04.json",
+            "timestamp": "2023.03.01.16.30.04"
+        },
+        {
+            "model_name": "active_explorer.2023.03.01.19.55.58",
+            "path": "/home/lorenzo/Desktop/research-projects/mimic-2/log/mab/history/active_explorer.2023.03.01.19.55.58.2023.03.01.19.55.58.json",
+            "timestamp": "2023.03.01.19.55.58"
+        },
+        {
+            "model_name": "active_explorer.2023.03.01.20.00.58",
+            "path": "/home/lorenzo/Desktop/research-projects/mimic-2/log/mab/history/active_explorer.2023.03.01.20.00.58.2023.03.01.20.00.58.json",
+            "timestamp": "2023.03.01.20.00.58"
+        },
+        {
+            "model_name": "active_explorer.2023.03.02.20.32.39",
+            "path": "/home/lorenzo/Desktop/research-projects/mimic-2/log/mab/history/active_explorer.2023.03.02.20.32.39.2023.03.02.20.32.39.json",
+            "timestamp": "2023.03.02.20.32.39"
         }
     ],
     "traces": [
@@ -64,6 +108,30 @@
             "path": "/home/lorenzo/Desktop/research-projects/mimic-2/log/mab/trace/att.lte.driving.active_explorer.2023.03.01.11.10.22.csv",
             "timestamp": "2023.03.01.11.10.22",
             "trace_name": "att.lte.driving.active_explorer.2023.03.01.11.10.22.csv"
+        },
+        {
+            "model_name": "active_explorer.2023.03.01.16.30.04",
+            "path": "/home/lorenzo/Desktop/research-projects/mimic-2/log/mab/trace/att.lte.driving.active_explorer.2023.03.01.16.30.04.csv",
+            "timestamp": "2023.03.01.16.30.04",
+            "trace_name": "att.lte.driving.active_explorer.2023.03.01.16.30.04.csv"
+        },
+        {
+            "model_name": "active_explorer.2023.03.01.19.55.58",
+            "path": "/home/lorenzo/Desktop/research-projects/mimic-2/log/mab/trace/tm.lte.driving.active_explorer.2023.03.01.19.55.58.csv",
+            "timestamp": "2023.03.01.19.55.58",
+            "trace_name": "tm.lte.driving.active_explorer.2023.03.01.19.55.58.csv"
+        },
+        {
+            "model_name": "active_explorer.2023.03.01.20.00.58",
+            "path": "/home/lorenzo/Desktop/research-projects/mimic-2/log/mab/trace/tm.lte.driving.active_explorer.2023.03.01.20.00.58.csv",
+            "timestamp": "2023.03.01.20.00.58",
+            "trace_name": "tm.lte.driving.active_explorer.2023.03.01.20.00.58.csv"
+        },
+        {
+            "model_name": "active_explorer.2023.03.02.20.32.39",
+            "path": "/home/lorenzo/Desktop/research-projects/mimic-2/log/mab/trace/att.lte.driving.active_explorer.2023.03.02.20.32.39.csv",
+            "timestamp": "2023.03.02.20.32.39",
+            "trace_name": "att.lte.driving.active_explorer.2023.03.02.20.32.39.csv"
         }
     ]
 }

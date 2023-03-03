@@ -164,7 +164,8 @@ dkms.conf
 # End of https://www.gitignore.io/api/c
 
 src/kernel/
-src/venv/
+src/.venv/
+.env/
 model/__pycache__
 environment/__pycache__
 network/__pycache__
@@ -173,7 +174,6 @@ network/__pycache__
 # traces/
 
 # Logging
-log/
 
 **/*.cmd
 **/*.ko
@@ -184,3 +184,6 @@ __pycache__
 **/*.up.log
 **/*.down.log
 **/*.log
+
+# Misc
+pid.txt

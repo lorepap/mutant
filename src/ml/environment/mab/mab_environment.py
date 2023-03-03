@@ -80,6 +80,7 @@ class MabEnvironment(BaseEnvironment):
         start = time.time()
 
         # while received_jiffies < self.jiffies_per_state:
+        # Read and record data for step_wait seconds
         while float(time.time() - start) <= float(self.step_wait):
 
             if self.with_kernel_thread:

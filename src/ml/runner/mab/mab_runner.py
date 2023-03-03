@@ -1,5 +1,6 @@
 import json
 import os
+import time
 from typing import Any
 
 import numpy as np
@@ -34,6 +35,7 @@ class MabBaseRunner(BaseRunner):
                                     nchoices, steps_per_episode, delta, step_wait_seconds, comm, moderator)
         
         self.set_latest(self.model_path)
+        self.training_time = None
 
     def get_model(self) -> BaseAgent:
         return self.model
@@ -47,11 +49,16 @@ class MabBaseRunner(BaseRunner):
     def train(self, training_steps: int, reset_model: bool = True) -> Any:
         if reset_model:
             self.reset_model()
-
+        
+        start = time.time()
+        
         self.train_res = self.model.fit(self.environment, nb_steps=training_steps,
-                                        visualize=False, verbose=2)
-
+            visualize=False, verbose=2)
+        
+        self.training_time = time.time() - start
+        
         self.history = self.train_res.history
+
         return self.history
 
     def test(self, episodes: int, trace: str) -> None:
@@ -95,7 +102,8 @@ class MabBaseRunner(BaseRunner):
         self.config['runs'].append({
             'model_name': self.model.get_model_name(),
             'path': path,
-            'timestamp': self.now
+            'timestamp': self.now,
+            'training_time': self.training_time
         })
         self.save_config(self.config_path, self.config)
 

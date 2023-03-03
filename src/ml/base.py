@@ -5,6 +5,7 @@ from helper.subprocess_wrappers import call, Popen, check_output, print_output
 from helper.moderator import Moderator
 
 from iperf.iperf_client import IperfClient
+from iperf.iperf_server import IperfServer
 from helper import context, utils
 from model.mahimahi_trace import MahimahiTrace
 from network.netlink_communicator import NetlinkCommunicator
@@ -23,6 +24,7 @@ class Base():
         self.init_communication()
 
         self.client: IperfClient = None
+        self.server: IperfServer = None
         self.moderator: Moderator = Moderator(self.args.iperf == 1)
 
     def is_kernel_initialized(self) -> bool:
@@ -50,9 +52,16 @@ class Base():
         res = call(cmd)
         if res != 0:
             raise Exception('Unable to init kernel\n')
+        
+    def start_server(self, tag):
+        base_path = os.path.join(context.entry_dir, "log", "iperf", "server")
+        filename = f'server.{tag}.log'
+        log_filename = f'{base_path}/{filename}'
+        self.server = IperfServer(log_filename)
+        self.server.start()
 
     # Initialize an IperfClient object for the experiment with an input mahimahi trace (from args)
-    def start_client(self, tag: str) -> str:
+    def start_client(self, tag: str, pid_file: str) -> str:
 
         if self.args.iperf != 1:
             self.moderator.start()
@@ -65,11 +74,17 @@ class Base():
         log_filename = f'{base_path}/{filename}'
 
         self.client = IperfClient(MahimahiTrace.fromString(
-            self.args.trace), self.args.ip, self.args.time, log_filename, self.moderator)
+            self.args.trace), self.args.ip, self.args.time, log_filename, self.moderator, pid_file)
 
         self.client.start()
         return log_filename
+    
+    
+    def start_communication(self, tag):
+        self.start_server(tag)
+        self.start_client(tag, pid_file=os.path.join(context.src_dir, "pid.txt"))
 
+    
     def change_iperf_logfile_name(old_name: str, new_name: str) -> None:
         try:
             new_file = new_name.replace("csv", "json")
@@ -104,3 +119,7 @@ class Base():
         self.netlink_communicator.close_socket()
 
         print("Communication closed")
+
+    def stop_communication(self):
+        self.client.stop()
+        self.server.stop()

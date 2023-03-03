@@ -76,6 +76,7 @@ static void sendMessageToApplicationLayer(char *message, int socketId)
 
 static void onConnectionStarted(struct nlmsghdr *nlh)
 {
+	printk(KERN_INFO "User-kernel communication initialized");
     char message[MAX_PAYLOAD - 1];
 
     socketId = nlh->nlmsg_pid;
@@ -114,6 +115,7 @@ static void onMessageRecievedFromApplicationLayer(struct sk_buff *skb)
 
     case COMM_SELECT_ARM:
         selectedProtocolId = nlh->nlmsg_seq;
+		// printk(KERN_INFO "protocol selected: %d", selectedProtocolId);
         break;
 
     case 3: // testing

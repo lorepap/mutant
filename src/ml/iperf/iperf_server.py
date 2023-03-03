@@ -1,9 +1,9 @@
 import subprocess
 
 class IperfServer:
-    def __init__(self):
+    def __init__(self, log_file):
         self._server_proc = None
-        self._server_log_file = "server.log"
+        self._server_log_file = log_file
 
     def start(self):
         if self._server_proc is not None:
