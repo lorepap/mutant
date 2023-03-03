@@ -128,10 +128,19 @@ class Trainer(Base):
             reset_model = self.args.retrain != 1
 
             # train
-            history = runner.train(
-                self.train_episodes * self.steps_per_episode, reset_model)
-            print(f'#{indexer}: training is done for model: {model}')
-
+            try:
+                
+                history = runner.train(
+                    self.train_episodes * self.steps_per_episode, reset_model)
+                print(f'#{indexer}: training is done for model: {model}')
+            
+            except Exception as e:
+                
+                print(f"Error during training: {e}")
+                # close the communication between client and server
+                self.stop_communication()
+                raise e
+            
             self.stop_communication()
 
             runner.save_history(history)
