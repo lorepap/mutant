@@ -1,0 +1,26 @@
+{
+    "models": [
+        {
+            "name": "bootstrapped_ucb.2023.03.03.04.18.43",
+            "prod_score": 2839153.8068,
+            "score": 2839153.8068,
+            "timestamp": "2023.03.03.04.18.43"
+        }
+    ],
+    "runs": [
+        {
+            "model_name": "bootstrapped_ucb.2023.03.03.04.18.43",
+            "path": "/home/lorenzo/Desktop/research-projects/mimic-2/log/mab/history/bootstrapped_ucb.2023.03.03.04.18.43.2023.03.03.04.18.43.json",
+            "timestamp": "2023.03.03.04.18.43",
+            "training_time": 6846.848482131958
+        }
+    ],
+    "traces": [
+        {
+            "model_name": "bootstrapped_ucb.2023.03.03.04.18.43",
+            "path": "/home/lorenzo/Desktop/research-projects/mimic-2/log/mab/trace/att.lte.driving.bootstrapped_ucb.2023.03.03.04.18.43.csv",
+            "timestamp": "2023.03.03.04.18.43",
+            "trace_name": "att.lte.driving.bootstrapped_ucb.2023.03.03.04.18.43.csv"
+        }
+    ]
+}

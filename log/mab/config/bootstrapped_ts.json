@@ -1,0 +1,26 @@
+{
+    "models": [
+        {
+            "name": "bootstrapped_ts.2023.03.03.02.24.23",
+            "prod_score": 2842592.5067150006,
+            "score": 2842592.5067150006,
+            "timestamp": "2023.03.03.02.24.23"
+        }
+    ],
+    "runs": [
+        {
+            "model_name": "bootstrapped_ts.2023.03.03.02.24.23",
+            "path": "/home/lorenzo/Desktop/research-projects/mimic-2/log/mab/history/bootstrapped_ts.2023.03.03.02.24.23.2023.03.03.02.24.23.json",
+            "timestamp": "2023.03.03.02.24.23",
+            "training_time": 6856.048844099045
+        }
+    ],
+    "traces": [
+        {
+            "model_name": "bootstrapped_ts.2023.03.03.02.24.23",
+            "path": "/home/lorenzo/Desktop/research-projects/mimic-2/log/mab/trace/att.lte.driving.bootstrapped_ts.2023.03.03.02.24.23.csv",
+            "timestamp": "2023.03.03.02.24.23",
+            "trace_name": "att.lte.driving.bootstrapped_ts.2023.03.03.02.24.23.csv"
+        }
+    ]
+}

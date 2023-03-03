@@ -1,0 +1,105 @@
+{
+	"start":	{
+		"connected":	[{
+				"socket":	5,
+				"local_host":	"100.64.0.4",
+				"local_port":	34410,
+				"remote_host":	"10.120.8.116",
+				"remote_port":	5201
+			}],
+		"version":	"iperf 3.1.3",
+		"system_info":	"Linux lorenzo-nrg 5.4.232 #2 SMP Thu Feb 23 21:13:11 CST 2023 x86_64",
+		"timestamp":	{
+			"time":	"Fri, 03 Mar 2023 15:49:23 GMT",
+			"timesecs":	1677858563
+		},
+		"connecting_to":	{
+			"host":	"10.120.8.116",
+			"port":	5201
+		},
+		"cookie":	"lorenzo-nrg.1677858562.414800.0d8015",
+		"tcp_mss_default":	1448,
+		"test_start":	{
+			"protocol":	"TCP",
+			"num_streams":	1,
+			"blksize":	131072,
+			"omit":	0,
+			"duration":	86400,
+			"bytes":	0,
+			"blocks":	0,
+			"reverse":	0
+		}
+	},
+	"intervals":	[{
+			"streams":	[{
+					"socket":	5,
+					"start":	0,
+					"end":	0.360796,
+					"seconds":	0.360796,
+					"bytes":	230232,
+					"bits_per_second":	5104979.348428,
+					"retransmits":	0,
+					"snd_cwnd":	98464,
+					"rtt":	129312,
+					"omitted":	false
+				}],
+			"sum":	{
+				"start":	0,
+				"end":	0.360796,
+				"seconds":	0.360796,
+				"bytes":	230232,
+				"bits_per_second":	5104979.348428,
+				"retransmits":	0,
+				"omitted":	false
+			}
+		}],
+	"end":	{
+		"streams":	[{
+				"sender":	{
+					"socket":	5,
+					"start":	0,
+					"end":	0.360796,
+					"seconds":	0.360796,
+					"bytes":	230232,
+					"bits_per_second":	5104979.348428,
+					"retransmits":	0,
+					"max_snd_cwnd":	98464,
+					"max_rtt":	129312,
+					"min_rtt":	129312,
+					"mean_rtt":	129312
+				},
+				"receiver":	{
+					"socket":	5,
+					"start":	0,
+					"end":	0.360796,
+					"seconds":	0.360796,
+					"bytes":	0,
+					"bits_per_second":	0
+				}
+			}],
+		"sum_sent":	{
+			"start":	0,
+			"end":	0.360796,
+			"seconds":	0.360796,
+			"bytes":	230232,
+			"bits_per_second":	5104979.348428,
+			"retransmits":	0
+		},
+		"sum_received":	{
+			"start":	0,
+			"end":	0.360796,
+			"seconds":	0.360796,
+			"bytes":	0,
+			"bits_per_second":	0
+		},
+		"cpu_utilization_percent":	{
+			"host_total":	3.386512,
+			"host_user":	1.584265,
+			"host_system":	1.802408,
+			"remote_total":	0,
+			"remote_user":	0,
+			"remote_system":	0
+		}
+	},
+	"error":	"interrupt - the client has terminated"
+}

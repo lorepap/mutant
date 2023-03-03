@@ -1,0 +1,11 @@
+python3 /home/lorenzo/Desktop/research-projects/mimic-2/src/ml/train.py -t att.lte.driving -m adaptive_greedy_threshold -x 10.120.8.116 -e 86400 -rt 0
+python3 /home/lorenzo/Desktop/research-projects/mimic-2/src/ml/train.py -t att.lte.driving -m adaptive_greedy_percentile -x 10.120.8.116 -e 86400 -rt 0
+python3 /home/lorenzo/Desktop/research-projects/mimic-2/src/ml/train.py -t att.lte.driving -m adaptive_greedy_weighted -x 10.120.8.116 -e 86400 -rt 0
+python3 /home/lorenzo/Desktop/research-projects/mimic-2/src/ml/train.py -t att.lte.driving -m bootstrapped_ts -x 10.120.8.116 -e 86400 -rt 0
+python3 /home/lorenzo/Desktop/research-projects/mimic-2/src/ml/train.py -t att.lte.driving -m bootstrapped_ucb -x 10.120.8.116 -e 86400 -rt 0
+python3 /home/lorenzo/Desktop/research-projects/mimic-2/src/ml/train.py -t att.lte.driving -m epsilon_greedy_decay -x 10.120.8.116 -e 86400 -rt 0
+python3 /home/lorenzo/Desktop/research-projects/mimic-2/src/ml/train.py -t att.lte.driving -m epsilon_greedy -x 10.120.8.116 -e 86400 -rt 0
+python3 /home/lorenzo/Desktop/research-projects/mimic-2/src/ml/train.py -t att.lte.driving -m explore_first -x 10.120.8.116 -e 86400 -rt 0
+python3 /home/lorenzo/Desktop/research-projects/mimic-2/src/ml/train.py -t att.lte.driving -m active_explorer -x 10.120.8.116 -e 86400 -rt 0
+python3 /home/lorenzo/Desktop/research-projects/mimic-2/src/ml/train.py -t att.lte.driving -m separate_classifiers -x 10.120.8.116 -e 86400 -rt 0
+python3 /home/lorenzo/Desktop/research-projects/mimic-2/src/ml/train.py -t att.lte.driving -m softmax_explorer -x 10.120.8.116 -e 86400 -rt 0
