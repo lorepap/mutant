@@ -121,4 +121,6 @@ class IperfClient(threading.Thread):
         # Kill the client process
         os.kill(pid, signal.SIGTERM)
         print("Iperf client killed")
+         # Remove the pid.txt file
+        os.remove(self._pid_file)
         
