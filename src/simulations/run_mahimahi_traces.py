@@ -25,13 +25,23 @@ TRAINING_FILENAME = os.path.join(context.ml_dir, "train.py")
 
 def generate_experiments(model):
     ip = utils.get_private_ip()
+    
+    
     # read trace names and paths from YAML file
-    trace_data = utils.parse_traces_config()
+    yaml_data = utils.parse_traces_config()
+
+    # Select only mahimahi traces for training
+    trace_names = ["att.lte.driving", "att.lte.driving.2016", "tm.lte.driving", "tm.lte.short", "tm.umts.driving", "vz.evdo.driving", "vz.lte.driving", "vz.lte.short"]
+    trace_data = {name: data for name, data in yaml_data["traces"].items() if name in trace_names}
+
 
     # generate bash script to execute experiments for each trace
     os.chmod(SCRIPT_FILENAME, 0o777)
+
     with open(SCRIPT_FILENAME, "w") as script_file:
+
         for trace_name, trace_info in trace_data["traces"].items():
+
             trace_path = trace_name
             # generate command to execute for this trace
             command = f"python3 {TRAINING_FILENAME} -m {model} -t {trace_path} -x {ip} -e 86400 -rt 0"
@@ -51,6 +61,7 @@ def run_experiments():
 if __name__ == "__main__":
     parser = ArgumentParser()
     parser.add_argument("--model", "-m", help="MAB policy to train")
+    parser.add_argument("--retrain", "-r", help="True: retrain from scratch")
     args = parser.parse_args()
     generate_experiments(model=args.model)
     run_experiments()

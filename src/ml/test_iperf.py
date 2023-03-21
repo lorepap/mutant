@@ -18,17 +18,17 @@ t = 60
 log_filename = "test.log"
 moderator: Moderator = Moderator(True)
 client = IperfClient(MahimahiTrace.fromString("att.lte.driving"), 
-                    ip, t, log_filename, moderator)
+                    ip, t, log_filename, moderator, pid_file='pid_test.txt')
 
 # launch iperf3 server in a separate shell and redirect output to log file
-server = IperfServer()
+server = IperfServer(log_file='server_test.txt')
 server.start()
 
 client.start()
 print("Client started...........")
 
 # Simulating processing.............
-time.sleep(10)
+time.sleep(5)
 
 # # Read the PID from the file
 # pid_file = "pid.txt"
@@ -40,14 +40,15 @@ time.sleep(10)
 # os.kill(pid, signal.SIGTERM)
 # print("Iperf client killed")
 client.stop()
-
+server.stop()
 # Restart the server
-server.restart()
+# server.restart()
 
 print("Testing another run")
 client = IperfClient(MahimahiTrace.fromString("att.lte.driving"), 
-                    ip, t, log_filename, moderator)
+                    ip, t, log_filename, moderator, pid_file="client_test.txt")
+server.start()
 client.start()
-time.sleep(10)
+time.sleep(2)
 client.stop()
 server.stop()

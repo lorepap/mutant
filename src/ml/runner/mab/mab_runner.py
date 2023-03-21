@@ -19,7 +19,7 @@ class MabBaseRunner(BaseRunner):
     def __init__(self, nchoices: int, lr: int, num_features: int,
                  window_len: int, num_fields_kernel: int, jiffies_per_state: int,
                  steps_per_episode: int, delta: float, step_wait_seconds: float, 
-                 comm: NetlinkCommunicator, moderator: Moderator) -> None:
+                 comm: NetlinkCommunicator, moderator: Moderator, trace: str) -> None:
         super(MabBaseRunner, self).__init__()
 
         self.nchoices = nchoices
@@ -36,6 +36,8 @@ class MabBaseRunner(BaseRunner):
         
         self.set_latest(self.model_path)
         self.training_time = None
+
+        self.trace_name = trace
 
     def get_model(self) -> BaseAgent:
         return self.model
@@ -61,12 +63,12 @@ class MabBaseRunner(BaseRunner):
 
         return self.history
 
-    def test(self, episodes: int, trace: str) -> None:
+    def test(self, episodes: int) -> None:
         self.environment.enable_log_traces()
         self.model.test(self.environment,
                         nb_episodes=episodes, visualize=False)
 
-        tag = f'{trace}.{self.get_tag()}'
+        tag = f'{self.trace_name}.{self.get_tag()}'
 
         # save logs
         log_name, log_path = self.environment.save_log(tag, 'log/mab/trace')
@@ -103,14 +105,16 @@ class MabBaseRunner(BaseRunner):
             'model_name': self.model.get_model_name(),
             'path': path,
             'timestamp': self.now,
-            'training_time': self.training_time
+            'training_time': self.training_time,
+            'trace': self.trace_name
         })
         self.save_config(self.config_path, self.config)
 
+
     def save_model(self, reset_model: bool = True) -> str:
-        # path = os.path.join(
-        #     context.entry_dir, f'log/mab/model/{self.model.get_model_name()}.h5')
-        path = os.path.join(self.model_path, self.model.get_model_name()+'.h5')
+        path = os.path.join(
+            context.entry_dir, f'log/mab/model/{self.model.get_model_name()}.h5')
+        # path = os.path.join(self.model_path, self.model.get_model_name() + '.' + self.trace_name +'.h5')
         self.model.save_weights(path, True)
 
         self.model_config = {

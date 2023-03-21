@@ -1,4 +1,5 @@
 import subprocess
+import psutil
 
 class IperfServer:
     def __init__(self, log_file):
@@ -10,7 +11,17 @@ class IperfServer:
             raise Exception("Server already running")
 
         server_cmd = ["iperf3", "-s", "--logfile", self._server_log_file]
-        self._server_proc = subprocess.Popen(server_cmd, shell=False)
+        
+        try:
+        
+            self._server_proc = subprocess.Popen(server_cmd, shell=False)
+        
+        except Exception as e:
+            # Kill all iperf3 processes if an error is raised
+            for proc in psutil.process_iter(['pid', 'name']):
+                if proc.info['name'] == 'iperf3':
+                    proc.kill()
+            raise e
 
         print("Server started with PID:", self._server_proc.pid)
 

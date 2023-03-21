@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import os
+import time
 import traceback
 from argparse import ArgumentError
 from typing import Any
@@ -34,9 +35,11 @@ class Trainer(Base):
         # Policies available
         self.model_config = utils.parse_models_config()
 
-        self.train_episodes = int(self.train_config['train_episodes'])
+        self.debug = bool(self.train_config['debug'])
+
+        self.train_episodes = int(self.train_config['train_episodes']) if not(self.debug) else 2
         self.test_episodes = int(self.train_config['test_episodes'])
-        self.steps_per_episode = int(self.train_config['steps_per_episode'])
+        self.steps_per_episode = int(self.train_config['steps_per_episode']) if not(self.debug) else 5
 
         if self.args.retrain == 1:
             self.train_episodes = int(self.train_config['retrain_episodes'])
@@ -56,37 +59,38 @@ class Trainer(Base):
         # Number of network statistics
         num_fields_kernel = int(self.train_config['num_fields_kernel'])
         # Number of steps per episode
-        steps_per_episode = int(self.train_config['steps_per_episode'])
+        steps_per_episode = self.steps_per_episode
         # Delta factor for reward function
         delta = float(self.train_config['delta'])
         # Learning rate for the optimized
         lr = float(self.train_config['lr'])
         # Time to wait for next 
         step_wait_seconds = float(self.train_config['step_wait_seconds'])
+ 
 
         runners = {
 
-            'active_explorer': ActiveExplorerRunner(self.nchoices, lr, num_features, window_len, num_fields_kernel, jiffies_per_state, steps_per_episode, delta, step_wait_seconds, self.netlink_communicator, self.moderator),
+            # 'active_explorer': ActiveExplorerRunner(self.nchoices, lr, num_features, window_len, num_fields_kernel, jiffies_per_state, steps_per_episode, delta, step_wait_seconds, self.netlink_communicator, self.moderator),
 
-            'adaptive_greedy_threshold': AdaptiveGreedyThresholdRunner(self.nchoices, lr, num_features, window_len, num_fields_kernel, jiffies_per_state, steps_per_episode, delta, step_wait_seconds, self.netlink_communicator, self.moderator),
+            'adaptive_greedy_threshold': AdaptiveGreedyThresholdRunner(self.nchoices, lr, num_features, window_len, num_fields_kernel, jiffies_per_state, steps_per_episode, delta, step_wait_seconds, self.netlink_communicator, self.moderator, self.args.trace),
 
-            'adaptive_greedy_weighted': AdaptiveGreedyWeightedRunner(self.nchoices, lr, num_features, window_len, num_fields_kernel, jiffies_per_state, steps_per_episode, delta, step_wait_seconds, self.netlink_communicator, self.moderator),
+            # 'adaptive_greedy_weighted': AdaptiveGreedyWeightedRunner(self.nchoices, lr, num_features, window_len, num_fields_kernel, jiffies_per_state, steps_per_episode, delta, step_wait_seconds, self.netlink_communicator, self.moderator),
 
-            'adaptive_greedy_percentile': AdaptiveGreedyPercentileRunner(self.nchoices, lr, num_features, window_len, num_fields_kernel, jiffies_per_state, steps_per_episode, delta, step_wait_seconds, self.netlink_communicator, self.moderator),
+            # 'adaptive_greedy_percentile': AdaptiveGreedyPercentileRunner(self.nchoices, lr, num_features, window_len, num_fields_kernel, jiffies_per_state, steps_per_episode, delta, step_wait_seconds, self.netlink_communicator, self.moderator),
 
-            'bootstrapped_ts': BootstrappedTSRunner(self.nchoices, lr, num_features, window_len, num_fields_kernel, jiffies_per_state, steps_per_episode, delta, step_wait_seconds, self.netlink_communicator, self.moderator),
+            # 'bootstrapped_ts': BootstrappedTSRunner(self.nchoices, lr, num_features, window_len, num_fields_kernel, jiffies_per_state, steps_per_episode, delta, step_wait_seconds, self.netlink_communicator, self.moderator),
 
-            'bootstrapped_ucb': BootstrappedUCBRunner(self.nchoices, lr, num_features, window_len, num_fields_kernel, jiffies_per_state, steps_per_episode, delta, step_wait_seconds, self.netlink_communicator, self.moderator),
+            # 'bootstrapped_ucb': BootstrappedUCBRunner(self.nchoices, lr, num_features, window_len, num_fields_kernel, jiffies_per_state, steps_per_episode, delta, step_wait_seconds, self.netlink_communicator, self.moderator),
 
-            'epsilon_greedy_decay': EpsilonGreedyDecayRunner(self.nchoices, lr, num_features, window_len, num_fields_kernel, jiffies_per_state, steps_per_episode, delta, step_wait_seconds, self.netlink_communicator, self.moderator),
+            # 'epsilon_greedy_decay': EpsilonGreedyDecayRunner(self.nchoices, lr, num_features, window_len, num_fields_kernel, jiffies_per_state, steps_per_episode, delta, step_wait_seconds, self.netlink_communicator, self.moderator),
 
-            'epsilon_greedy': EpsilonGreedyRunner(self.nchoices, lr, num_features, window_len, num_fields_kernel, jiffies_per_state, steps_per_episode, delta, step_wait_seconds, self.netlink_communicator, self.moderator),
+            # 'epsilon_greedy': EpsilonGreedyRunner(self.nchoices, lr, num_features, window_len, num_fields_kernel, jiffies_per_state, steps_per_episode, delta, step_wait_seconds, self.netlink_communicator, self.moderator),
 
-            'explore_first': ExploreFirstRunner(self.nchoices, lr, num_features, window_len, num_fields_kernel, jiffies_per_state, steps_per_episode, delta, step_wait_seconds, self.netlink_communicator, self.moderator),
+            # 'explore_first': ExploreFirstRunner(self.nchoices, lr, num_features, window_len, num_fields_kernel, jiffies_per_state, steps_per_episode, delta, step_wait_seconds, self.netlink_communicator, self.moderator),
 
-            'separate_classifiers': SeparateClassifiersRunner(self.nchoices, lr, num_features, window_len, num_fields_kernel, jiffies_per_state, steps_per_episode, delta, step_wait_seconds, self.netlink_communicator, self.moderator),
+            # 'separate_classifiers': SeparateClassifiersRunner(self.nchoices, lr, num_features, window_len, num_fields_kernel, jiffies_per_state, steps_per_episode, delta, step_wait_seconds, self.netlink_communicator, self.moderator),
 
-            'softmax_explorer': SoftmaxExplorerRunner(self.nchoices, lr, num_features, window_len, num_fields_kernel, jiffies_per_state, steps_per_episode, delta, step_wait_seconds, self.netlink_communicator, self.moderator)
+            # 'softmax_explorer': SoftmaxExplorerRunner(self.nchoices, lr, num_features, window_len, num_fields_kernel, jiffies_per_state, steps_per_episode, delta, step_wait_seconds, self.netlink_communicator, self.moderator)
         }
 
         return runners
@@ -135,7 +139,7 @@ class Trainer(Base):
                 print(f'#{indexer}: training is done for model: {model}')
             
             except Exception as e:
-                
+
                 print(f"Error during training: {e}")
                 # close the communication between client and server
                 self.stop_communication()
@@ -143,18 +147,19 @@ class Trainer(Base):
             
             self.stop_communication()
 
-            runner.save_history(history)
-            print(
-                f'#{indexer}: saved training history for model: {model}')
+            if not(self.debug):
+                runner.save_history(history)
+                print(
+                    f'#{indexer}: saved training history for model: {model}')
 
-            runner.save_model(reset_model)
+                runner.save_model(reset_model)
+                        
+            # self.start_communication(tag=f'{self.args.trace}.{model}')
 
-            self.start_communication(tag=f'{self.args.trace}.{model}')
+            # print(f'#{indexer}: running test for model: {model}')
+            # runner.test(self.test_episodes, self.args.trace)
 
-            print(f'#{indexer}: running test for model: {model}')
-            runner.test(self.test_episodes, self.args.trace)
-
-            self.stop_communication()
+            # self.stop_communication()
 
             runner.close()
 

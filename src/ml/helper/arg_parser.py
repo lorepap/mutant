@@ -45,6 +45,7 @@ def verify_pantheon_protocols(protocols) -> list:
 def verify_trace(trace: str) -> list:
     yaml_config = utils.parse_traces_config()
     all_traces = yaml_config['traces'].keys()
+    print(all_traces)
 
     if trace not in all_traces:
         sys.exit(

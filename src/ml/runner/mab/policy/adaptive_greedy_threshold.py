@@ -11,12 +11,12 @@ class AdaptiveGreedyThresholdRunner(MabBaseRunner):
     def __init__(self, nchoices: int, lr: int, num_features: int,
                  window_len: int, num_fields_kernel: int, jiffies_per_state: int,
                  steps_per_episode: int, delta: float, step_wait_seconds: float,
-                 comm: NetlinkCommunicator, moderator: Moderator, **kwargs) -> None:
+                 comm: NetlinkCommunicator, moderator: Moderator, trace: str, **kwargs) -> None:
 
         super(AdaptiveGreedyThresholdRunner, self).__init__(nchoices, lr, num_features, window_len,
                                                             num_fields_kernel, jiffies_per_state,
                                                             steps_per_episode, delta, step_wait_seconds,
-                                                            comm, moderator)
+                                                            comm, moderator, trace)
 
         self.kwargs = kwargs
 

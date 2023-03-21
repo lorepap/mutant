@@ -83,6 +83,7 @@ class Base():
     def start_communication(self, tag):
         self.start_server(tag)
         self.start_client(tag, pid_file=os.path.join(context.src_dir, "pid.txt"))
+        print("Client pid stored in", os.path.join(context.src_dir, "pid.txt"))
 
     
     def change_iperf_logfile_name(old_name: str, new_name: str) -> None:

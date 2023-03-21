@@ -1,26 +1,5 @@
 {
-    "models": [
-        {
-            "name": "adaptive_greedy_threshold.2023.03.02.20.59.56",
-            "prod_score": 2912186.328345,
-            "score": 2912186.328345,
-            "timestamp": "2023.03.02.20.59.56"
-        }
-    ],
-    "runs": [
-        {
-            "model_name": "adaptive_greedy_threshold.2023.03.02.20.59.56",
-            "path": "/home/lorenzo/Desktop/research-projects/mimic-2/log/mab/history/adaptive_greedy_threshold.2023.03.02.20.59.56.2023.03.02.20.59.56.json",
-            "timestamp": "2023.03.02.20.59.56",
-            "training_time": 6485.418352127075
-        }
-    ],
-    "traces": [
-        {
-            "model_name": "adaptive_greedy_threshold.2023.03.02.20.59.56",
-            "path": "/home/lorenzo/Desktop/research-projects/mimic-2/log/mab/trace/att.lte.driving.adaptive_greedy_threshold.2023.03.02.20.59.56.csv",
-            "timestamp": "2023.03.02.20.59.56",
-            "trace_name": "att.lte.driving.adaptive_greedy_threshold.2023.03.02.20.59.56.csv"
-        }
-    ]
+    "models": [],
+    "runs": [],
+    "traces": []
 }

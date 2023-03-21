@@ -21,7 +21,7 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')
 from ml.helper import context, utils
 
 SCRIPT_FILENAME = os.path.join(context.entry_dir, "tests", "traces_tests.sh")  # name of bash script to generate
-TRAINING_FILENAME = os.path.join(context.ml_dir, "train.py")
+TEST_FILENAME = os.path.join(context.ml_dir, "test.py")
 
 def generate_experiments(model):
     ip = utils.get_private_ip()
@@ -32,9 +32,9 @@ def generate_experiments(model):
     os.chmod(SCRIPT_FILENAME, 0o777)
     with open(SCRIPT_FILENAME, "w") as script_file:
         for trace_name, trace_info in trace_data["traces"].items():
-            trace_path = trace_name
+            trace_path = trace_info["name"]
             # generate command to execute for this trace
-            command = f"python3 {TRAINING_FILENAME} -m {model} -t {trace_path} -x {ip} -e 86400 -rt 0"
+            command = f"python3 {TEST_FILENAME} -m {model} -t {trace_path} -x {ip} -e 60"
             # write command to script file
             script_file.write(command + "\n")
     

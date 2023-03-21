@@ -22,7 +22,6 @@ from runner.mab.policy.explore_first import ExploreFirstRunner
 from runner.mab.policy.separate_classifiers import SeparateClassifiersRunner
 from runner.mab.policy.softmax_explorer import SoftmaxExplorerRunner
 from runner.mab.policy.adpative_greedy_percentile import AdaptiveGreedyPercentileRunner
-from runner.owl.owl_runner import OwlRunner
 
 
 class Tester(Base):
@@ -53,7 +52,6 @@ class Tester(Base):
         step_wait_seconds = float(self.train_config['step_wait_seconds'])
 
         runners = {
-            'owl': OwlRunner(self.nchoices, lr, num_features, window_len, num_fields_kernel, jiffies_per_state, steps_per_episode, delta, self.netlink_communicator, self.moderator),
 
             'active_explorer': ActiveExplorerRunner(self.nchoices, lr, num_features, window_len, num_fields_kernel, jiffies_per_state, steps_per_episode, delta, step_wait_seconds, self.netlink_communicator, self.moderator),
 
@@ -110,15 +108,24 @@ class Tester(Base):
         try:
             print(f'#{indexer}: running test for model: {model}')
 
-            model_tag = 'owl.agent' if model == 'owl' else model
-
-            self.start_client(f'{self.args.trace}.{model_tag}')
+            # Start client and server communication (mahimahi + iperf3)
+            self.start_communication(tag=f'{self.args.trace}.{model}')
 
             runner: BaseRunner = self.model_runners[model]
 
             # test
-            runner.test(self.test_episodes, self.args.trace)
+            try:
+                runner.test(self.test_episodes, self.args.trace)
+                print(f'#{indexer}: test is done for model: {model}')
 
+            except Exception as e:    
+                print(f"Error during testing: {e}")
+                # close the communication between client and server
+                self.stop_communication()
+                raise e
+            
+            self.stop_communication()
+            
             runner.close()
 
         except Exception as _:
