@@ -51,7 +51,7 @@ def parse_traces_config():
 
 def parse_training_config():
     with open(os.path.join(context.entry_dir, 'config/train.yml')) as config:
-        return yaml.load(config, Loader=yaml.BaseLoader)
+        return yaml.load(config, Loader=yaml.FullLoader)
 
 
 def parse_prod_config():
