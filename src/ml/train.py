@@ -35,11 +35,17 @@ class Trainer(Base):
         # Policies available
         self.model_config = utils.parse_models_config()
 
-        self.debug = bool(self.train_config['debug'])
+        self.debug = self.train_config['debug']
+
+        if (self.debug):
+            print("Entering debug mode..\n")
 
         self.train_episodes = int(self.train_config['train_episodes']) if not(self.debug) else 2
         self.test_episodes = int(self.train_config['test_episodes'])
         self.steps_per_episode = int(self.train_config['steps_per_episode']) if not(self.debug) else 5
+
+        print(f"[DEBUG] Steps per episode {self.steps_per_episode}\n")
+
 
         if self.args.retrain == 1:
             self.train_episodes = int(self.train_config['retrain_episodes'])
