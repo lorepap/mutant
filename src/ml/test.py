@@ -54,7 +54,7 @@ class Tester(Base):
         jiffies_per_state = int(self.train_config['jiffies_per_state'])
         num_fields_kernel = int(self.train_config['num_fields_kernel'])
         steps_per_episode = int(self.train_config['steps_per_episode']) if not(self.train_config["debug"]) \
-            else 10
+            else 5
         print("DEBUG steps per episode", steps_per_episode)
         delta = float(self.train_config['delta'])
         lr = float(self.train_config['lr'])

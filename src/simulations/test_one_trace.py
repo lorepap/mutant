@@ -21,7 +21,7 @@ def run_experiments(items):
     trace_name = 'att.lte.driving'
 
     # generate command to execute for this trace
-    command = f"python3 {TEST_FILENAME} -m {items.model} -t {trace_name} -x {ip} -e 86400"
+    command = f"python3 {TEST_FILENAME} -m {items.model} -t {trace_name} -x {ip} -e 5"
     
     subprocess.call(command, shell=True, stderr=sys.stderr)
 
