@@ -1,5 +1,69 @@
 {
-    "models": [],
-    "runs": [],
+    "models": [
+        {
+            "name": "adaptive_greedy_threshold.2023.03.22.14.39.27",
+            "prod_score": 19221204.936489996,
+            "score": 19221204.936489996,
+            "timestamp": "2023.03.23.02.32.08"
+        }
+    ],
+    "runs": [
+        {
+            "model_name": "adaptive_greedy_threshold.2023.03.22.14.39.27",
+            "path": "/home/lorenzo/Desktop/research-projects/mimic-2/log/mab/history/adaptive_greedy_threshold.2023.03.22.14.39.27.2023.03.22.14.39.27.json",
+            "timestamp": "2023.03.22.14.39.27",
+            "trace": "att.lte.driving",
+            "training_time": 6454.060743808746
+        },
+        {
+            "model_name": "adaptive_greedy_threshold.2023.03.22.14.39.27",
+            "path": "/home/lorenzo/Desktop/research-projects/mimic-2/log/mab/history/adaptive_greedy_threshold.2023.03.22.14.39.27.2023.03.22.16.27.06.json",
+            "timestamp": "2023.03.22.16.27.06",
+            "trace": "att.lte.driving.2016",
+            "training_time": 6310.2479639053345
+        },
+        {
+            "model_name": "adaptive_greedy_threshold.2023.03.22.14.39.27",
+            "path": "/home/lorenzo/Desktop/research-projects/mimic-2/log/mab/history/adaptive_greedy_threshold.2023.03.22.14.39.27.2023.03.22.18.12.19.json",
+            "timestamp": "2023.03.22.18.12.19",
+            "trace": "tm.lte.driving",
+            "training_time": 5645.40465426445
+        },
+        {
+            "model_name": "adaptive_greedy_threshold.2023.03.22.14.39.27",
+            "path": "/home/lorenzo/Desktop/research-projects/mimic-2/log/mab/history/adaptive_greedy_threshold.2023.03.22.14.39.27.2023.03.22.19.46.28.json",
+            "timestamp": "2023.03.22.19.46.28",
+            "trace": "tm.lte.short",
+            "training_time": 5532.728682041168
+        },
+        {
+            "model_name": "adaptive_greedy_threshold.2023.03.22.14.39.27",
+            "path": "/home/lorenzo/Desktop/research-projects/mimic-2/log/mab/history/adaptive_greedy_threshold.2023.03.22.14.39.27.2023.03.22.21.18.44.json",
+            "timestamp": "2023.03.22.21.18.44",
+            "trace": "tm.umts.driving",
+            "training_time": 6251.134627580643
+        },
+        {
+            "model_name": "adaptive_greedy_threshold.2023.03.22.14.39.27",
+            "path": "/home/lorenzo/Desktop/research-projects/mimic-2/log/mab/history/adaptive_greedy_threshold.2023.03.22.14.39.27.2023.03.22.23.02.58.json",
+            "timestamp": "2023.03.22.23.02.58",
+            "trace": "vz.evdo.driving",
+            "training_time": 6793.517162561417
+        },
+        {
+            "model_name": "adaptive_greedy_threshold.2023.03.22.14.39.27",
+            "path": "/home/lorenzo/Desktop/research-projects/mimic-2/log/mab/history/adaptive_greedy_threshold.2023.03.22.14.39.27.2023.03.23.00.56.16.json",
+            "timestamp": "2023.03.23.00.56.16",
+            "trace": "vz.lte.driving",
+            "training_time": 5748.348060131073
+        },
+        {
+            "model_name": "adaptive_greedy_threshold.2023.03.22.14.39.27",
+            "path": "/home/lorenzo/Desktop/research-projects/mimic-2/log/mab/history/adaptive_greedy_threshold.2023.03.22.14.39.27.2023.03.23.02.32.08.json",
+            "timestamp": "2023.03.23.02.32.08",
+            "trace": "vz.lte.short",
+            "training_time": 5503.614615440369
+        }
+    ],
     "traces": []
 }

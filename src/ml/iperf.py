@@ -48,6 +48,7 @@ class IperfRunner():
 
                 # Write the process ID to the file if the pid_file is provided
                 if self.pid_file is not None:
+                    print("Writing in", self.pid_file)
                     with open(self.pid_file, 'w') as f:
                         f.write(str(self.ps.pid))
                 
@@ -70,6 +71,8 @@ class IperfRunner():
             self.ps.wait()
             self.ps = None
             print("Iperf Runner stopped")
+            if os.path.exists(self.pid_file):
+                os.remove(self.pid_file)
 
 
 

@@ -5,6 +5,7 @@ from typing import Any
 
 import numpy as np
 from helper import context, utils
+from helper.debug import is_debug_on, change_name
 from keras.optimizers import Adam
 from agent.base_agent import BaseAgent
 from agent.mab.base_mab_agent import BaseMabAgent
@@ -42,6 +43,9 @@ class MabBaseRunner(BaseRunner):
     def get_model(self) -> BaseAgent:
         return self.model
 
+    def get_model_config(self) -> dict:
+        return self.model_config
+
     def get_optimizer(self) -> optimizer_v2.OptimizerV2:
         return Adam(lr=self.lr)
 
@@ -64,7 +68,9 @@ class MabBaseRunner(BaseRunner):
         return self.history
 
     def test(self, episodes: int) -> None:
+        
         self.environment.enable_log_traces()
+        
         self.model.test(self.environment,
                         nb_episodes=episodes, visualize=False)
 
@@ -72,15 +78,18 @@ class MabBaseRunner(BaseRunner):
 
         # save logs
         log_name, log_path = self.environment.save_log(tag, 'log/mab/trace')
+        if is_debug_on():
+            log_name = change_name(log_name)
 
         # update config
-        self.config['traces'].append({
-            'model_name': self.model.get_model_name(),
-            'trace_name': log_name,
-            'path': log_path,
-            'timestamp': self.now
-        })
-        self.save_config(self.config_path, self.config)
+        if not(is_debug_on()):
+            self.config['traces'].append({
+                'model_name': self.model.get_model_name(),
+                'trace_name': log_name,
+                'path': log_path,
+                'timestamp': self.now
+            })
+            self.save_config(self.config_path, self.config)
 
     def predict(self, x: np.ndarray) -> np.ndarray:
         model = self.model.get_model()

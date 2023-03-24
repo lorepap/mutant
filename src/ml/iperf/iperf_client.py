@@ -16,15 +16,15 @@ import threading
 from concurrent.futures import thread
 import traceback, signal
 
-from helper import context, utils, moderator
-from helper.subprocess_wrappers import Popen, call, check_output, print_output
+from helper import context, utils, moderator, debug
+from helper.subprocess_wrappers import Popen, call, check_output, print_output, check_call
 from model.mahimahi_trace import MahimahiTrace
 import subprocess
 
 
 class IperfClient(threading.Thread):
 
-    def __init__(self, trace: MahimahiTrace, ip: str, time: int, log_file: str, moderator: moderator.Moderator, pid_file: str) -> None:
+    def __init__(self, trace: MahimahiTrace, ip: str, time: int, log_file: str, moderator: moderator.Moderator) -> None:
         threading.Thread.__init__(self)
 
         self.trace: MahimahiTrace = trace
@@ -33,7 +33,7 @@ class IperfClient(threading.Thread):
         self.log_file = log_file
         self.moderator = moderator
         self.ps = None
-        self._pid_file = pid_file 
+        self._pid_file = os.path.join(context.ml_dir, "pid.txt")
 
     def _ip_forwarding_set(self) -> bool:
         cmd = ['sysctl', 'net.ipv4.ip_forward']
@@ -62,17 +62,28 @@ class IperfClient(threading.Thread):
 
         utils.check_dir(os.path.join(context.entry_dir, 'log/mahimahi'))
 
-        uplink = os.path.join(context.entry_dir, 'log/mahimahi',
-                              f'{self.trace}.{utils.time_to_str()}.up.log')
-        downlink = os.path.join(
-            context.entry_dir, 'log/mahimahi', f'{self.trace}.{utils.time_to_str()}.down.log')
+        filename_up = f'{self.trace}.{utils.time_to_str()}.up.log'
+        filename_down = f'{self.trace}.{utils.time_to_str()}.down.log'
+        
+        if debug.is_debug_on():
+            print("Debug mode on")
+            filename_up = debug.change_name(filename_up)
+            filename_down = debug.change_name(filename_down)
+        else:
+            print("Debug mode off")
+        
+        uplink = os.path.join(context.entry_dir, 'log/mahimahi', filename_up)
+        downlink = os.path.join(context.entry_dir, 'log/mahimahi', filename_down)
 
         up_path, down_path = MahimahiTrace.path(self.trace)
+
+        print("[DEBUG] up path, down path", up_path, down_path)
 
         cmd = ['mm-link',
                up_path,
                down_path,
-               f'--uplink-log={uplink}', f'--downlink-log={downlink}']
+               f'--uplink-log={uplink}', f'--downlink-log={downlink}'
+               ]
 
         return cmd
 
@@ -101,7 +112,7 @@ class IperfClient(threading.Thread):
 
             self.moderator.start()
 
-            check_output(cmd)
+            check_call(cmd)
 
             self.moderator.stop()
 
@@ -115,12 +126,14 @@ class IperfClient(threading.Thread):
 
     def stop(self) -> None:
         # Read the PID from the file
-        with open(self._pid_file, 'r') as f:
-            pid = int(f.read().strip())
-            print("Client PID:", pid)
-        # Kill the client process
-        os.kill(pid, signal.SIGTERM)
-        print("Iperf client killed")
-         # Remove the pid.txt file
-        os.remove(self._pid_file)
+        if os.path.exists(self._pid_file):
+            with open(self._pid_file, 'r') as f:
+                print("Getting pid from", self._pid_file)
+                pid = int(f.read().strip())
+                print("Client PID:", pid)
+            # Kill the client process
+            os.kill(pid, signal.SIGTERM)
+            print("Iperf client killed")
+            # Remove the pid.txt file
+            os.remove(self._pid_file)
         

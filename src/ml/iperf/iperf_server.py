@@ -9,7 +9,7 @@ class IperfServer:
     def start(self):
         if self._server_proc is not None:
             raise Exception("Server already running")
-
+        print("[SERVER] Server log:", self._server_log_file)
         server_cmd = ["iperf3", "-s", "--logfile", self._server_log_file]
         
         try:

@@ -77,7 +77,7 @@ class BaseRunner():
 
         print(f'{self.get_tag()}: saved config successfully')
 
-    def test(self, episodes: int, trace: str) -> None:
+    def test(self, episodes: int) -> None:
         raise NotImplementedError()
 
     def load_basic(self) -> Any:

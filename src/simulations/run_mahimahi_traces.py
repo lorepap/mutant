@@ -32,14 +32,15 @@ def run_experiments(args):
     # Select only mahimahi traces for training
     trace_names = ["att.lte.driving", "att.lte.driving.2016", "tm.lte.driving", "tm.lte.short", "tm.umts.driving", "vz.evdo.driving", "vz.lte.driving", "vz.lte.short"]
     trace_data = {name: data for name, data in yaml_data["traces"].items() if name in trace_names}
-    test = trace_data.keys()
+
     for i, trace_name in enumerate(trace_data.keys()):
 
         trace_path = trace_name
         print(trace_path)
         # Train from scratch on the first trace, then retrain the same model over the others
-        if args.retrain == 1:
+        if args.retrain:
             retrain = 1 if i > 0 else 0
+            print("Training from scratch over the first trace...")
         else:
             retrain = 1
         # generate command to execute for this trace
@@ -56,6 +57,6 @@ def run_experiments(args):
 if __name__ == "__main__":
     parser = ArgumentParser()
     parser.add_argument("--model", "-m", help="MAB policy to train")
-    parser.add_argument("--retrain", "-r", help="True: retrain from scratch")
+    parser.add_argument("--retrain", "-r", actions="store_true", help="True: retrain from scratch")
     args = parser.parse_args()
     run_experiments(args)

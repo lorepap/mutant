@@ -3,7 +3,7 @@ import traceback
 from typing import Any
 from helper.subprocess_wrappers import call, Popen, check_output, print_output
 from helper.moderator import Moderator
-
+from helper.debug import set_debug, is_debug_on, change_name
 from iperf.iperf_client import IperfClient
 from iperf.iperf_server import IperfServer
 from helper import context, utils
@@ -26,6 +26,7 @@ class Base():
         self.client: IperfClient = None
         self.server: IperfServer = None
         self.moderator: Moderator = Moderator(self.args.iperf == 1)
+        self.trace = self.args.trace
 
     def is_kernel_initialized(self) -> bool:
         cmd = ['cat', '/proc/sys/net/ipv4/tcp_congestion_control']
@@ -56,12 +57,14 @@ class Base():
     def start_server(self, tag):
         base_path = os.path.join(context.entry_dir, "log", "iperf", "server")
         filename = f'server.{tag}.log'
+        if is_debug_on():
+            filename = change_name(filename)
         log_filename = f'{base_path}/{filename}'
         self.server = IperfServer(log_filename)
         self.server.start()
 
     # Initialize an IperfClient object for the experiment with an input mahimahi trace (from args)
-    def start_client(self, tag: str, pid_file: str) -> str:
+    def start_client(self, tag: str, pid_file: str = None) -> str:
 
         if self.args.iperf != 1:
             self.moderator.start()
@@ -71,10 +74,15 @@ class Base():
         utils.check_dir(base_path)
 
         filename = f'{tag}.{utils.time_to_str()}.json'
+        
+        if is_debug_on():
+            filename = change_name(filename)
+        
         log_filename = f'{base_path}/{filename}'
+        
 
         self.client = IperfClient(MahimahiTrace.fromString(
-            self.args.trace), self.args.ip, self.args.time, log_filename, self.moderator, pid_file)
+            self.args.trace), self.args.ip, self.args.time, log_filename, self.moderator, )
 
         self.client.start()
         return log_filename
@@ -82,9 +90,7 @@ class Base():
     
     def start_communication(self, tag):
         self.start_server(tag)
-        self.start_client(tag, pid_file=os.path.join(context.src_dir, "pid.txt"))
-        print("Client pid stored in", os.path.join(context.src_dir, "pid.txt"))
-
+        self.start_client(tag)
     
     def change_iperf_logfile_name(old_name: str, new_name: str) -> None:
         try:

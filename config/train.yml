@@ -10,4 +10,4 @@ knowledge_percentage: 50
 delta: 0.5
 lr: 1e-3
 step_wait_seconds: 0.5
-debug: false
+debug: true

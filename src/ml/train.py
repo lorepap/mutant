@@ -7,6 +7,7 @@ from argparse import ArgumentError
 from typing import Any
 
 from helper import arg_parser, utils
+from helper.debug import set_debug, is_debug_on
 from base import Base
 from runner.base_runner import BaseRunner
 from runner.mab.policy.active_explorer import ActiveExplorerRunner
@@ -35,17 +36,15 @@ class Trainer(Base):
         # Policies available
         self.model_config = utils.parse_models_config()
 
-        self.debug = self.train_config['debug']
+        if self.train_config["debug"]:
+            set_debug()
+            self.debug_mode = is_debug_on()
 
-        if (self.debug):
-            print("Entering debug mode..\n")
-
-        self.train_episodes = int(self.train_config['train_episodes']) if not(self.debug) else 2
+        self.train_episodes = int(self.train_config['train_episodes']) if not(self.debug_mode) else 2
         self.test_episodes = int(self.train_config['test_episodes'])
-        self.steps_per_episode = int(self.train_config['steps_per_episode']) if not(self.debug) else 5
+        self.steps_per_episode = int(self.train_config['steps_per_episode']) if not(self.debug_mode) else 5
 
         print(f"[DEBUG] Steps per episode {self.steps_per_episode}\n")
-
 
         if self.args.retrain == 1:
             self.train_episodes = int(self.train_config['retrain_episodes'])
@@ -78,7 +77,7 @@ class Trainer(Base):
 
             # 'active_explorer': ActiveExplorerRunner(self.nchoices, lr, num_features, window_len, num_fields_kernel, jiffies_per_state, steps_per_episode, delta, step_wait_seconds, self.netlink_communicator, self.moderator),
 
-            'adaptive_greedy_threshold': AdaptiveGreedyThresholdRunner(self.nchoices, lr, num_features, window_len, num_fields_kernel, jiffies_per_state, steps_per_episode, delta, step_wait_seconds, self.netlink_communicator, self.moderator, self.args.trace),
+            'adaptive_greedy_threshold': AdaptiveGreedyThresholdRunner(self.nchoices, lr, num_features, window_len, num_fields_kernel, jiffies_per_state, steps_per_episode, delta, step_wait_seconds, self.netlink_communicator, self.moderator, self.trace),
 
             # 'adaptive_greedy_weighted': AdaptiveGreedyWeightedRunner(self.nchoices, lr, num_features, window_len, num_fields_kernel, jiffies_per_state, steps_per_episode, delta, step_wait_seconds, self.netlink_communicator, self.moderator),
 
@@ -153,7 +152,7 @@ class Trainer(Base):
             
             self.stop_communication()
 
-            if not(self.debug):
+            if not(self.debug_mode):
                 runner.save_history(history)
                 print(
                     f'#{indexer}: saved training history for model: {model}')
