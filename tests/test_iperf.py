@@ -21,6 +21,7 @@ import subprocess
 
 ip = utils.get_private_ip()
 t = 60
+processing_time = 30
 log_filename = "test.log"
 moderator: Moderator = Moderator(True)
 set_debug()
@@ -36,7 +37,7 @@ client.start()
 print("Client started...........")
 
 # Simulating processing.............
-time.sleep(5)
+time.sleep(processing_time)
 
 # # Read the PID from the file
 # pid_file = "pid.txt"
@@ -55,8 +56,8 @@ server.stop()
 print("Testing another run")
 client = IperfClient(MahimahiTrace.fromString("att.lte.driving"), 
                     ip, t, log_filename, moderator)
-server.start()
-client.start()
-time.sleep(2)
-client.stop()
-server.stop()
+# server.start()
+# client.start()
+# time.sleep(2)
+# client.stop()
+# server.stop()

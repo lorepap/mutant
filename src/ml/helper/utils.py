@@ -35,7 +35,7 @@ def parse_protocols_config():
 
 
 def parse_pantheon_protocols_config():
-    location = utils.get_fullpath('/pantheon/src/config.yml')
+    location = get_fullpath('/pantheon/src/config.yml')
 
     if location == None or location.strip() == '':
          sys.exit('Pantheon not installed on your machine')

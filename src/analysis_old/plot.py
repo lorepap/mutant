@@ -23,7 +23,7 @@ def get_config(trace: str = 'vz.lte.short') -> dict:
 
     # experiment = get_verizon_exp()
 
-    # experiment = get_tmobile_exp()
+    experiment = get_tmobile_exp()
 
     # experiment = get_wifi_exp()
 
@@ -35,7 +35,7 @@ def get_config(trace: str = 'vz.lte.short') -> dict:
 
     # experiment = get_prod_exp(trace)
 
-    experiment = get_prod_exp_verbose(trace)
+    # experiment = get_prod_exp_verbose(trace)
 
     return experiment
 
@@ -76,7 +76,7 @@ def prod_plots(experiment: dict) -> None:
 
     # plot_prod_throughput_latency_best(experiment)
 
-    # plot_iperf_throughput_latency_mean(experiment)
+    plot_iperf_throughput_latency_mean(experiment)
     # plot_iperf_throughput_latency_min(experiment)
     # plot_iperf_throughput_latency_max(experiment)
     # plot_iperf_cwnd(experiment)
