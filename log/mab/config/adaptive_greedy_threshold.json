@@ -137,6 +137,24 @@
             "path": "/home/lorenzo/Desktop/research-projects/mimic-2/log/mab/trace/none.adaptive_greedy_threshold.2023.03.23.21.40.02.csv",
             "timestamp": "2023.03.23.21.40.02",
             "trace_name": "none.adaptive_greedy_threshold.2023.03.23.21.40.02.csv"
+        },
+        {
+            "model_name": "adaptive_greedy_threshold.2023.03.22.14.39.27",
+            "path": "/home/lorenzo/Desktop/research-projects/mimic-2/log/mab/trace/att.lte.driving.adaptive_greedy_threshold.2023.03.31.14.40.26.csv",
+            "timestamp": "2023.03.31.14.40.26",
+            "trace_name": "att.lte.driving.adaptive_greedy_threshold.2023.03.31.14.40.26.csv"
+        },
+        {
+            "model_name": "adaptive_greedy_threshold.2023.03.22.14.39.27",
+            "path": "/home/lorenzo/Desktop/research-projects/mimic-2/log/mab/trace/att.lte.driving.adaptive_greedy_threshold.2023.03.31.14.59.03.csv",
+            "timestamp": "2023.03.31.14.59.03",
+            "trace_name": "att.lte.driving.adaptive_greedy_threshold.2023.03.31.14.59.03.csv"
+        },
+        {
+            "model_name": "adaptive_greedy_threshold.2023.03.22.14.39.27",
+            "path": "/home/lorenzo/Desktop/research-projects/mimic-2/log/mab/trace/att.lte.driving.adaptive_greedy_threshold.2023.03.31.15.01.27.csv",
+            "timestamp": "2023.03.31.15.01.27",
+            "trace_name": "att.lte.driving.adaptive_greedy_threshold.2023.03.31.15.01.27.csv"
         }
     ]
 }

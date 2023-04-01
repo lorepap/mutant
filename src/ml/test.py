@@ -55,7 +55,6 @@ class Tester(Base):
         num_fields_kernel = int(self.train_config['num_fields_kernel'])
         steps_per_episode = int(self.train_config['steps_per_episode']) if not(self.train_config["debug"]) \
             else 5
-        print("DEBUG steps per episode", steps_per_episode)
         delta = float(self.train_config['delta'])
         lr = float(self.train_config['lr'])
         step_wait_seconds = float(self.train_config['step_wait_seconds'])
@@ -131,6 +130,7 @@ class Tester(Base):
                 print(f"Error during testing: {e}")
                 # close the communication between client and server
                 self.stop_communication()
+                runner.close()
                 raise e
 
             self.stop_communication()

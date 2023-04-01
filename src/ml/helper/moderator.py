@@ -18,3 +18,6 @@ class Moderator():
 
     def stop(self) -> None:
         self.started = False
+
+    def is_stopped(self) -> bool:
+        return not(self.started)

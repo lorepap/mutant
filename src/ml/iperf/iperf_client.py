@@ -124,16 +124,20 @@ class IperfClient(threading.Thread):
             print(traceback.format_exc())
             self.moderator.stop()
 
+    # This stop function is set when total episodes time in training > iperf time, so I need to stop manually the client when training is finished
+    # This temporarily solution let me run the training with a specific number of episodes (and steps per episodes), while iperf is always running
+    # TODO: iperf process should check the moderator which could be stopped by the RL-module.
     def stop(self) -> None:
         # Read the PID from the file
         if os.path.exists(self._pid_file):
             with open(self._pid_file, 'r') as f:
-                print("Getting pid from", self._pid_file)
+                # print("Getting pid from", self._pid_file)
                 pid = int(f.read().strip())
-                print("Client PID:", pid)
-            # Kill the client process
-            os.kill(pid, signal.SIGTERM)
-            print("Iperf client killed")
-            # Remove the pid.txt file
-            os.remove(self._pid_file)
+                # print("Client PID:", pid)
+            # Kill the client process if moderator is on
+                if not(self.moderator.is_stopped()):
+                    os.kill(pid, signal.SIGTERM)
+                    print("Iperf client killed")
+                # Remove the pid.txt file
+                os.remove(self._pid_file)
         

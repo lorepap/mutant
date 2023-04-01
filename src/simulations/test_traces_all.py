@@ -25,7 +25,7 @@ def run_experiments(items):
     for i, trace_name in enumerate(trace_data["traces"].keys()):
 
         # generate command to execute for this trace
-        command = f"python3 {TEST_FILENAME} -m {items.model} -t {trace_name} -x {ip}"
+        command = f"python3 {TEST_FILENAME} -m {items.model} -t {trace_name} -x {ip} -e {items.iperf_duration}"
         
         try:
             subprocess.call(command, shell=True, stderr=sys.stderr)
@@ -37,5 +37,6 @@ def run_experiments(items):
 if __name__ == "__main__":
     parser = ArgumentParser()
     parser.add_argument("--model", "-m", help="MAB policy to train")
+    parser.add_argument("--iperf_duration", "-id", help="Experiment duration", default=60)
     args = parser.parse_args()
     run_experiments(items=args)
