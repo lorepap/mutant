@@ -16,7 +16,7 @@ class AdaptiveGreedyThresholdRunner(MabBaseRunner):
         super(AdaptiveGreedyThresholdRunner, self).__init__(nchoices, lr, num_features, window_len,
                                                             num_fields_kernel, jiffies_per_state,
                                                             steps_per_episode, delta, step_wait_seconds,
-                                                            comm, moderator, trace)
+                                                            comm, moderator, trace, **kwargs)
 
         self.kwargs = kwargs
 
