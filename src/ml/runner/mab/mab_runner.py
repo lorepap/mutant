@@ -26,6 +26,7 @@ class MabBaseRunner(BaseRunner):
         self.nchoices = nchoices
         self.lr = lr
         self.moderator = moderator
+        self.num_features = num_features
 
         self.base_config_dir = os.path.join(context.entry_dir, 'log/mab/config')
         self.config_path = os.path.join(
@@ -38,7 +39,7 @@ class MabBaseRunner(BaseRunner):
         
         self.set_latest(self.model_path)
         self.training_time = None
-
+        self.step_wait_time = step_wait_seconds
         self.trace_name = trace
 
     def get_model(self) -> BaseAgent:
@@ -116,7 +117,10 @@ class MabBaseRunner(BaseRunner):
             'path': path,
             'timestamp': self.now,
             'training_time': self.training_time,
-            'trace': self.trace_name
+            'trace': self.trace_name,
+            'actions': self.nchoices,
+            'step_wait': self.step_wait_time,
+            'num_features': self.num_features
         })
         self.save_config(self.config_path, self.config)
 
