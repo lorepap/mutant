@@ -1,2 +1,0 @@
-class Plotter():
-    pass

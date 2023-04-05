@@ -1,0 +1,89 @@
+{
+    "models": [
+        {
+            "name": "epsilon_greedy.2023.03.31.21.09.34",
+            "prod_score": 60321.93457349906,
+            "score": 60321.93457349906,
+            "timestamp": "2023.04.02.15.09.09"
+        },
+        {
+            "name": "epsilon_greedy.2023.04.03.14.45.34",
+            "prod_score": 19310511.506415,
+            "score": 19310511.506415,
+            "timestamp": "2023.04.04.02.33.56"
+        }
+    ],
+    "runs": [
+        {
+            "model_name": "epsilon_greedy.2023.03.31.21.09.34",
+            "path": "/home/lorenzo/Desktop/research-projects/mimic-2/log/mab/history/epsilon_greedy.2023.03.31.21.09.34.2023.03.31.21.09.34.json",
+            "timestamp": "2023.03.31.21.09.34",
+            "trace": "att.lte.driving",
+            "training_time": 151169.58025598526
+        },
+        {
+            "model_name": "epsilon_greedy.2023.03.31.21.09.34",
+            "path": "/home/lorenzo/Desktop/research-projects/mimic-2/log/mab/history/epsilon_greedy.2023.03.31.21.09.34.2023.04.02.15.09.09.json",
+            "timestamp": "2023.04.02.15.09.09",
+            "trace": "att.lte.driving.2016",
+            "training_time": 73372.11565470695
+        },
+        {
+            "model_name": "epsilon_greedy.2023.04.03.14.45.34",
+            "path": "/home/lorenzo/Desktop/research-projects/mimic-2/log/mab/history/epsilon_greedy.2023.04.03.14.45.34.2023.04.03.14.45.34.json",
+            "timestamp": "2023.04.03.14.45.34",
+            "trace": "att.lte.driving",
+            "training_time": 6479.178174972534
+        },
+        {
+            "model_name": "epsilon_greedy.2023.04.03.14.45.34",
+            "path": "/home/lorenzo/Desktop/research-projects/mimic-2/log/mab/history/epsilon_greedy.2023.04.03.14.45.34.2023.04.03.16.33.35.json",
+            "timestamp": "2023.04.03.16.33.35",
+            "trace": "att.lte.driving.2016",
+            "training_time": 6305.890002250671
+        },
+        {
+            "model_name": "epsilon_greedy.2023.04.03.14.45.34",
+            "path": "/home/lorenzo/Desktop/research-projects/mimic-2/log/mab/history/epsilon_greedy.2023.04.03.14.45.34.2023.04.03.18.18.43.json",
+            "timestamp": "2023.04.03.18.18.43",
+            "trace": "tm.lte.driving",
+            "training_time": 5520.463893413544
+        },
+        {
+            "model_name": "epsilon_greedy.2023.04.03.14.45.34",
+            "path": "/home/lorenzo/Desktop/research-projects/mimic-2/log/mab/history/epsilon_greedy.2023.04.03.14.45.34.2023.04.03.19.50.48.json",
+            "timestamp": "2023.04.03.19.50.48",
+            "trace": "tm.lte.short",
+            "training_time": 5450.040544509888
+        },
+        {
+            "model_name": "epsilon_greedy.2023.04.03.14.45.34",
+            "path": "/home/lorenzo/Desktop/research-projects/mimic-2/log/mab/history/epsilon_greedy.2023.04.03.14.45.34.2023.04.03.21.21.40.json",
+            "timestamp": "2023.04.03.21.21.40",
+            "trace": "tm.umts.driving",
+            "training_time": 6248.171135902405
+        },
+        {
+            "model_name": "epsilon_greedy.2023.04.03.14.45.34",
+            "path": "/home/lorenzo/Desktop/research-projects/mimic-2/log/mab/history/epsilon_greedy.2023.04.03.14.45.34.2023.04.03.23.05.50.json",
+            "timestamp": "2023.04.03.23.05.50",
+            "trace": "vz.evdo.driving",
+            "training_time": 6798.218459844589
+        },
+        {
+            "model_name": "epsilon_greedy.2023.04.03.14.45.34",
+            "path": "/home/lorenzo/Desktop/research-projects/mimic-2/log/mab/history/epsilon_greedy.2023.04.03.14.45.34.2023.04.04.00.59.11.json",
+            "timestamp": "2023.04.04.00.59.11",
+            "trace": "vz.lte.driving",
+            "training_time": 5682.725125074387
+        },
+        {
+            "model_name": "epsilon_greedy.2023.04.03.14.45.34",
+            "path": "/home/lorenzo/Desktop/research-projects/mimic-2/log/mab/history/epsilon_greedy.2023.04.03.14.45.34.2023.04.04.02.33.56.json",
+            "timestamp": "2023.04.04.02.33.56",
+            "trace": "vz.lte.short",
+            "training_time": 5458.737326860428
+        }
+    ],
+    "traces": []
+}

@@ -1,0 +1,48 @@
+{
+    "models": [
+        {
+            "name": "bootstrapped_ucb.2023.04.04.04.04.57",
+            "prod_score": 3449046.897705001,
+            "score": 3449046.897705001,
+            "timestamp": "2023.04.04.11.16.50"
+        }
+    ],
+    "runs": [
+        {
+            "model_name": "bootstrapped_ucb.2023.04.04.04.04.57",
+            "path": "/home/lorenzo/Desktop/research-projects/mimic-2/log/mab/history/bootstrapped_ucb.2023.04.04.04.04.57.2023.04.04.04.04.57.json",
+            "timestamp": "2023.04.04.04.04.57",
+            "trace": "att.lte.driving",
+            "training_time": 7097.555990934372
+        },
+        {
+            "model_name": "bootstrapped_ucb.2023.04.04.04.04.57",
+            "path": "/home/lorenzo/Desktop/research-projects/mimic-2/log/mab/history/bootstrapped_ucb.2023.04.04.04.04.57.2023.04.04.06.03.17.json",
+            "timestamp": "2023.04.04.06.03.17",
+            "trace": "att.lte.driving.2016",
+            "training_time": 6919.707338809967
+        },
+        {
+            "model_name": "bootstrapped_ucb.2023.04.04.04.04.57",
+            "path": "/home/lorenzo/Desktop/research-projects/mimic-2/log/mab/history/bootstrapped_ucb.2023.04.04.04.04.57.2023.04.04.07.58.39.json",
+            "timestamp": "2023.04.04.07.58.39",
+            "trace": "tm.lte.driving",
+            "training_time": 5956.8643345832825
+        },
+        {
+            "model_name": "bootstrapped_ucb.2023.04.04.04.04.57",
+            "path": "/home/lorenzo/Desktop/research-projects/mimic-2/log/mab/history/bootstrapped_ucb.2023.04.04.04.04.57.2023.04.04.09.37.58.json",
+            "timestamp": "2023.04.04.09.37.58",
+            "trace": "tm.lte.short",
+            "training_time": 5930.04981303215
+        },
+        {
+            "model_name": "bootstrapped_ucb.2023.04.04.04.04.57",
+            "path": "/home/lorenzo/Desktop/research-projects/mimic-2/log/mab/history/bootstrapped_ucb.2023.04.04.04.04.57.2023.04.04.11.16.50.json",
+            "timestamp": "2023.04.04.11.16.50",
+            "trace": "tm.umts.driving",
+            "training_time": 6832.868293762207
+        }
+    ],
+    "traces": []
+}
