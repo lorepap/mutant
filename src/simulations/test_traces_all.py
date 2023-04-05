@@ -27,12 +27,10 @@ def run_experiments(items):
         # generate command to execute for this trace
         command = f"python3 {TEST_FILENAME} -m {items.model} -t {trace_name} -x {ip} -e {items.iperf_duration}"
         
-        try:
-            subprocess.call(command, shell=True, stderr=sys.stderr)
-        
-        except subprocess.CalledProcessError as e:
-            print(f"Error running command '{command}': {e}")
-            raise e
+        subprocess.call(command, shell=True, stderr=sys.stderr)
+        # except subprocess.CalledProcessError as e:
+        #     print(f"Error running command '{command}': {e}")
+        #     raise e
 
 if __name__ == "__main__":
     parser = ArgumentParser()

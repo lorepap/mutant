@@ -56,7 +56,7 @@ class Base():
         
     def start_server(self, tag):
         base_path = os.path.join(context.entry_dir, "log", "iperf", "server")
-        filename = f'server.{tag}.log'
+        filename = f'server.log'
         if is_debug_on():
             filename = change_name(filename)
         log_filename = f'{base_path}/{filename}'

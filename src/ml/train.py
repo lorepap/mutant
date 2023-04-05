@@ -1,5 +1,14 @@
 #!/usr/bin/env python3
 
+
+"""
+Training script.
+
+Example usage
+
+python train.py -m adaptive_greedy_threshold -t att.lte.driving -rt 1
+
+"""
 import os
 import time
 import traceback
@@ -79,7 +88,7 @@ class Trainer(Base):
 
             # 'active_explorer': ActiveExplorerRunner(self.nchoices, lr, num_features, window_len, num_fields_kernel, jiffies_per_state, steps_per_episode, delta, step_wait_seconds, self.netlink_communicator, self.moderator),
 
-            'adaptive_greedy_threshold': AdaptiveGreedyThresholdRunner(self.nchoices, lr, num_features, window_len, num_fields_kernel, jiffies_per_state, steps_per_episode, delta, step_wait_seconds, self.netlink_communicator, self.moderator, self.trace),
+            'adaptive_greedy_threshold': AdaptiveGreedyThresholdRunner(1, lr, num_features, window_len, num_fields_kernel, jiffies_per_state, steps_per_episode, delta, step_wait_seconds, self.netlink_communicator, self.moderator, self.trace, retrain=self.args.retrain),
 
             # 'adaptive_greedy_weighted': AdaptiveGreedyWeightedRunner(self.nchoices, lr, num_features, window_len, num_fields_kernel, jiffies_per_state, steps_per_episode, delta, step_wait_seconds, self.netlink_communicator, self.moderator),
 

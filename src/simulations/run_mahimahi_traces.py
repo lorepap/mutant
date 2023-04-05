@@ -5,7 +5,7 @@ Look at models.yml to see available models for MAB
 
 Example usage
 
-python3 run_traces_all.py -m active_explorer -r
+python3 run_mahimahi_traces.py -m active_explorer -r
 
 """
 

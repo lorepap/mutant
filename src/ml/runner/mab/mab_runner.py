@@ -20,11 +20,13 @@ class MabBaseRunner(BaseRunner):
     def __init__(self, nchoices: int, lr: int, num_features: int,
                  window_len: int, num_fields_kernel: int, jiffies_per_state: int,
                  steps_per_episode: int, delta: float, step_wait_seconds: float, 
-                 comm: NetlinkCommunicator, moderator: Moderator, trace: str) -> None:
+                 comm: NetlinkCommunicator, moderator: Moderator, trace: str, retrain: bool) -> None:
         super(MabBaseRunner, self).__init__()
 
         self.nchoices = nchoices
         self.lr = lr
+        self.moderator = moderator
+        self.num_features = num_features
 
         self.base_config_dir = os.path.join(context.entry_dir, 'log/mab/config')
         self.config_path = os.path.join(
@@ -35,9 +37,9 @@ class MabBaseRunner(BaseRunner):
         self.environment = MabEnvironment(num_features, window_len, num_fields_kernel, jiffies_per_state,
                                     nchoices, steps_per_episode, delta, step_wait_seconds, comm, moderator)
         
-        self.set_latest(self.model_path)
+        self.set_latest(self.model_path, retrain)
         self.training_time = None
-
+        self.step_wait_time = step_wait_seconds
         self.trace_name = trace
 
     def get_model(self) -> BaseAgent:
@@ -115,7 +117,10 @@ class MabBaseRunner(BaseRunner):
             'path': path,
             'timestamp': self.now,
             'training_time': self.training_time,
-            'trace': self.trace_name
+            'trace': self.trace_name,
+            'actions': self.nchoices,
+            'step_wait': self.step_wait_time,
+            'num_features': self.num_features
         })
         self.save_config(self.config_path, self.config)
 
