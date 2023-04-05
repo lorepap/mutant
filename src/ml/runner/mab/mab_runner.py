@@ -25,6 +25,7 @@ class MabBaseRunner(BaseRunner):
 
         self.nchoices = nchoices
         self.lr = lr
+        self.moderator = moderator
 
         self.base_config_dir = os.path.join(context.entry_dir, 'log/mab/config')
         self.config_path = os.path.join(

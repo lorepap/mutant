@@ -17,6 +17,7 @@ class BaseMabAgent(BaseAgent):
 
         self.model = self.get_policy(nchoices)
 
+
     def get_model(self) -> _BasePolicy:
         return self.model
 

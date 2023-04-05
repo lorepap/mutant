@@ -23,7 +23,7 @@ class AdaptiveGreedyThresholdRunner(MabBaseRunner):
     def load_basic(self) -> Any:
         try:
 
-            model = AdaptiveGreedyThresholdAgent(self.nchoices)
+            model = AdaptiveGreedyThresholdAgent(self.nchoices, moderator=self.moderator)
             model.compile(self.get_optimizer(), metrics=['mae'])
             return model
 
