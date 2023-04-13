@@ -6,23 +6,23 @@ from gym import spaces
 from helper.moderator import Moderator
 from network.netlink_communicator import NetlinkCommunicator
 
-class ThruputNormalizer():
-    def __init__(self):
-        self.mean = 0
-        self.std = 1
-        self.count = 0
+# class ThruputNormalizer():
+#     def __init__(self):
+#         self.mean = 0
+#         self.std = 1
+#         self.count = 0
 
-    def update(self, feature):
-        self.count += 1
-        prev_mean = self.mean
-        self.mean += (feature - prev_mean) / self.count
-        self.std += (feature - prev_mean) * (feature - self.mean)
+#     def update(self, feature):
+#         self.count += 1
+#         prev_mean = self.mean
+#         self.mean += (feature - prev_mean) / self.count
+#         self.std += (feature - prev_mean) * (feature - self.mean)
 
-    def normalize(self, feature):
-        if self.count == 0:
-            return feature
-        else:
-            return (feature - self.mean) / np.sqrt(self.std / self.count)
+#     def normalize(self, feature):
+#         if self.count == 0:
+#             return feature
+#         else:
+#             return (feature - self.mean) / np.sqrt(self.std / self.count)
 
 
 class MabEnvironment(BaseEnvironment):
@@ -66,7 +66,7 @@ class MabEnvironment(BaseEnvironment):
         self.allow_save = False
         self.step_wait = step_wait_seconds
         self.mss = None
-        self.thruput_norm = ThruputNormalizer()
+        # self.thruput_norm = ThruputNormalizer()
 
         # TODO: implement a dict with rewards formulas and names
         self.reward_name = 'norm-thru'
@@ -166,11 +166,13 @@ class MabEnvironment(BaseEnvironment):
             # if throughput > self.max_thruput:
             #     self.max_thruput = throughput
 
-            self.thruput_norm.update(throughput)
-            normalized_throughput = self.thruput_norm.normalize(throughput)
+            # self.thruput_norm.update(throughput)
+            # normalized_throughput = self.thruput_norm.normalize(throughput)
 
-            reward = normalized_throughput - self.delta * normalized_throughput * (1 / (1 - p))
+            # reward = normalized_throughput - self.delta * normalized_throughput * (1 / (1 - p))
             
+            reward = throughput - self.delta * throughput * (1 / (1 - p))
+
             binary_reward = 0 if reward <= self.curr_reward else 1
 
             binary_rewards.append(binary_reward)
