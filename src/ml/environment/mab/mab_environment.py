@@ -32,7 +32,7 @@ class MabEnvironment(BaseEnvironment):
     def __init__(self, num_features: int,
                  window_len: int, num_fields_kernel: int, jiffies_per_state: int,
                  num_actions: int, steps_per_episode: int, delta: float,
-                 step_wait_seconds: float, comm: NetlinkCommunicator, moderator: Moderator) -> None:
+                 step_wait_seconds: float, comm: NetlinkCommunicator, moderator: Moderator, reward_name: str) -> None:
         super(MabEnvironment, self).__init__(comm, num_fields_kernel)
 
         self.moderator = moderator
@@ -69,7 +69,7 @@ class MabEnvironment(BaseEnvironment):
         # self.thruput_norm = ThruputNormalizer()
 
         # TODO: implement a dict with rewards formulas and names
-        self.reward_name = 'norm-thru'
+        self.reward_name = reward_name
 
     def update_rtt(self, rtt: float) -> None:
 

@@ -15,6 +15,17 @@ def verify_models(models) -> list:
 
     return all_models
 
+def verify_reward(rewards) -> list:
+    rewards = rewards.split()
+    yaml_config = utils.parse_reward_config()
+    all_rewards = yaml_config['rewards'].keys()
+
+    for r in rewards:
+        if r not in all_rewards:
+            sys.exit('%s is not a reward included in config/reward.yml' % r)
+
+    return all_rewards
+
 
 def verify_protocols(protocols) -> list:
     protocols = protocols.split()
@@ -76,6 +87,9 @@ def add_base_arguments(parser: argparse.ArgumentParser) -> None:
 
     parser.add_argument('--runs', '-r', type=int,
                         help='--runs: Number of times to run', default=1)
+    
+    parser.add_argument('--reward', '-r', type=str, help='Name of the reward for the training',
+                        default='owl')
 
 
 
@@ -104,6 +118,9 @@ def parse_train_setup() -> Any:
 
     if args.models is not None:
         verify_models(args.models)
+
+    if args.reward is not None:
+        verify_reward(args.reward)  
 
     verify_trace(args.trace)
 

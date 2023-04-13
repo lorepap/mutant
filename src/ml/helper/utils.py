@@ -27,6 +27,10 @@ def str_to_time(time: str) -> datetime:
 def parse_models_config():
     with open(os.path.join(context.entry_dir, 'config/models.yml')) as config:
         return yaml.load(config, Loader=yaml.BaseLoader)
+    
+def parse_reward_config():
+    with open(os.path.join(context.entry_dir, 'config/rewards.yml')) as config:
+        return yaml.load(config, Loader=yaml.BaseLoader)
 
 
 def parse_protocols_config():
