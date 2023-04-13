@@ -15,14 +15,15 @@ class EpsilonGreedyRunner(MabBaseRunner):
 
         super(EpsilonGreedyRunner, self).__init__(nchoices, lr, num_features, window_len,
                                                   num_fields_kernel, jiffies_per_state, steps_per_episode, 
-                                                  delta, step_wait_seconds,comm, moderator, trace)
+                                                  delta, step_wait_seconds,comm, moderator, trace, **kwargs)
 
         self.kwargs = kwargs
+        self.moderator = moderator
 
     def load_basic(self) -> Any:
         try:
 
-            model = EpsilonGreedyAgent(self.nchoices)
+            model = EpsilonGreedyAgent(self.nchoices, moderator=self.moderator)
             model.compile(self.get_optimizer(), metrics=['mae'])
             return model
 
