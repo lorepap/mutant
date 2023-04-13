@@ -170,6 +170,7 @@ class BaseAgent(Agent):
                     callbacks.on_step_begin(episode_step)
 
                     action = self.forward(observation)
+                    print(action)
                     if self.processor is not None:
                         action = self.processor.process_action(action)
                     reward = 0.

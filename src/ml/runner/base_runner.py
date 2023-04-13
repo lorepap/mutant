@@ -113,7 +113,6 @@ class BaseRunner():
 
         if len(models) == 0:
             return self.load_basic(), {}
-
         sorted_models = sorted(
             models, key=lambda model: utils.str_to_time(model['timestamp']), reverse=True)
         selected_model_config = sorted_models[0]
@@ -123,6 +122,7 @@ class BaseRunner():
         model: BaseAgent = self.load_basic()
         # model.load_weights(selected_model_config['path'])
         if not(retrain):
+            print("[DEBUG] retraining model",os.path.join(model_path, selected_model_config['name']+'.h5'))
             model.load_weights(os.path.join(model_path, selected_model_config['name']+'.h5'))
         else:
             print("[DEBUG] retraining model from scratch...")

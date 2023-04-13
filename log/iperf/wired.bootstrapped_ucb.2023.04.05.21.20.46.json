@@ -1,0 +1,105 @@
+{
+	"start":	{
+		"connected":	[{
+				"socket":	5,
+				"local_host":	"100.64.0.2",
+				"local_port":	35422,
+				"remote_host":	"10.0.2.15",
+				"remote_port":	5201
+			}],
+		"version":	"iperf 3.1.3",
+		"system_info":	"Linux ubuntu-bionic 5.4.239 #2 SMP Tue Apr 4 21:06:07 CDT 2023 x86_64",
+		"timestamp":	{
+			"time":	"Thu, 06 Apr 2023 02:20:46 GMT",
+			"timesecs":	1680747646
+		},
+		"connecting_to":	{
+			"host":	"10.0.2.15",
+			"port":	5201
+		},
+		"cookie":	"ubuntu-bionic.1680747646.120325.1450",
+		"tcp_mss_default":	1448,
+		"test_start":	{
+			"protocol":	"TCP",
+			"num_streams":	1,
+			"blksize":	131072,
+			"omit":	0,
+			"duration":	60,
+			"bytes":	0,
+			"blocks":	0,
+			"reverse":	0
+		}
+	},
+	"intervals":	[{
+			"streams":	[{
+					"socket":	5,
+					"start":	0,
+					"end":	0.484011,
+					"seconds":	0.484011,
+					"bytes":	3204424,
+					"bits_per_second":	52964489.343653,
+					"retransmits":	0,
+					"snd_cwnd":	162176,
+					"rtt":	25236,
+					"omitted":	false
+				}],
+			"sum":	{
+				"start":	0,
+				"end":	0.484011,
+				"seconds":	0.484011,
+				"bytes":	3204424,
+				"bits_per_second":	52964489.343653,
+				"retransmits":	0,
+				"omitted":	false
+			}
+		}],
+	"end":	{
+		"streams":	[{
+				"sender":	{
+					"socket":	5,
+					"start":	0,
+					"end":	0.484011,
+					"seconds":	0.484011,
+					"bytes":	3204424,
+					"bits_per_second":	52964489.343653,
+					"retransmits":	0,
+					"max_snd_cwnd":	162176,
+					"max_rtt":	25236,
+					"min_rtt":	25236,
+					"mean_rtt":	25236
+				},
+				"receiver":	{
+					"socket":	5,
+					"start":	0,
+					"end":	0.484011,
+					"seconds":	0.484011,
+					"bytes":	0,
+					"bits_per_second":	0
+				}
+			}],
+		"sum_sent":	{
+			"start":	0,
+			"end":	0.484011,
+			"seconds":	0.484011,
+			"bytes":	3204424,
+			"bits_per_second":	52964489.343653,
+			"retransmits":	0
+		},
+		"sum_received":	{
+			"start":	0,
+			"end":	0.484011,
+			"seconds":	0.484011,
+			"bytes":	0,
+			"bits_per_second":	0
+		},
+		"cpu_utilization_percent":	{
+			"host_total":	1.881386,
+			"host_user":	0,
+			"host_system":	1.881386,
+			"remote_total":	0,
+			"remote_user":	0,
+			"remote_system":	0
+		}
+	},
+	"error":	"interrupt - the client has terminated"
+}

@@ -187,3 +187,8 @@ __pycache__
 
 # Misc
 pid.txt
+analysis/plots/cdf_metrics
+analysis/plots/action_vs_metrics_per_step
+analysis/plots/kernel_features
+analysis/plots/thruput_vs_rtt
+**/*/debug_*

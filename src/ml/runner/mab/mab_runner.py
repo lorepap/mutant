@@ -20,7 +20,7 @@ class MabBaseRunner(BaseRunner):
     def __init__(self, nchoices: int, lr: int, num_features: int,
                  window_len: int, num_fields_kernel: int, jiffies_per_state: int,
                  steps_per_episode: int, delta: float, step_wait_seconds: float, 
-                 comm: NetlinkCommunicator, moderator: Moderator, trace: str, retrain: bool) -> None:
+                 comm: NetlinkCommunicator, moderator: Moderator, trace: str, retrain: bool = False) -> None:
         super(MabBaseRunner, self).__init__()
 
         self.nchoices = nchoices
@@ -120,7 +120,8 @@ class MabBaseRunner(BaseRunner):
             'trace': self.trace_name,
             'actions': self.nchoices,
             'step_wait': self.step_wait_time,
-            'num_features': self.num_features
+            'num_features': self.num_features,
+            'reward': self.environment.reward_name
         })
         self.save_config(self.config_path, self.config)
 
@@ -128,8 +129,10 @@ class MabBaseRunner(BaseRunner):
     def save_model(self, reset_model: bool = True) -> str:
         path = os.path.join(
             context.entry_dir, f'log/mab/model/{self.model.get_model_name()}.h5')
-        # path = os.path.join(self.model_path, self.model.get_model_name() + '.' + self.trace_name +'.h5')
         self.model.save_weights(path, True)
+
+        print(f"Saving model for {self.model.get_tag}")
+        print("[DEBUG] model weights saved successfully in", path)
 
         self.model_config = {
             'name': self.model.get_model_name(),

@@ -6,6 +6,24 @@ from gym import spaces
 from helper.moderator import Moderator
 from network.netlink_communicator import NetlinkCommunicator
 
+class ThruputNormalizer():
+    def __init__(self):
+        self.mean = 0
+        self.std = 1
+        self.count = 0
+
+    def update(self, feature):
+        self.count += 1
+        prev_mean = self.mean
+        self.mean += (feature - prev_mean) / self.count
+        self.std += (feature - prev_mean) * (feature - self.mean)
+
+    def normalize(self, feature):
+        if self.count == 0:
+            return feature
+        else:
+            return (feature - self.mean) / np.sqrt(self.std / self.count)
+
 
 class MabEnvironment(BaseEnvironment):
     '''Kernel Environment that follows gym interface'''
@@ -41,12 +59,17 @@ class MabEnvironment(BaseEnvironment):
         self.delta = delta
         self.curr_reward = 0
         self.last_rtt = 0
-
+        self.max_thruput = 0
         self.last_cwnd = 0
 
         self.epoch = -1
         self.allow_save = False
         self.step_wait = step_wait_seconds
+        self.mss = None
+        self.thruput_norm = ThruputNormalizer()
+
+        # TODO: implement a dict with rewards formulas and names
+        self.reward_name = 'norm-thru'
 
     def update_rtt(self, rtt: float) -> None:
 
@@ -60,9 +83,9 @@ class MabEnvironment(BaseEnvironment):
 
         if self.with_kernel_thread:
             print("[DEBUG] reading data from kernel...")
-            timestamp, cwnd, rtt, rtt_dev, mss, delivered, lost, in_flight, retrans, action = self._read_data()
+            timestamp, cwnd, rtt, rtt_dev, self.mss, delivered, lost, in_flight, retrans, action = self._read_data()
         else:
-            timestamp, cwnd, rtt, rtt_dev, mss, delivered, lost, in_flight, retrans, action = self._recv_data()
+            timestamp, cwnd, rtt, rtt_dev, self.mss, delivered, lost, in_flight, retrans, action = self._recv_data()
 
         print("[DEBUG] current CWND=", cwnd)
 
@@ -84,9 +107,9 @@ class MabEnvironment(BaseEnvironment):
         while float(time.time() - start) <= float(self.step_wait):
 
             if self.with_kernel_thread:
-                timestamp, cwnd, rtt, rtt_dev, mss, delivered, lost, in_flight, retrans, action = self._read_data()
+                timestamp, cwnd, rtt, rtt_dev, self.mss, delivered, lost, in_flight, retrans, action = self._read_data()
             else:
-                timestamp, cwnd, rtt, rtt_dev, mss, delivered, lost, in_flight, retrans, action = self._recv_data()
+                timestamp, cwnd, rtt, rtt_dev, self.mss, delivered, lost, in_flight, retrans, action = self._recv_data()
 
             delivered_diff = delivered - self.last_delivered
             self.last_delivered = delivered
@@ -128,14 +151,26 @@ class MabEnvironment(BaseEnvironment):
 
             cwnd, rtt, _, delivered, _, lost, _, _ = state
 
+            cwnd, rtt, rtt_dev, delivered, delivered_diff, lost, _, _ = state
+
             if rtt == 0:
                 rtt = self.last_rtt
 
             throughput = cwnd / (rtt / self.nb)
+            # throughput = (delivered * self.mss) / (rtt / self.nb)
+
+            
+
             p = lost / (lost + delivered)
 
-            reward = throughput - self.delta * throughput * (1 / (1 - p))
+            # if throughput > self.max_thruput:
+            #     self.max_thruput = throughput
 
+            self.thruput_norm.update(throughput)
+            normalized_throughput = self.thruput_norm.normalize(throughput)
+
+            reward = normalized_throughput - self.delta * normalized_throughput * (1 / (1 - p))
+            
             binary_reward = 0 if reward <= self.curr_reward else 1
 
             binary_rewards.append(binary_reward)

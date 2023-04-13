@@ -85,5 +85,72 @@
             "training_time": 5458.737326860428
         }
     ],
-    "traces": []
+    "traces": [
+        {
+            "model_name": "epsilon_greedy.2023.04.03.14.45.34",
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/trace/att.lte.driving.epsilon_greedy.2023.04.05.21.08.28.csv",
+            "timestamp": "2023.04.05.21.08.28",
+            "trace_name": "att.lte.driving.epsilon_greedy.2023.04.05.21.08.28.csv"
+        },
+        {
+            "model_name": "epsilon_greedy.2023.04.03.14.45.34",
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/trace/att.lte.driving.2016.epsilon_greedy.2023.04.05.21.09.34.csv",
+            "timestamp": "2023.04.05.21.09.34",
+            "trace_name": "att.lte.driving.2016.epsilon_greedy.2023.04.05.21.09.34.csv"
+        },
+        {
+            "model_name": "epsilon_greedy.2023.04.03.14.45.34",
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/trace/tm.lte.driving.epsilon_greedy.2023.04.05.21.10.38.csv",
+            "timestamp": "2023.04.05.21.10.38",
+            "trace_name": "tm.lte.driving.epsilon_greedy.2023.04.05.21.10.38.csv"
+        },
+        {
+            "model_name": "epsilon_greedy.2023.04.03.14.45.34",
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/trace/tm.lte.short.epsilon_greedy.2023.04.05.21.11.42.csv",
+            "timestamp": "2023.04.05.21.11.42",
+            "trace_name": "tm.lte.short.epsilon_greedy.2023.04.05.21.11.42.csv"
+        },
+        {
+            "model_name": "epsilon_greedy.2023.04.03.14.45.34",
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/trace/tm.umts.driving.epsilon_greedy.2023.04.05.21.12.46.csv",
+            "timestamp": "2023.04.05.21.12.46",
+            "trace_name": "tm.umts.driving.epsilon_greedy.2023.04.05.21.12.46.csv"
+        },
+        {
+            "model_name": "epsilon_greedy.2023.04.03.14.45.34",
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/trace/vz.evdo.driving.epsilon_greedy.2023.04.05.21.13.55.csv",
+            "timestamp": "2023.04.05.21.13.55",
+            "trace_name": "vz.evdo.driving.epsilon_greedy.2023.04.05.21.13.55.csv"
+        },
+        {
+            "model_name": "epsilon_greedy.2023.04.03.14.45.34",
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/trace/vz.lte.driving.epsilon_greedy.2023.04.05.21.15.00.csv",
+            "timestamp": "2023.04.05.21.15.00",
+            "trace_name": "vz.lte.driving.epsilon_greedy.2023.04.05.21.15.00.csv"
+        },
+        {
+            "model_name": "epsilon_greedy.2023.04.03.14.45.34",
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/trace/vz.lte.short.epsilon_greedy.2023.04.05.21.16.08.csv",
+            "timestamp": "2023.04.05.21.16.08",
+            "trace_name": "vz.lte.short.epsilon_greedy.2023.04.05.21.16.08.csv"
+        },
+        {
+            "model_name": "epsilon_greedy.2023.04.03.14.45.34",
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/trace/bus.epsilon_greedy.2023.04.05.21.17.13.csv",
+            "timestamp": "2023.04.05.21.17.13",
+            "trace_name": "bus.epsilon_greedy.2023.04.05.21.17.13.csv"
+        },
+        {
+            "model_name": "epsilon_greedy.2023.04.03.14.45.34",
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/trace/timessquare.epsilon_greedy.2023.04.05.21.18.16.csv",
+            "timestamp": "2023.04.05.21.18.16",
+            "trace_name": "timessquare.epsilon_greedy.2023.04.05.21.18.16.csv"
+        },
+        {
+            "model_name": "epsilon_greedy.2023.04.03.14.45.34",
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/trace/wired.epsilon_greedy.2023.04.05.21.19.18.csv",
+            "timestamp": "2023.04.05.21.19.18",
+            "trace_name": "wired.epsilon_greedy.2023.04.05.21.19.18.csv"
+        }
+    ]
 }

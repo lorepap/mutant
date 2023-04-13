@@ -21,4 +21,6 @@ models:
     name: 'separate_classifiers'
   softmax_explorer:
     name: 'softmax_explorer'
+  random_policy:
+    name: 'random_policy'
   
