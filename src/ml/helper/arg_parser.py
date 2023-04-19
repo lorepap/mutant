@@ -88,7 +88,7 @@ def add_base_arguments(parser: argparse.ArgumentParser) -> None:
     parser.add_argument('--runs', '-r', type=int,
                         help='--runs: Number of times to run', default=1)
     
-    parser.add_argument('--reward', '-r', type=str, help='Name of the reward for the training',
+    parser.add_argument('--reward', '-rw', type=str, help='Name of the reward for the training',
                         default='owl')
 
 
