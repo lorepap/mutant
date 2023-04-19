@@ -14,6 +14,7 @@ import yaml
 import re
 import sys
 import subprocess
+import random
 from argparse import ArgumentParser
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
@@ -33,6 +34,9 @@ def run_experiments(args):
     trace_names = ["att.lte.driving", "att.lte.driving.2016", "tm.lte.driving", "tm.lte.short", "tm.umts.driving", "vz.evdo.driving", "vz.lte.driving", "vz.lte.short"]
     trace_data = {name: data for name, data in yaml_data["traces"].items() if name in trace_names}
 
+    # Shuffle the keys of trace_data
+    shuffled_data = list(trace_data.keys())
+    random.shuffle(shuffled_data)
 
     models = []
     if args.all:
@@ -43,7 +47,7 @@ def run_experiments(args):
         models = args.models
 
     for model in models:
-        for i, trace_name in enumerate(trace_data.keys()):
+        for i, trace_name in enumerate(shuffled_data):
             trace_path = trace_name
             print(trace_path)
             # Train from scratch on the first trace, then retrain the same model over the others
@@ -51,7 +55,7 @@ def run_experiments(args):
             
             # generate command to execute for this trace
            
-            command = f"python3 {TRAINING_FILENAME} -m {model} -t {trace_path} -x {ip} -e 86400 -rt {retrain}"
+            command = f"python3 {TRAINING_FILENAME} -m {model} -t {trace_path} -x {ip} -e 86400 -rt {retrain} -rw {args.reward}"
             print("Executing", command)
             # execute each command and wait for it to finish
             try:
@@ -65,7 +69,8 @@ if __name__ == "__main__":
     parser = ArgumentParser()
     # parser.add_argument("--model", "-m", help="MAB policy to train")
     parser.add_argument('-m', '--models', nargs='+', help='List of models to run')
-    parser.add_argument('-all', '--all', action="store_true")
+    parser.add_argument('-all', '--all', action="store_true", help='train all policies available')
+    parser.add_argument('-rw', '--reward', help='The reward type for the RL module', default='orca')
     # parser.add_argument("--retrain", "-r", action="store_true", help="True: retrain latest model")
     args = parser.parse_args()
     run_experiments(args)
