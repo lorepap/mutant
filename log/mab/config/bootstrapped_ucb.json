@@ -2,9 +2,15 @@
     "models": [
         {
             "name": "bootstrapped_ucb.2023.04.04.04.04.57",
-            "prod_score": 24340740.272805005,
-            "score": 24340740.272805005,
-            "timestamp": "2023.04.05.18.55.01"
+            "prod_score": 24.489974999999998,
+            "score": 24.489974999999998,
+            "timestamp": "2023.04.19.02.00.12"
+        },
+        {
+            "name": "bootstrapped_ucb.2023.04.19.09.08.39",
+            "prod_score": 17.531715,
+            "score": 17.531715,
+            "timestamp": "2023.04.19.09.08.39"
         }
     ],
     "runs": [
@@ -82,6 +88,32 @@
             "timestamp": "2023.04.05.18.55.01",
             "trace": "vz.lte.short",
             "training_time": 5652.043401479721
+        },
+        {
+            "actions": 3,
+            "model_name": "bootstrapped_ucb.2023.04.04.04.04.57",
+            "num_features": 8,
+            "num_kernel_fields": 11,
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/history/bootstrapped_ucb.2023.04.04.04.04.57.2023.04.19.02.00.12.json",
+            "reward": "orca",
+            "step_wait": 0.5,
+            "steps_per_episode": 500,
+            "timestamp": "2023.04.19.02.00.12",
+            "trace": "vz.evdo.driving",
+            "training_time": 6918.898965835571
+        },
+        {
+            "actions": 3,
+            "model_name": "bootstrapped_ucb.2023.04.19.09.08.39",
+            "num_features": 8,
+            "num_kernel_fields": 11,
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/history/bootstrapped_ucb.2023.04.19.09.08.39.2023.04.19.09.08.39.json",
+            "reward": "orca",
+            "step_wait": 0.5,
+            "steps_per_episode": 500,
+            "timestamp": "2023.04.19.09.08.39",
+            "trace": "tm.lte.short",
+            "training_time": 5600.779112100601
         }
     ],
     "traces": [

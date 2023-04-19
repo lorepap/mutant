@@ -1,0 +1,127 @@
+{
+	"start":	{
+		"connected":	[{
+				"socket":	5,
+				"local_host":	"100.64.0.2",
+				"local_port":	57386,
+				"remote_host":	"10.0.2.15",
+				"remote_port":	5201
+			}],
+		"version":	"iperf 3.1.3",
+		"system_info":	"Linux ubuntu-bionic 5.4.239 #2 SMP Tue Apr 4 21:06:07 CDT 2023 x86_64",
+		"timestamp":	{
+			"time":	"Wed, 19 Apr 2023 05:15:50 GMT",
+			"timesecs":	1681881350
+		},
+		"connecting_to":	{
+			"host":	"10.0.2.15",
+			"port":	5201
+		},
+		"cookie":	"ubuntu-bionic.1681881349.369840.6641",
+		"tcp_mss_default":	1448,
+		"test_start":	{
+			"protocol":	"TCP",
+			"num_streams":	1,
+			"blksize":	131072,
+			"omit":	0,
+			"duration":	86400,
+			"bytes":	0,
+			"blocks":	0,
+			"reverse":	0
+		}
+	},
+	"intervals":	[{
+			"streams":	[{
+					"socket":	5,
+					"start":	0,
+					"end":	1.000823,
+					"seconds":	1.000823,
+					"bytes":	810880,
+					"bits_per_second":	6481705.420744,
+					"retransmits":	0,
+					"snd_cwnd":	262088,
+					"rtt":	484333,
+					"omitted":	false
+				}],
+			"sum":	{
+				"start":	0,
+				"end":	1.000823,
+				"seconds":	1.000823,
+				"bytes":	810880,
+				"bits_per_second":	6481705.420744,
+				"retransmits":	0,
+				"omitted":	false
+			}
+		}, {
+			"streams":	[{
+					"socket":	5,
+					"start":	1.000823,
+					"end":	1.325008,
+					"seconds":	0.324185,
+					"bytes":	0,
+					"bits_per_second":	0,
+					"retransmits":	0,
+					"snd_cwnd":	341728,
+					"rtt":	506074,
+					"omitted":	false
+				}],
+			"sum":	{
+				"start":	1.000823,
+				"end":	1.325008,
+				"seconds":	0.324185,
+				"bytes":	0,
+				"bits_per_second":	0,
+				"retransmits":	0,
+				"omitted":	false
+			}
+		}],
+	"end":	{
+		"streams":	[{
+				"sender":	{
+					"socket":	5,
+					"start":	0,
+					"end":	1.325008,
+					"seconds":	1.325008,
+					"bytes":	810880,
+					"bits_per_second":	4895849.116725,
+					"retransmits":	0,
+					"max_snd_cwnd":	341728,
+					"max_rtt":	506074,
+					"min_rtt":	484333,
+					"mean_rtt":	495203
+				},
+				"receiver":	{
+					"socket":	5,
+					"start":	0,
+					"end":	1.325008,
+					"seconds":	1.325008,
+					"bytes":	0,
+					"bits_per_second":	0
+				}
+			}],
+		"sum_sent":	{
+			"start":	0,
+			"end":	1.325008,
+			"seconds":	1.325008,
+			"bytes":	810880,
+			"bits_per_second":	4895849.116725,
+			"retransmits":	0
+		},
+		"sum_received":	{
+			"start":	0,
+			"end":	1.325008,
+			"seconds":	1.325008,
+			"bytes":	0,
+			"bits_per_second":	0
+		},
+		"cpu_utilization_percent":	{
+			"host_total":	1.165142,
+			"host_user":	0.190984,
+			"host_system":	0.974158,
+			"remote_total":	0,
+			"remote_user":	0,
+			"remote_system":	0
+		}
+	},
+	"error":	"interrupt - the client has terminated"
+}

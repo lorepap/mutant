@@ -138,6 +138,7 @@ static void replyToApplicationLayer(struct tcp_sock *tp, int socketId, __u32 pro
     __u32 cwnd = tp->snd_cwnd;
     __u32 rtt = tp->srtt_us;
     __u32 rtt_dev = tp->mdev_us;
+	__u32 rtt_min = tcp_min_rtt(tp);
     __u16 MSS = tp->advmss;
     __u32 delivered = tp->delivered;
     __u32 lost = tp->lost_out;
@@ -145,8 +146,8 @@ static void replyToApplicationLayer(struct tcp_sock *tp, int socketId, __u32 pro
     __u32 retransmitted = tp->retrans_out;
     __u32 now = tcp_jiffies32;
 
-    snprintf(message, MAX_PAYLOAD - 1, "%u;%u;%u;%u;%u;%u;%u;%u;%u;%u;",
-             now, cwnd, rtt, rtt_dev, MSS, delivered, lost,
+    snprintf(message, MAX_PAYLOAD - 1, "%u;%u;%u;%u;%u;%u;%u;%u;%u;%u;%u",
+             now, cwnd, rtt, rtt_dev, rtt_min, MSS, delivered, lost,
              in_flight, retransmitted, protocolId);
 
     sendMessageToApplicationLayer(message, socketId);
