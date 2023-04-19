@@ -38,7 +38,7 @@ class NetlinkCommunicator:
 
     def recv_msg(self):
         try:
-            return self.socket.recv(512)
+            return self.socket.recv(1024)
             # return self.socket.recv()
         except Exception as err:
             print('\n')
