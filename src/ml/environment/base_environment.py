@@ -48,7 +48,7 @@ class BaseEnvironment(gym.Env):
             print("Communication initiated")
             self.initiated = True
 
-    def _change_cwnd(self, action):
+    def _change_cca(self, action):
 
         msg = self.netlink_communicator.create_netlink_msg(
             'SENDING ACTION', msg_flags=self.netlink_communicator.ACTION_FLAG, msg_seq=action)
