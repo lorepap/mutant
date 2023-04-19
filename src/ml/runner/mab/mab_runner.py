@@ -15,6 +15,7 @@ from runner.base_runner import BaseRunner
 from tensorflow.python.keras.optimizer_v2 import optimizer_v2
 from helper.moderator import Moderator
 
+
 class MabBaseRunner(BaseRunner):
 
     def __init__(self, nchoices: int, lr: int, num_features: int,
@@ -41,6 +42,8 @@ class MabBaseRunner(BaseRunner):
         self.training_time = None
         self.step_wait_time = step_wait_seconds
         self.trace_name = trace
+        self.steps_per_episode = steps_per_episode
+        self.num_fields_kernel = num_fields_kernel
 
     def get_model(self) -> BaseAgent:
         return self.model
@@ -121,6 +124,8 @@ class MabBaseRunner(BaseRunner):
             'actions': self.nchoices,
             'step_wait': self.step_wait_time,
             'num_features': self.num_features,
+            'num_kernel_fields': self.num_fields_kernel,
+            'steps_per_episode': self.steps_per_episode,
             'reward': self.environment.reward_name
         })
         self.save_config(self.config_path, self.config)
