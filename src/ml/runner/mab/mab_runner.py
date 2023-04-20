@@ -3,9 +3,11 @@ import os
 import time
 from typing import Any
 
+
 import numpy as np
 from helper import context, utils
 from helper.debug import is_debug_on, change_name
+from callbacks import TrainingCallback
 from keras.optimizers import Adam
 from agent.base_agent import BaseAgent
 from agent.mab.base_mab_agent import BaseMabAgent
@@ -60,10 +62,20 @@ class MabBaseRunner(BaseRunner):
     def train(self, training_steps: int, reset_model: bool = True) -> Any:
         if reset_model:
             self.reset_model()
-        
+
+        now = self.now
+        if not(is_debug_on()):
+            cb: TrainingCallback = TrainingCallback(log_file_path=os.path.join(
+                context.entry_dir, f'log/mab/history/{self.model.get_model_name()}.{now}.json')
+            )
+        else:
+            cb: TrainingCallback = TrainingCallback(log_file_path=os.path.join(
+                context.entry_dir, f'log/mab/history/debug_{self.model.get_model_name()}.{now}.json')
+            )
+
         start = time.time()
-        
-        self.train_res = self.model.fit(self.environment, nb_steps=training_steps,
+
+        self.train_res = self.model.fit(self.environment, nb_steps=training_steps, callbacks=[cb],
             visualize=False, verbose=2)
         
         self.training_time = time.time() - start
@@ -109,7 +121,7 @@ class MabBaseRunner(BaseRunner):
 
     def save_history(self, history: dict) -> None:
         path = os.path.join(
-            context.entry_dir, f'log/mab/history/{self.model.get_model_name()}.{self.now}.json')
+            context.entry_dir, f'log/mab/history/episode_hist_{self.model.get_model_name()}.{self.now}.json')
 
         with open(path, 'w+') as file:
             json.dump(history, file, default=self.np_encoder)

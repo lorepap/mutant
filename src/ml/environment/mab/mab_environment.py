@@ -7,6 +7,7 @@ from gym import spaces
 from helper.moderator import Moderator
 from network.netlink_communicator import NetlinkCommunicator
 import math
+import copy
 
 
 class MabEnvironment(BaseEnvironment):
@@ -40,6 +41,7 @@ class MabEnvironment(BaseEnvironment):
         self.curr_state = np.zeros((self.height_state, self.width_state))
 
         # Reward
+        self.rws = dict() # list of rws for each step
         self.delta = delta
         self.curr_reward = 0
         self.last_rtt = 0
@@ -167,9 +169,7 @@ class MabEnvironment(BaseEnvironment):
                             np.array([cwnd, rtt, rtt_dev, delivered, delivered_diff, loss_rate, in_flight, retrans, thr, rtt_min]))
                 num_msg += 1
 
-
         # Normalize the state (from ORCA) -> normalization is relative to the entire session
-
         for s in s_tmp:
             self.normalizer.observe(s)
             s_n = self.normalizer.normalize(s)
@@ -280,7 +280,7 @@ class MabEnvironment(BaseEnvironment):
         avg_binary_reward = np.bincount(binary_rewards).argmax()
 
         info = {'reward': avg_reward}
-        data = {'rewards': binary_rewards, 'obs': observation}
+        data = {'rewards': binary_rewards, 'normalized_rewards': rewards, 'obs': observation}
 
         print(
             f'\nStep: {self.step_counter} \t Sent Action: {action} \t Received Action: {observed_action} \t Epoch: {self.epoch} | Reward: {avg_reward} ({np.mean(avg_binary_reward)})  | Data Size: {observation.shape[0]}')
