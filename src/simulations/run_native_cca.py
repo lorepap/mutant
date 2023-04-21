@@ -7,6 +7,7 @@ import yaml
 import re
 import sys
 import subprocess
+import numpy as np
 from argparse import ArgumentParser
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
@@ -24,11 +25,10 @@ def run_experiments(items):
     # Loop over the traces
     for i, trace_name in enumerate(trace_data["traces"].keys()):
         
-        
         if items.debug:
-            command = f'python3 {SCRIPT_FILENAME} -p {items.protocol} -tr {trace_name} -id {items.iperf_duration} -debug'
+            command = f'python3 {SCRIPT_FILENAME} -p {items.protocol} -tr {trace_name} -id {items.iperf_duration} -x {ip} -debug'
         else:
-            command = f'python3 {SCRIPT_FILENAME} -p {items.protocol} -tr {trace_name} -id {items.iperf_duration}'
+            command = f'python3 {SCRIPT_FILENAME} -p {items.protocol} -tr {trace_name} -id {items.iperf_duration} -x {ip}'
 
         subprocess.call(command, shell=True, stderr=sys.stderr)
         
@@ -40,6 +40,8 @@ if __name__ == "__main__":
     parser = ArgumentParser()
     parser.add_argument("--protocol", "-p", help="Linux native CCA to test")
     parser.add_argument("--iperf_duration", "-id", help="Duration of the iperf simulation", default="60")
+    parser.add_argument("--rounds", "-r", type=int, help="number of test repeatitions", default=5)
     parser.add_argument("--debug", "-d", action="store_true", help="Debug mode")
     args = parser.parse_args()
-    run_experiments(items=args)
+    for r in np.arange(args.rounds):
+        run_experiments(items=args)
