@@ -16,10 +16,8 @@ class TrainingCallback(Callback):
     def on_step_end(self, step, logs=None):
         # append logs to external file
         log_copy: dict = copy.deepcopy(logs)
-        # obs = log_copy["observation"].pop("obs")
-        # log_copy["obs"] = obs.tolist()
         log_copy['observation']['obs'] = log_copy['observation']['obs'].tolist()
+        log_copy['observation']['features'] = log_copy['observation']['features'].tolist()
         with open(self.log_file_path, 'a') as f:
-            f.write(json.dumps(log_copy, default=self.np_encoder) + '\n')
-
-    
+            json.dump(log_copy, f, default=self.np_encoder)
+            f.write('\n')

@@ -38,7 +38,7 @@ if __name__ == "__main__":
     parser = ArgumentParser()
     parser.add_argument("--models", "-m", nargs='+', help="MAB policy to train")
     parser.add_argument("--iperf_duration", "-id", help="Experiment duration", default=60)
-    parser.add_argument("--rounds", "-r", type=int, help="number of test runs", default=5)
+    parser.add_argument("--rounds", "-r", type=int, help="number of test runs", default=1)
     args = parser.parse_args()
     for r in np.arange(args.rounds):
         print(f"Run {r}/{args.rounds}")

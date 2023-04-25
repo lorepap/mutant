@@ -7,7 +7,8 @@ import traceback
 NETLINK_TEST = 25
 
 class NetlinkCommunicator:
-    TEST_FLAG = 3
+    TEST_FLAG = 4
+    INIT_SINGLE_PROT_TEST = 3
     ACTION_FLAG = 2
     INIT_COMM_FLAG = 1
     END_COMM_FLAG = 0

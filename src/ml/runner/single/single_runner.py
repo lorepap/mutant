@@ -10,7 +10,7 @@ from helper.debug import is_debug_on, change_name
 from callbacks import TrainingCallback
 from keras.optimizers import Adam
 from agent.base_agent import BaseAgent
-from agent.mab.base_mab_agent import BaseMabAgent
+from agent.single_protocol_agent import SingleProtocolAgent
 from environment.mab.mab_environment import MabEnvironment
 from network.netlink_communicator import NetlinkCommunicator
 from runner.base_runner import BaseRunner
@@ -18,36 +18,37 @@ from tensorflow.python.keras.optimizer_v2 import optimizer_v2
 from helper.moderator import Moderator
 
 
-class MabBaseRunner(BaseRunner):
+class SingleBaseRunner(BaseRunner):
 
     def __init__(self, nchoices: int, lr: int, num_features: int,
                  window_len: int, num_fields_kernel: int, jiffies_per_state: int,
                  steps_per_episode: int, delta: float, step_wait_seconds: float, 
-                 comm: NetlinkCommunicator, moderator: Moderator, trace: str, retrain: bool = False, reward_name: str = 'owl') -> None:
-        super(MabBaseRunner, self).__init__()
+                 comm: NetlinkCommunicator, moderator: Moderator, trace: str, protocol: str, retrain: bool = False, reward_name: str = 'owl') -> None:
+        super(SingleBaseRunner, self).__init__()
 
         self.nchoices = nchoices
         self.lr = lr
         self.moderator = moderator
         self.num_features = num_features
+        self.protocol = protocol
+        self.model: SingleProtocolAgent = SingleProtocolAgent(moderator, protocol)
 
         self.base_config_dir = os.path.join(context.entry_dir, 'log/mab/config')
+        self.trace_name = trace
         self.config_path = os.path.join(
             self.base_config_dir, f'{self.get_tag()}.json')
         self.config = self.load_config(self.config_path)
-        self.model_path = os.path.join(
-            context.entry_dir, f'log/mab/model')
+        # self.model_path = os.path.join(context.entry_dir, f'log/mab/model')
         self.environment = MabEnvironment(num_features, window_len, num_fields_kernel, jiffies_per_state,
                                     nchoices, steps_per_episode, delta, step_wait_seconds, comm, moderator, reward_name)
         
-        self.set_latest(self.model_path, retrain)
+        # self.set_latest(self.model_path, retrain)
         self.training_time = None
         self.step_wait_time = step_wait_seconds
-        self.trace_name = trace
         self.steps_per_episode = steps_per_episode
         self.num_fields_kernel = num_fields_kernel
 
-    def get_model(self) -> BaseAgent:
+    def get_model(self) -> SingleProtocolAgent:
         return self.model
 
     def get_model_config(self) -> dict:
@@ -57,49 +58,23 @@ class MabBaseRunner(BaseRunner):
         return Adam(lr=self.lr)
 
     def get_tag(self) -> str:
-        raise NotImplementedError()
-
-    def train(self, training_steps: int, reset_model: bool = True) -> Any:
-        if reset_model:
-            self.reset_model()
-
-        now = self.now
-        if not(is_debug_on()):
-            cb: TrainingCallback = TrainingCallback(log_file_path=os.path.join(
-                context.entry_dir, f'log/mab/history/{self.model.get_model_name()}.{now}.json')
-            )
-        else:
-            cb: TrainingCallback = TrainingCallback(log_file_path=os.path.join(
-                context.entry_dir, f'log/mab/history/debug_{self.model.get_model_name()}.{now}.json')
-            )
-
-        start = time.time()
-
-        self.train_res = self.model.fit(self.environment, nb_steps=training_steps, callbacks=[cb],
-            visualize=False, verbose=2)
-        
-        self.training_time = time.time() - start
-        
-        self.history = self.train_res.history
-
-        return self.history
+        return self.protocol
 
     def test(self, episodes: int) -> None:
-
+        
+        self.environment.enable_log_traces()
         now = self.now
 
         if not(is_debug_on()):
             cb: TrainingCallback = TrainingCallback(log_file_path=os.path.join(
-                context.entry_dir, f'log/mab/history/{self.model.get_model_name()}.{now}.json')
+                context.entry_dir, f'log/mab/history/test_{self.protocol}.{now}.json')
             )
         else:
             cb: TrainingCallback = TrainingCallback(log_file_path=os.path.join(
-                context.entry_dir, f'log/mab/history/debug_{self.model.get_model_name()}.{now}.json')
+                context.entry_dir, f'log/mab/history/debug_test_{self.protocol}.{now}.json')
             )
         
-        self.environment.enable_log_traces()
-        
-        self.model.test(self.environment,
+        self.model.native_prot_test(self.environment,
                         nb_episodes=episodes, visualize=False, callbacks=[cb])
 
         tag = f'{self.trace_name}.{self.get_tag()}'
@@ -112,22 +87,11 @@ class MabBaseRunner(BaseRunner):
         # update config
         if not(is_debug_on()):
             self.config['traces'].append({
-                'model_name': self.model.get_model_name(),
                 'trace_name': log_name,
                 'path': log_path,
                 'timestamp': self.now
             })
             self.save_config(self.config_path, self.config)
-
-    def predict(self, x: np.ndarray) -> np.ndarray:
-        model = self.model.get_model()
-
-        x = self.model.alter_x(x)
-
-        if self.model.can_exploit():
-            return model.predict(x, exploit=True)
-        else:
-            return model.predict(x)
 
 
     def save_history(self, history: dict) -> None:
@@ -152,33 +116,6 @@ class MabBaseRunner(BaseRunner):
             'reward': self.environment.reward_name
         })
         self.save_config(self.config_path, self.config)
-
-
-    def save_model(self, reset_model: bool = True) -> str:
-        path = os.path.join(
-            context.entry_dir, f'log/mab/model/{self.model.get_model_name()}.h5')
-        self.model.save_weights(path, True)
-
-        print(f"Saving model for {self.model.get_tag}")
-        print("[DEBUG] model weights saved successfully in", path)
-
-        self.model_config = {
-            'name': self.model.get_model_name(),
-            'timestamp': self.now,
-            'score': self.calculate_score(),
-            'prod_score': self.calculate_score()
-        }
-
-        # update config
-
-        if reset_model:
-            self.config['models'].append(self.model_config)
-        else:
-            self.update_model_in_config(self.config, self.model_config)
-
-        self.save_config(self.config_path, self.config)
-
-        return self.model.get_model_name()
 
     def calculate_score(self) -> float:
         return np.mean(self.history['episode_reward']) if self.history != None else 0

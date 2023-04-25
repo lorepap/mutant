@@ -11,13 +11,14 @@ from gym import spaces
 from helper import context, utils
 from network.kernel_feedback import KernelRequest
 from network.netlink_communicator import NetlinkCommunicator
+from helper.moderator import Moderator
 
 
 class BaseEnvironment(gym.Env):
     '''Kernel Environment that follows gym interface'''
     metadata = {'render.modes': ['human']}
 
-    def __init__(self, comm: NetlinkCommunicator, num_fields_kernel: int):
+    def __init__(self, comm: NetlinkCommunicator, num_fields_kernel: int, moderator: Moderator=None):
         super(BaseEnvironment, self).__init__()
 
         # Netlink communicator
@@ -33,6 +34,7 @@ class BaseEnvironment(gym.Env):
         self.nb = 1e9
         self.initiated = False
         self.curr_reward = 0
+        self.moderator = moderator
 
     def _init_communication(self):
 

@@ -18,9 +18,9 @@ class MabEnvironment(BaseEnvironment):
                  window_len: int, num_fields_kernel: int, jiffies_per_state: int,
                  num_actions: int, steps_per_episode: int, delta: float,
                  step_wait_seconds: float, comm: NetlinkCommunicator, moderator: Moderator, reward_name: str) -> None:
-        super(MabEnvironment, self).__init__(comm, num_fields_kernel)
+        super(MabEnvironment, self).__init__(comm, num_fields_kernel, moderator)
 
-        self.moderator = moderator
+        # self.moderator = moderator
         self.width_state = num_features # state dimension
         self.height_state = window_len
 
@@ -56,6 +56,7 @@ class MabEnvironment(BaseEnvironment):
         self.max_bw = 0.0
         self.num_features_tmp = self.width_state + 2 # all features to be normalized (this is not the state dimension)
         self.normalizer = Normalizer(self.num_features_tmp)
+        self.cwnd = []
 
     def update_rtt(self, rtt: float) -> None:
 
@@ -82,10 +83,14 @@ class MabEnvironment(BaseEnvironment):
         """
         s_tmp = np.array([])
         state_n = np.array([])
-        rws = []
-        binary_rws = []
         received_jiffies = 0
 
+        # Callbacks data
+        self.features = []
+        rws = []
+        binary_rws = []
+
+        
         if self.with_kernel_thread:
             print("[DEBUG] reading data from kernel...")
             timestamp, cwnd, rtt, rtt_dev, rtt_min, self.mss, delivered, lost, in_flight, retrans, action = self._read_data()
@@ -111,6 +116,8 @@ class MabEnvironment(BaseEnvironment):
         curr_kernel_features = np.array(
             [cwnd, rtt, rtt_dev, delivered, delivered_diff, loss_rate, in_flight, retrans, thr, rtt_min])
         
+        self.features.append(curr_kernel_features)
+        
         # Number of total features which will be extracted during the step_wait time (switching time) 
         num_features_tmp = self.num_features_tmp
 
@@ -127,7 +134,7 @@ class MabEnvironment(BaseEnvironment):
                 timestamp, cwnd, rtt, rtt_dev, rtt_min, self.mss, delivered, lost, in_flight, retrans, action = self._read_data()
             else:
                 timestamp, cwnd, rtt, rtt_dev, rtt_min, self.mss, delivered, lost, in_flight, retrans, action = self._recv_data()
-
+            
 
             # thruput bytes/s
             rtt = rtt if rtt > 0 else 1e-5
@@ -156,7 +163,7 @@ class MabEnvironment(BaseEnvironment):
 
                 curr_kernel_features = np.array(
                     [cwnd, rtt, rtt_dev, delivered, delivered_diff, loss_rate, in_flight, retrans, thr, rtt_min])
-
+                
                 curr_timestamp = timestamp
 
                 num_msg = 1
@@ -168,6 +175,9 @@ class MabEnvironment(BaseEnvironment):
                 curr_kernel_features = np.add(curr_kernel_features,
                             np.array([cwnd, rtt, rtt_dev, delivered, delivered_diff, loss_rate, in_flight, retrans, thr, rtt_min]))
                 num_msg += 1
+
+        # Kernel features for callbacks
+        self.features = s_tmp
 
         # Normalize the state (from ORCA) -> normalization is relative to the entire session
         for s in s_tmp:
@@ -280,7 +290,7 @@ class MabEnvironment(BaseEnvironment):
         avg_binary_reward = np.bincount(binary_rewards).argmax()
 
         info = {'reward': avg_reward}
-        data = {'rewards': binary_rewards, 'normalized_rewards': rewards, 'obs': observation}
+        data = {'rewards': binary_rewards, 'normalized_rewards': rewards, "features": self.features, 'obs': observation}
 
         print(
             f'\nStep: {self.step_counter} \t Sent Action: {action} \t Received Action: {observed_action} \t Epoch: {self.epoch} | Reward: {avg_reward} ({np.mean(avg_binary_reward)})  | Data Size: {observation.shape[0]}')

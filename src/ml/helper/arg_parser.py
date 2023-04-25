@@ -89,7 +89,10 @@ def add_base_arguments(parser: argparse.ArgumentParser) -> None:
                         help='--runs: Number of times to run', default=1)
     
     parser.add_argument('--reward', '-rw', type=str, help='Name of the reward for the training',
-                        default='owl')
+                        default='orca')
+
+    # single protocol mode
+    parser.add_argument("--protocol", "-prot", help="Native protocol under test within mimic", default="cubic")
 
 
 
@@ -266,7 +269,7 @@ def parse_test_setup():
                        help='run test mode')
 
     group.add_argument('--models', '-m', metavar='"MODEL1 MODEL2..."',
-                       help='set up a space-separated list of models')
+                       help='set up a space-separated list of models', default="bootstrapped_ucb")
 
     add_base_arguments(parser)
 

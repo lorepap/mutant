@@ -15,7 +15,7 @@ sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')
 from ml.helper import context
 from ml.helper import utils
 
-SCRIPT_FILENAME = os.path.join(context.ml_dir, "native.py")
+SCRIPT_FILENAME = os.path.join(context.ml_dir, "mimic_single_prot.py")
 
 def run_experiments(items):
     ip = utils.get_private_ip()
@@ -23,12 +23,13 @@ def run_experiments(items):
     trace_data = utils.parse_traces_config()
 
     # Loop over the traces
-    for i, trace_name in enumerate(trace_data["traces"].keys()):
-        
+    for p in items.protocol:
+        #   for i, trace_name in enumerate(trace_data["traces"].keys()):
+        trace_name = 'att.lte.driving.2016'
         if items.debug:
-            command = f'python3 {SCRIPT_FILENAME} -p {items.protocol} -tr {trace_name} -id {items.iperf_duration} -x {ip} -debug'
+            command = f'python3 {SCRIPT_FILENAME} -p {p} -t {trace_name} -e {items.iperf_duration} -x {ip}'
         else:
-            command = f'python3 {SCRIPT_FILENAME} -p {items.protocol} -tr {trace_name} -id {items.iperf_duration} -x {ip}'
+            command = f'python3 {SCRIPT_FILENAME} -p {p} -t {trace_name} -e {items.iperf_duration} -x {ip}'
 
         subprocess.call(command, shell=True, stderr=sys.stderr)
         
@@ -38,9 +39,9 @@ def run_experiments(items):
 
 if __name__ == "__main__":
     parser = ArgumentParser()
-    parser.add_argument("--protocol", "-p", help="Linux native CCA to test")
+    parser.add_argument("--protocol", "-p", nargs="+", help="Linux native CCA to test")
     parser.add_argument("--iperf_duration", "-id", help="Duration of the iperf simulation", default="60")
-    parser.add_argument("--rounds", "-r", type=int, help="number of test repeatitions", default=5)
+    parser.add_argument("--rounds", "-r", type=int, help="number of test repeatitions", default=1)
     parser.add_argument("--debug", "-d", action="store_true", help="Debug mode")
     args = parser.parse_args()
     for r in np.arange(args.rounds):
