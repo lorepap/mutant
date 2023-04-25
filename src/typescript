@@ -1,7 +1,0 @@
-Script started on 2023-01-16 18:08:31+00:00 [TERM="xterm-256color" TTY="/dev/pts/5" COLUMNS="194" LINES="38"]
-]0;lorenzo@ubuntu: ~/Desktop/mimic-0/src[01;32mlorenzo@ubuntu[00m:[01;34m~/Desktop/mimic-0/src[00m$ clear
-[H[2J[3J]0;lorenzo@ubuntu: ~/Desktop/mimic-0/src[01;32mlorenzo@ubuntu[00m:[01;34m~/Desktop/mimic-0/src[00m$ 
-]0;lorenzo@ubuntu: ~/Desktop/mimic-0/src[01;32mlorenzo@ubuntu[00m:[01;34m~/Desktop/mimic-0/src[00m$ clearhistory | grep export[5Pexport[Ksource /home/lorenzo/Desktop/mimic-0/src/venv/bin/activate[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cclear[Ksource /home/lorenzo/Desktop/mimic-0/src/venv/bin/activate[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cclear[Kgit clone https://github.com/Principe92/mimic.git mimic-0[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cclear[Kd Desktop/ls[Kclearifconfig[1Pgparted[2Pclear[Kdf -hsudo resize2fs /dev/mapper/ubuntu--vg-ubuntu--lv[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cdf -h[K[Kexit
-exit
-
-Script done on 2023-01-16 18:08:57+00:00 [COMMAND_EXIT_CODE="0"]
