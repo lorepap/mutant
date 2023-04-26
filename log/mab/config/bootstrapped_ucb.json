@@ -17,6 +17,12 @@
             "prod_score": 42.287015,
             "score": 42.287015,
             "timestamp": "2023.04.25.13.00.36"
+        },
+        {
+            "name": "bootstrapped_ucb.2023.04.26.13.23.54",
+            "prod_score": 12.667474999999996,
+            "score": 12.667474999999996,
+            "timestamp": "2023.04.26.13.23.54"
         }
     ],
     "runs": [
@@ -224,6 +230,32 @@
             "timestamp": "2023.04.25.13.00.36",
             "trace": "tm.lte.short",
             "training_time": 5575.352229833603
+        },
+        {
+            "actions": 3,
+            "model_name": "bootstrapped_ucb.2023.04.26.13.20.45",
+            "num_features": 8,
+            "num_kernel_fields": 11,
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/history/episode_hist_bootstrapped_ucb.2023.04.26.13.20.45.2023.04.26.13.20.45.json",
+            "reward": "orca",
+            "step_wait": 0.5,
+            "steps_per_episode": 500,
+            "timestamp": "2023.04.26.13.20.45",
+            "trace": "att.lte.driving",
+            "training_time": 18.82010769844055
+        },
+        {
+            "actions": 3,
+            "model_name": "bootstrapped_ucb.2023.04.26.13.23.54",
+            "num_features": 8,
+            "num_kernel_fields": 11,
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/history/episode_hist_bootstrapped_ucb.2023.04.26.13.23.54.2023.04.26.13.23.54.json",
+            "reward": "orca",
+            "step_wait": 0.5,
+            "steps_per_episode": 500,
+            "timestamp": "2023.04.26.13.23.54",
+            "trace": "att.lte.driving",
+            "training_time": 6619.9671132564545
         }
     ],
     "traces": [
@@ -688,6 +720,12 @@
             "path": "/home/lorenzo/Desktop/mimic-2/log/mab/trace/wired.bootstrapped_ucb.2023.04.22.14.39.30.csv",
             "timestamp": "2023.04.22.14.39.30",
             "trace_name": "wired.bootstrapped_ucb.2023.04.22.14.39.30.csv"
+        },
+        {
+            "model_name": "bootstrapped_ucb.2023.04.26.13.23.54",
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/trace/att.lte.driving.bootstrapped_ucb.2023.04.26.15.26.36.csv",
+            "timestamp": "2023.04.26.15.26.36",
+            "trace_name": "att.lte.driving.bootstrapped_ucb.2023.04.26.15.26.36.csv"
         }
     ]
 }

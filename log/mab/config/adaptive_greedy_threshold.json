@@ -227,6 +227,18 @@
             "path": "/home/lorenzo/Desktop/mimic-2/log/mab/trace/att.lte.driving.2016.adaptive_greedy_threshold.2023.04.05.01.24.16.csv",
             "timestamp": "2023.04.05.01.24.16",
             "trace_name": "att.lte.driving.2016.adaptive_greedy_threshold.2023.04.05.01.24.16.csv"
+        },
+        {
+            "model_name": "adaptive_greedy_threshold.2023.03.22.14.39.27",
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/trace/att.lte.driving.adaptive_greedy_threshold.2023.04.25.18.51.55.csv",
+            "timestamp": "2023.04.25.18.51.55",
+            "trace_name": "att.lte.driving.adaptive_greedy_threshold.2023.04.25.18.51.55.csv"
+        },
+        {
+            "model_name": "adaptive_greedy_threshold.2023.03.22.14.39.27",
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/trace/att.lte.driving.adaptive_greedy_threshold.2023.04.25.18.55.41.csv",
+            "timestamp": "2023.04.25.18.55.41",
+            "trace_name": "att.lte.driving.adaptive_greedy_threshold.2023.04.25.18.55.41.csv"
         }
     ]
 }
