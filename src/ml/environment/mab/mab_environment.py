@@ -97,10 +97,13 @@ class MabEnvironment(BaseEnvironment):
         else:
             timestamp, cwnd, rtt, rtt_dev, rtt_min, self.mss, delivered, lost, in_flight, retrans, action = self._recv_data()
 
+        
         # Compute thr and loss rate from kernel statistics
         rtt = rtt if rtt > 0 else 1e-5
-        thr = (delivered - lost) * self.mss * 8 / (rtt/self.nb)
+        thr = cwnd * self.mss / (rtt/self.nb)
         loss_rate = lost / (lost + delivered)
+
+        # print(f"[DEBUG] {delivered}, {self.mss}, {cwnd}, {rtt}, {thr}, {cwnd*self.mss/(rtt/self.nb)}")
 
         print("[DEBUG] current CWND=", cwnd)
 
@@ -134,13 +137,15 @@ class MabEnvironment(BaseEnvironment):
                 timestamp, cwnd, rtt, rtt_dev, rtt_min, self.mss, delivered, lost, in_flight, retrans, action = self._read_data()
             else:
                 timestamp, cwnd, rtt, rtt_dev, rtt_min, self.mss, delivered, lost, in_flight, retrans, action = self._recv_data()
+
+            # thruput bit/s
+            rtt = rtt if rtt > 0 else 1e-5
+            thr = (cwnd * self.mss) / (rtt/self.nb)
+            loss_rate = lost / (lost + delivered)
+          
+            # print(f"[DEBUG] {delivered}, {self.mss}, {cwnd}, {rtt}, {thr}, {cwnd*self.mss/(rtt/self.nb)}")
             
 
-            # thruput bytes/s
-            rtt = rtt if rtt > 0 else 1e-5
-            thr = (delivered - lost) * self.mss * 8 / (rtt/self.nb)
-            loss_rate = lost / (lost + delivered)
-            
             delivered_diff = delivered - self.last_delivered
             self.last_delivered = delivered
             self.update_rtt(rtt)

@@ -23,7 +23,7 @@ class MabBaseRunner(BaseRunner):
     def __init__(self, nchoices: int, lr: int, num_features: int,
                  window_len: int, num_fields_kernel: int, jiffies_per_state: int,
                  steps_per_episode: int, delta: float, step_wait_seconds: float, 
-                 comm: NetlinkCommunicator, moderator: Moderator, trace: str, retrain: bool = False, reward_name: str = 'owl') -> None:
+                 comm: NetlinkCommunicator, moderator: Moderator, trace: str, retrain: bool = False, reward_name: str = 'orca') -> None:
         super(MabBaseRunner, self).__init__()
 
         self.nchoices = nchoices

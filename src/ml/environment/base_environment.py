@@ -31,7 +31,7 @@ class BaseEnvironment(gym.Env):
         self.log_traces = ""
         self.allow_save = False
         self.floating_error = 1e-12
-        self.nb = 1e9
+        self.nb = 1e6
         self.initiated = False
         self.curr_reward = 0
         self.moderator = moderator

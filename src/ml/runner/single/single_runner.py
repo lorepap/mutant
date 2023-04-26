@@ -67,11 +67,11 @@ class SingleBaseRunner(BaseRunner):
 
         if not(is_debug_on()):
             cb: TrainingCallback = TrainingCallback(log_file_path=os.path.join(
-                context.entry_dir, f'log/mab/history/test_{self.protocol}.{now}.json')
+                context.entry_dir, f'log/mab/history/{self.protocol}.{now}.json')
             )
         else:
             cb: TrainingCallback = TrainingCallback(log_file_path=os.path.join(
-                context.entry_dir, f'log/mab/history/debug_test_{self.protocol}.{now}.json')
+                context.entry_dir, f'log/mab/history/debug_{self.protocol}.{now}.json')
             )
         
         self.model.native_prot_test(self.environment,
