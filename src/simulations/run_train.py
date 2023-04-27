@@ -54,7 +54,7 @@ if __name__ == "__main__":
     # parser.add_argument("--model", "-m", help="MAB policy to train")
     parser.add_argument('-m', '--models', nargs='+', help='List of models to run')
     parser.add_argument('-t', '--traces', nargs='+', help='List of traces to run')
-    parser.add_argument('-rw', '--reward', help='The reward type for the RL module', default='owl')
+    parser.add_argument('-rw', '--reward', help='The reward type for the RL module', default='orca')
     parser.add_argument("--retrain", "-r", action="store_true", help="True: retrain the latest trained model otherwise train a new model from scratch")
     args = parser.parse_args()
     run_experiments(args)
