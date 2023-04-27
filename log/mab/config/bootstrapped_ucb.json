@@ -23,6 +23,12 @@
             "prod_score": 12.667474999999996,
             "score": 12.667474999999996,
             "timestamp": "2023.04.26.13.23.54"
+        },
+        {
+            "name": "bootstrapped_ucb.2023.04.26.18.59.18",
+            "prod_score": 38.02027500000001,
+            "score": 38.02027500000001,
+            "timestamp": "2023.04.26.18.59.18"
         }
     ],
     "runs": [
@@ -256,6 +262,19 @@
             "timestamp": "2023.04.26.13.23.54",
             "trace": "att.lte.driving",
             "training_time": 6619.9671132564545
+        },
+        {
+            "actions": 3,
+            "model_name": "bootstrapped_ucb.2023.04.26.18.59.18",
+            "num_features": 8,
+            "num_kernel_fields": 11,
+            "path": "/home/lorenzo/Desktop/research-projects/mimic-2/log/mab/history/episode_hist_bootstrapped_ucb.2023.04.26.18.59.18.2023.04.26.18.59.18.json",
+            "reward": "orca",
+            "step_wait": 0.5,
+            "steps_per_episode": 500,
+            "timestamp": "2023.04.26.18.59.18",
+            "trace": "att.lte.driving",
+            "training_time": 6762.003193616867
         }
     ],
     "traces": [
