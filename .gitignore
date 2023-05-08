@@ -184,7 +184,10 @@ __pycache__
 **/*.up.log
 **/*.down.log
 **/*.log
-log/
+log/mab/history
+log/mab/trace
+log/iperf
+log/mab/mahimahi
 analysis/
 
 # Misc
