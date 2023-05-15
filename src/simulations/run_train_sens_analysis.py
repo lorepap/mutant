@@ -54,7 +54,7 @@ def run_experiments(args):
                     train_config = yaml.load(f, Loader=yaml.FullLoader)
                 train_config["step_wait_seconds"] = step_wait_seconds
                 # Adjust the training time accordingly setting the steps per episode
-                # train_config["steps_per_episode"] = base_step_wait/step_wait_seconds * base_step_per_episode
+                train_config["steps_per_episode"] = base_step_wait/step_wait_seconds * base_step_per_episode
                 with open(TRAIN_CONFIG_FILENAME, 'w') as f:
                     yaml.dump(train_config, f)
 

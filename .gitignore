@@ -186,7 +186,6 @@ __pycache__
 **/*.log
 log/
 analysis/
-log/mab/history
 
 # Misc
 pid.txt

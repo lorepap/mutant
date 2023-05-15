@@ -1,0 +1,111 @@
+{
+    "models": [],
+    "runs": [],
+    "traces": [
+        {
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/trace/att.lte.driving.cubic.2023.04.21.19.26.38.csv",
+            "timestamp": "2023.04.21.19.26.38",
+            "trace_name": "att.lte.driving.cubic.2023.04.21.19.26.38.csv"
+        },
+        {
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/trace/att.lte.driving.cubic.2023.04.21.19.52.44.csv",
+            "timestamp": "2023.04.21.19.52.44",
+            "trace_name": "att.lte.driving.cubic.2023.04.21.19.52.44.csv"
+        },
+        {
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/trace/att.lte.driving.cubic.2023.04.21.19.59.48.csv",
+            "timestamp": "2023.04.21.19.59.48",
+            "trace_name": "att.lte.driving.cubic.2023.04.21.19.59.48.csv"
+        },
+        {
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/trace/att.lte.driving.cubic.2023.04.21.20.33.54.csv",
+            "timestamp": "2023.04.21.20.33.54",
+            "trace_name": "att.lte.driving.cubic.2023.04.21.20.33.54.csv"
+        },
+        {
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/trace/att.lte.driving.cubic.2023.04.21.20.34.39.csv",
+            "timestamp": "2023.04.21.20.34.39",
+            "trace_name": "att.lte.driving.cubic.2023.04.21.20.34.39.csv"
+        },
+        {
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/trace/att.lte.driving.cubic.2023.04.21.21.17.47.csv",
+            "timestamp": "2023.04.21.21.17.47",
+            "trace_name": "att.lte.driving.cubic.2023.04.21.21.17.47.csv"
+        },
+        {
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/trace/att.lte.driving.2016.cubic.2023.04.21.21.19.08.csv",
+            "timestamp": "2023.04.21.21.19.08",
+            "trace_name": "att.lte.driving.2016.cubic.2023.04.21.21.19.08.csv"
+        },
+        {
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/trace/att.lte.driving.cubic.2023.04.22.12.33.09.csv",
+            "timestamp": "2023.04.22.12.33.09",
+            "trace_name": "att.lte.driving.cubic.2023.04.22.12.33.09.csv"
+        },
+        {
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/trace/att.lte.driving.2016.cubic.2023.04.22.12.34.29.csv",
+            "timestamp": "2023.04.22.12.34.29",
+            "trace_name": "att.lte.driving.2016.cubic.2023.04.22.12.34.29.csv"
+        },
+        {
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/trace/tm.lte.driving.cubic.2023.04.22.12.35.40.csv",
+            "timestamp": "2023.04.22.12.35.40",
+            "trace_name": "tm.lte.driving.cubic.2023.04.22.12.35.40.csv"
+        },
+        {
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/trace/tm.lte.short.cubic.2023.04.22.12.36.45.csv",
+            "timestamp": "2023.04.22.12.36.45",
+            "trace_name": "tm.lte.short.cubic.2023.04.22.12.36.45.csv"
+        },
+        {
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/trace/tm.umts.driving.cubic.2023.04.22.12.37.50.csv",
+            "timestamp": "2023.04.22.12.37.50",
+            "trace_name": "tm.umts.driving.cubic.2023.04.22.12.37.50.csv"
+        },
+        {
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/trace/vz.evdo.driving.cubic.2023.04.22.12.39.33.csv",
+            "timestamp": "2023.04.22.12.39.33",
+            "trace_name": "vz.evdo.driving.cubic.2023.04.22.12.39.33.csv"
+        },
+        {
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/trace/vz.lte.driving.cubic.2023.04.22.12.40.57.csv",
+            "timestamp": "2023.04.22.12.40.57",
+            "trace_name": "vz.lte.driving.cubic.2023.04.22.12.40.57.csv"
+        },
+        {
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/trace/vz.lte.short.cubic.2023.04.22.12.42.13.csv",
+            "timestamp": "2023.04.22.12.42.13",
+            "trace_name": "vz.lte.short.cubic.2023.04.22.12.42.13.csv"
+        },
+        {
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/trace/bus.cubic.2023.04.22.12.43.22.csv",
+            "timestamp": "2023.04.22.12.43.22",
+            "trace_name": "bus.cubic.2023.04.22.12.43.22.csv"
+        },
+        {
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/trace/timessquare.cubic.2023.04.22.12.44.25.csv",
+            "timestamp": "2023.04.22.12.44.25",
+            "trace_name": "timessquare.cubic.2023.04.22.12.44.25.csv"
+        },
+        {
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/trace/wired.cubic.2023.04.22.12.45.28.csv",
+            "timestamp": "2023.04.22.12.45.28",
+            "trace_name": "wired.cubic.2023.04.22.12.45.28.csv"
+        },
+        {
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/trace/att.lte.driving.2016.cubic.2023.04.22.16.45.52.csv",
+            "timestamp": "2023.04.22.16.45.52",
+            "trace_name": "att.lte.driving.2016.cubic.2023.04.22.16.45.52.csv"
+        },
+        {
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/trace/att.lte.driving.2016.cubic.2023.04.22.18.09.38.csv",
+            "timestamp": "2023.04.22.18.09.38",
+            "trace_name": "att.lte.driving.2016.cubic.2023.04.22.18.09.38.csv"
+        },
+        {
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/trace/att.lte.driving.cubic.2023.04.26.15.39.59.csv",
+            "timestamp": "2023.04.26.15.39.59",
+            "trace_name": "att.lte.driving.cubic.2023.04.26.15.39.59.csv"
+        }
+    ]
+}
