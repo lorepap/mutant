@@ -11,6 +11,12 @@
             "prod_score": 19310511.506415,
             "score": 19310511.506415,
             "timestamp": "2023.04.04.02.33.56"
+        },
+        {
+            "name": "epsilon_greedy.2023.04.26.20.52.03",
+            "prod_score": 63.27628499999999,
+            "score": 63.27628499999999,
+            "timestamp": "2023.04.26.20.52.03"
         }
     ],
     "runs": [
@@ -83,6 +89,19 @@
             "timestamp": "2023.04.04.02.33.56",
             "trace": "vz.lte.short",
             "training_time": 5458.737326860428
+        },
+        {
+            "actions": 3,
+            "model_name": "epsilon_greedy.2023.04.26.20.52.03",
+            "num_features": 8,
+            "num_kernel_fields": 11,
+            "path": "/home/lorenzo/Desktop/research-projects/mimic-2/log/mab/history/episode_hist_epsilon_greedy.2023.04.26.20.52.03.2023.04.26.20.52.03.json",
+            "reward": "orca",
+            "step_wait": 0.5,
+            "steps_per_episode": 500,
+            "timestamp": "2023.04.26.20.52.03",
+            "trace": "att.lte.driving",
+            "training_time": 6491.7111229896545
         }
     ],
     "traces": [

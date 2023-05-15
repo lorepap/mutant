@@ -5,6 +5,12 @@
             "prod_score": 19221204.936489996,
             "score": 19221204.936489996,
             "timestamp": "2023.03.23.02.32.08"
+        },
+        {
+            "name": "adaptive_greedy_threshold.2023.04.27.10.58.24",
+            "prod_score": 34.16599000000001,
+            "score": 34.16599000000001,
+            "timestamp": "2023.04.27.10.58.24"
         }
     ],
     "runs": [
@@ -63,6 +69,19 @@
             "timestamp": "2023.03.23.02.32.08",
             "trace": "vz.lte.short",
             "training_time": 5503.614615440369
+        },
+        {
+            "actions": 3,
+            "model_name": "adaptive_greedy_threshold.2023.04.27.10.58.24",
+            "num_features": 8,
+            "num_kernel_fields": 11,
+            "path": "/home/lorenzo/Desktop/research-projects/mimic-2/log/mab/history/episode_hist_adaptive_greedy_threshold.2023.04.27.10.58.24.2023.04.27.10.58.24.json",
+            "reward": "orca",
+            "step_wait": 0.5,
+            "steps_per_episode": 500,
+            "timestamp": "2023.04.27.10.58.24",
+            "trace": "att.lte.driving",
+            "training_time": 6538.231067657471
         }
     ],
     "traces": [
@@ -227,6 +246,18 @@
             "path": "/home/lorenzo/Desktop/mimic-2/log/mab/trace/att.lte.driving.2016.adaptive_greedy_threshold.2023.04.05.01.24.16.csv",
             "timestamp": "2023.04.05.01.24.16",
             "trace_name": "att.lte.driving.2016.adaptive_greedy_threshold.2023.04.05.01.24.16.csv"
+        },
+        {
+            "model_name": "adaptive_greedy_threshold.2023.03.22.14.39.27",
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/trace/att.lte.driving.adaptive_greedy_threshold.2023.04.25.18.51.55.csv",
+            "timestamp": "2023.04.25.18.51.55",
+            "trace_name": "att.lte.driving.adaptive_greedy_threshold.2023.04.25.18.51.55.csv"
+        },
+        {
+            "model_name": "adaptive_greedy_threshold.2023.03.22.14.39.27",
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/trace/att.lte.driving.adaptive_greedy_threshold.2023.04.25.18.55.41.csv",
+            "timestamp": "2023.04.25.18.55.41",
+            "trace_name": "att.lte.driving.adaptive_greedy_threshold.2023.04.25.18.55.41.csv"
         }
     ]
 }
