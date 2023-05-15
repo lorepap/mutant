@@ -7,6 +7,7 @@ import yaml
 import re
 import sys
 import subprocess
+import numpy as np
 from argparse import ArgumentParser
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
@@ -37,5 +38,8 @@ if __name__ == "__main__":
     parser = ArgumentParser()
     parser.add_argument("--models", "-m", nargs='+', help="MAB policy to train")
     parser.add_argument("--iperf_duration", "-id", help="Experiment duration", default=60)
+    parser.add_argument("--rounds", "-r", type=int, help="number of test runs", default=1)
     args = parser.parse_args()
-    run_experiments(items=args)
+    for r in np.arange(args.rounds):
+        print(f"Run {r}/{args.rounds}")
+        run_experiments(items=args)

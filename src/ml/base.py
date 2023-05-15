@@ -60,6 +60,7 @@ class Base():
         if is_debug_on():
             filename = change_name(filename)
         log_filename = f'{base_path}/{filename}'
+        os.makedirs(os.path.dirname(log_filename), exist_ok=True)
         self.server = IperfServer(log_filename)
         self.server.start()
 

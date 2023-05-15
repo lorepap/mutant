@@ -23,7 +23,7 @@ class NativeRunner():
         
     def start_server(self, tag):
         base_path = os.path.join(context.entry_dir, "log", "iperf", "server")
-        filename = f'server.{tag}.log'
+        filename = f'server.log'
         if is_debug_on():
             filename = change_name(filename)
         log_filename = f'{base_path}/{filename}'
@@ -37,37 +37,42 @@ class NativeRunner():
         utils.check_dir(base_path)
 
         filename = f'{tag}.{utils.time_to_str()}.json'
-        
+   
         if is_debug_on():
             filename = change_name(filename)
-        
+     
         log_filename = f'{base_path}/{filename}'
-        
-
+     
         self.client = IperfClient(MahimahiTrace.fromString(
             self.args.trace), self.args.ip, self.args.iperf_duration, log_filename, self.moderator)
 
         self.client.start()
         return log_filename
-    
-    
+
+
     def start_communication(self, tag):
         self.start_server(tag)
         self.start_client(tag)
 
     def stop_communication(self):
-        self.client.stop()
+        # self.client.stop()
         self.server.stop()
-        
+
     def run(self) -> None:
         if self.args.debug:
             set_debug()
-        
-        self.start_communication(tag=f'{self.args.protocol}.{self.args.trace}')
 
-        time.sleep(self.args.iperf_duration)
+        self.start_communication(tag=f'{self.args.protocol}.{self.args.trace}')
         
+        while self.moderator.is_stopped():
+            time.sleep(1)
+        
+        while not self.moderator.is_stopped():
+            time.sleep(1)
+
         self.stop_communication()
+        exit()
+
 
 if __name__ == '__main__':
     parser = ArgumentParser()
@@ -85,7 +90,7 @@ if __name__ == '__main__':
                         help='--iperf_dir: iperf directory to use', default="log/iperf")
     
     parser.add_argument('--ip', '-x', type=str,
-                        help='--ip: IP of iperf server machine', default="10.120.8.116")
+                        help='--ip: IP of iperf server machine', default="10.0.2.15")
 
 
     args = parser.parse_args() 

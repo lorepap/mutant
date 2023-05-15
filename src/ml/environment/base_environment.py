@@ -11,13 +11,14 @@ from gym import spaces
 from helper import context, utils
 from network.kernel_feedback import KernelRequest
 from network.netlink_communicator import NetlinkCommunicator
+from helper.moderator import Moderator
 
 
 class BaseEnvironment(gym.Env):
     '''Kernel Environment that follows gym interface'''
     metadata = {'render.modes': ['human']}
 
-    def __init__(self, comm: NetlinkCommunicator, num_fields_kernel: int):
+    def __init__(self, comm: NetlinkCommunicator, num_fields_kernel: int, moderator: Moderator=None):
         super(BaseEnvironment, self).__init__()
 
         # Netlink communicator
@@ -30,9 +31,10 @@ class BaseEnvironment(gym.Env):
         self.log_traces = ""
         self.allow_save = False
         self.floating_error = 1e-12
-        self.nb = 1e9
+        self.nb = 1e6
         self.initiated = False
         self.curr_reward = 0
+        self.moderator = moderator
 
     def _init_communication(self):
 
@@ -48,7 +50,7 @@ class BaseEnvironment(gym.Env):
             print("Communication initiated")
             self.initiated = True
 
-    def _change_cwnd(self, action):
+    def _change_cca(self, action):
 
         msg = self.netlink_communicator.create_netlink_msg(
             'SENDING ACTION', msg_flags=self.netlink_communicator.ACTION_FLAG, msg_seq=action)

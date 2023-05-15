@@ -3,9 +3,11 @@ import os
 import time
 from typing import Any
 
+
 import numpy as np
 from helper import context, utils
 from helper.debug import is_debug_on, change_name
+from callbacks import TrainingCallback
 from keras.optimizers import Adam
 from agent.base_agent import BaseAgent
 from agent.mab.base_mab_agent import BaseMabAgent
@@ -15,12 +17,13 @@ from runner.base_runner import BaseRunner
 from tensorflow.python.keras.optimizer_v2 import optimizer_v2
 from helper.moderator import Moderator
 
+
 class MabBaseRunner(BaseRunner):
 
     def __init__(self, nchoices: int, lr: int, num_features: int,
                  window_len: int, num_fields_kernel: int, jiffies_per_state: int,
                  steps_per_episode: int, delta: float, step_wait_seconds: float, 
-                 comm: NetlinkCommunicator, moderator: Moderator, trace: str, retrain: bool = False, reward_name: str = 'owl') -> None:
+                 comm: NetlinkCommunicator, moderator: Moderator, trace: str, retrain: bool = False, reward_name: str = 'orca') -> None:
         super(MabBaseRunner, self).__init__()
 
         self.nchoices = nchoices
@@ -41,6 +44,8 @@ class MabBaseRunner(BaseRunner):
         self.training_time = None
         self.step_wait_time = step_wait_seconds
         self.trace_name = trace
+        self.steps_per_episode = steps_per_episode
+        self.num_fields_kernel = num_fields_kernel
 
     def get_model(self) -> BaseAgent:
         return self.model
@@ -57,10 +62,20 @@ class MabBaseRunner(BaseRunner):
     def train(self, training_steps: int, reset_model: bool = True) -> Any:
         if reset_model:
             self.reset_model()
-        
+
+        now = self.now
+        if not(is_debug_on()):
+            cb: TrainingCallback = TrainingCallback(log_file_path=os.path.join(
+                context.entry_dir, f'log/mab/history/{self.model.get_model_name()}.{now}.json')
+            )
+        else:
+            cb: TrainingCallback = TrainingCallback(log_file_path=os.path.join(
+                context.entry_dir, f'log/mab/history/debug_{self.model.get_model_name()}.{now}.json')
+            )
+
         start = time.time()
-        
-        self.train_res = self.model.fit(self.environment, nb_steps=training_steps,
+
+        self.train_res = self.model.fit(self.environment, nb_steps=training_steps, callbacks=[cb],
             visualize=False, verbose=2)
         
         self.training_time = time.time() - start
@@ -70,11 +85,22 @@ class MabBaseRunner(BaseRunner):
         return self.history
 
     def test(self, episodes: int) -> None:
+
+        now = self.now
+
+        if not(is_debug_on()):
+            cb: TrainingCallback = TrainingCallback(log_file_path=os.path.join(
+                context.entry_dir, f'log/mab/history/{self.model.get_model_name()}.{now}.json')
+            )
+        else:
+            cb: TrainingCallback = TrainingCallback(log_file_path=os.path.join(
+                context.entry_dir, f'log/mab/history/debug_{self.model.get_model_name()}.{now}.json')
+            )
         
         self.environment.enable_log_traces()
         
         self.model.test(self.environment,
-                        nb_episodes=episodes, visualize=False)
+                        nb_episodes=episodes, visualize=False, callbacks=[cb])
 
         tag = f'{self.trace_name}.{self.get_tag()}'
 
@@ -106,7 +132,7 @@ class MabBaseRunner(BaseRunner):
 
     def save_history(self, history: dict) -> None:
         path = os.path.join(
-            context.entry_dir, f'log/mab/history/{self.model.get_model_name()}.{self.now}.json')
+            context.entry_dir, f'log/mab/history/episode_hist_{self.model.get_model_name()}.{self.now}.json')
 
         with open(path, 'w+') as file:
             json.dump(history, file, default=self.np_encoder)
@@ -121,6 +147,8 @@ class MabBaseRunner(BaseRunner):
             'actions': self.nchoices,
             'step_wait': self.step_wait_time,
             'num_features': self.num_features,
+            'num_kernel_fields': self.num_fields_kernel,
+            'steps_per_episode': self.steps_per_episode,
             'reward': self.environment.reward_name
         })
         self.save_config(self.config_path, self.config)

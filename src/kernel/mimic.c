@@ -14,6 +14,7 @@
 #define COMM_END 0
 #define COMM_BEGIN 1
 #define COMM_SELECT_ARM 2
+#define COMM_TEST_NATIVE_PROT 3
 
 // Netlink comm variables
 struct sock *nl_sk = NULL;
@@ -86,6 +87,18 @@ static void onConnectionStarted(struct nlmsghdr *nlh)
     sendMessageToApplicationLayer(message, socketId);
 }
 
+static void onStartSingleProtocol(struct nlmsghdr *nlh)
+{
+	printk(KERN_INFO "MODE SINGLE PROTOCOL ON: User-kernel communication initialized");
+	char message[MAX_PAYLOAD - 1];
+
+	socketId = nlh->nlmsg_pid;
+
+	snprintf(message, MAX_PAYLOAD - 1, "%u;%s", 1, INIT_MSG);
+    sendMessageToApplicationLayer(message, socketId);
+
+}
+
 /**
  * @brief Handles incoming messages from the application layer
  * 
@@ -118,7 +131,11 @@ static void onMessageRecievedFromApplicationLayer(struct sk_buff *skb)
 		// printk(KERN_INFO "protocol selected: %d", selectedProtocolId);
         break;
 
-    case 3: // testing
+	case COMM_TEST_NATIVE_PROT:
+		onStartSingleProtocol(nlh);
+		break;
+
+    default: // testing
 		printk(KERN_INFO "Test message received!");
         break;
     }
@@ -138,6 +155,7 @@ static void replyToApplicationLayer(struct tcp_sock *tp, int socketId, __u32 pro
     __u32 cwnd = tp->snd_cwnd;
     __u32 rtt = tp->srtt_us;
     __u32 rtt_dev = tp->mdev_us;
+	__u32 rtt_min = tcp_min_rtt(tp);
     __u16 MSS = tp->advmss;
     __u32 delivered = tp->delivered;
     __u32 lost = tp->lost_out;
@@ -145,8 +163,8 @@ static void replyToApplicationLayer(struct tcp_sock *tp, int socketId, __u32 pro
     __u32 retransmitted = tp->retrans_out;
     __u32 now = tcp_jiffies32;
 
-    snprintf(message, MAX_PAYLOAD - 1, "%u;%u;%u;%u;%u;%u;%u;%u;%u;%u;",
-             now, cwnd, rtt, rtt_dev, MSS, delivered, lost,
+    snprintf(message, MAX_PAYLOAD - 1, "%u;%u;%u;%u;%u;%u;%u;%u;%u;%u;%u",
+             now, cwnd, rtt, rtt_dev, rtt_min, MSS, delivered, lost,
              in_flight, retransmitted, protocolId);
 
     sendMessageToApplicationLayer(message, socketId);

@@ -32,14 +32,14 @@ def run_experiments(args):
     for model in args.models:
         for trace in args.traces:
             print(f"Training {model} on {trace}")
-            # Train from scratch on the first trace, then retrain the same model over the others
+
             if args.retrain:
                 retrain = 1
             else:
                 retrain = 0
 
             # generate command to execute for this trace        
-            command = f"python3 {TRAINING_FILENAME} -m {model} -t {trace} -x {ip} -e 86400 -rt {retrain}"
+            command = f"python3 {TRAINING_FILENAME} -m {model} -t {trace} -x {ip} -e 86400 -rt {retrain} -rw {args.reward}"
             print("Executing", command)
             # execute each command and wait for it to finish
             try:
@@ -54,6 +54,7 @@ if __name__ == "__main__":
     # parser.add_argument("--model", "-m", help="MAB policy to train")
     parser.add_argument('-m', '--models', nargs='+', help='List of models to run')
     parser.add_argument('-t', '--traces', nargs='+', help='List of traces to run')
-    parser.add_argument("--retrain", "-r", action="store_true", help="True: retrain from scratch")
+    parser.add_argument('-rw', '--reward', help='The reward type for the RL module', default='orca')
+    parser.add_argument("--retrain", "-r", action="store_true", help="True: retrain the latest trained model otherwise train a new model from scratch")
     args = parser.parse_args()
     run_experiments(args)
