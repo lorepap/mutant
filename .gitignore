@@ -190,6 +190,7 @@ log/iperf
 log/mab/mahimahi
 analysis/
 !log/mab/model
+!log/mab/config
 
 # Misc
 pid.txt
