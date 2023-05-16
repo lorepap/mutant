@@ -94,6 +94,7 @@ def add_base_arguments(parser: argparse.ArgumentParser) -> None:
     # single protocol mode
     parser.add_argument("--protocol", "-prot", help="Native protocol under test within mimic", default="cubic")
 
+    parser.add_argument('--model_name', '-mN', help="String stored in the log directory of the specific trained model", default=None)
 
 
 def parse_train_setup() -> Any:

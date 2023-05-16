@@ -106,6 +106,14 @@ class BaseRunner():
         print(
             f'{self.get_tag()}: loaded {selected_model_config["name"]} as best model')
         return model, selected_model_config
+    
+    def load_model_by_name(self, config, model_path, model_name):
+            self.model_config = config["models"]
+            model: BaseAgent = self.load_basic()
+            print("[DEBUG] model name", model_name +'.h5')
+            model.load_weights(os.path.join(model_path,f"{model_name}.h5"))
+            model.set_model_name(model_name)
+            return model
 
     def load_latest(self, config: dict, model_path: str, retrain=False) -> BaseAgent:
 
@@ -122,7 +130,6 @@ class BaseRunner():
         model: BaseAgent = self.load_basic()
         # model.load_weights(selected_model_config['path'])
         if not(retrain):
-            print("[DEBUG] retraining model",os.path.join(model_path, selected_model_config['name']+'.h5'))
             model.load_weights(os.path.join(model_path, selected_model_config['name']+'.h5'))
         else:
             print("[DEBUG] retraining model from scratch...")

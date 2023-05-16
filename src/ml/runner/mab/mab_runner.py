@@ -23,13 +23,17 @@ class MabBaseRunner(BaseRunner):
     def __init__(self, nchoices: int, lr: int, num_features: int,
                  window_len: int, num_fields_kernel: int, jiffies_per_state: int,
                  steps_per_episode: int, delta: float, step_wait_seconds: float, 
-                 comm: NetlinkCommunicator, moderator: Moderator, trace: str, retrain: bool = False, reward_name: str = 'orca') -> None:
+                 comm: NetlinkCommunicator, moderator: Moderator, trace: str, 
+                 retrain: bool=False, reward_name: str='orca', model_name:str=None, selected_model:str=None) -> None:
+
         super(MabBaseRunner, self).__init__()
 
         self.nchoices = nchoices
         self.lr = lr
         self.moderator = moderator
         self.num_features = num_features
+        self.model_name = model_name
+        self.selected_model = selected_model
 
         self.base_config_dir = os.path.join(context.entry_dir, 'log/mab/config')
         self.config_path = os.path.join(
@@ -39,13 +43,17 @@ class MabBaseRunner(BaseRunner):
             context.entry_dir, f'log/mab/model')
         self.environment = MabEnvironment(num_features, window_len, num_fields_kernel, jiffies_per_state,
                                     nchoices, steps_per_episode, delta, step_wait_seconds, comm, moderator, reward_name)
-        
-        self.set_latest(self.model_path, retrain)
+
         self.training_time = None
         self.step_wait_time = step_wait_seconds
         self.trace_name = trace
         self.steps_per_episode = steps_per_episode
         self.num_fields_kernel = num_fields_kernel
+
+        if self.model_name != None and self.model_name.split(".")[0]==self.get_tag():
+            self.load_model_by_name(self.config, self.model_path, self.model_name)
+        else:
+            self.set_latest(self.model_path, retrain)
 
     def get_model(self) -> BaseAgent:
         return self.model

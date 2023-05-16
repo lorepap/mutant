@@ -27,7 +27,7 @@ def run_experiments(items):
         for i, trace_name in enumerate(trace_data["traces"].keys()):
 
             # generate command to execute for this trace
-            command = f"python3 {TEST_FILENAME} -m {model} -t {trace_name} -x {ip} -e {items.iperf_duration}"
+            command = f"python3 {TEST_FILENAME} -m {model} -t {trace_name} -x {ip} -e {items.iperf_duration} -mn {items.model_name}"
             
             subprocess.call(command, shell=True, stderr=sys.stderr)
             # except subprocess.CalledProcessError as e:
@@ -39,6 +39,7 @@ if __name__ == "__main__":
     parser.add_argument("--models", "-m", nargs='+', help="MAB policy to train")
     parser.add_argument("--iperf_duration", "-id", help="Experiment duration", default=60)
     parser.add_argument("--rounds", "-r", type=int, help="number of test runs", default=1)
+    parser.add_argument("--timestamp", "-t", type=str, default=None)
     args = parser.parse_args()
     for r in np.arange(args.rounds):
         print(f"Run {r}/{args.rounds}")
