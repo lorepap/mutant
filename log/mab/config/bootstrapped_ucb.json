@@ -107,7 +107,7 @@
             "num_features": 8,
             "num_kernel_fields": 11,
             "path": "/home/lorenzo/Desktop/mimic-2/log/mab/history/bootstrapped_ucb.2023.04.04.04.04.57.2023.04.19.02.00.12.json",
-            "reward": "orca",
+            "reward": "orca ",
             "step_wait": 0.5,
             "steps_per_episode": 500,
             "timestamp": "2023.04.19.02.00.12",
