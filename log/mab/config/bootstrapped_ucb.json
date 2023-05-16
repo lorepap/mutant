@@ -1,0 +1,731 @@
+{
+    "models": [
+        {
+            "name": "bootstrapped_ucb.2023.04.04.04.04.57",
+            "prod_score": 24.489974999999998,
+            "score": 24.489974999999998,
+            "timestamp": "2023.04.19.02.00.12"
+        },
+        {
+            "name": "bootstrapped_ucb.2023.04.19.09.08.39",
+            "prod_score": 9.634345000000003,
+            "score": 9.634345000000003,
+            "timestamp": "2023.04.19.21.10.01"
+        },
+        {
+            "name": "bootstrapped_ucb.2023.04.25.13.00.36",
+            "prod_score": 42.287015,
+            "score": 42.287015,
+            "timestamp": "2023.04.25.13.00.36"
+        },
+        {
+            "name": "bootstrapped_ucb.2023.04.26.13.23.54",
+            "prod_score": 12.667474999999996,
+            "score": 12.667474999999996,
+            "timestamp": "2023.04.26.13.23.54"
+        }
+    ],
+    "runs": [
+        {
+            "model_name": "bootstrapped_ucb.2023.04.04.04.04.57",
+            "path": "/home/lorenzo/Desktop/research-projects/mimic-2/log/mab/history/bootstrapped_ucb.2023.04.04.04.04.57.2023.04.04.04.04.57.json",
+            "timestamp": "2023.04.04.04.04.57",
+            "trace": "att.lte.driving",
+            "training_time": 7097.555990934372
+        },
+        {
+            "model_name": "bootstrapped_ucb.2023.04.04.04.04.57",
+            "path": "/home/lorenzo/Desktop/research-projects/mimic-2/log/mab/history/bootstrapped_ucb.2023.04.04.04.04.57.2023.04.04.06.03.17.json",
+            "timestamp": "2023.04.04.06.03.17",
+            "trace": "att.lte.driving.2016",
+            "training_time": 6919.707338809967
+        },
+        {
+            "model_name": "bootstrapped_ucb.2023.04.04.04.04.57",
+            "path": "/home/lorenzo/Desktop/research-projects/mimic-2/log/mab/history/bootstrapped_ucb.2023.04.04.04.04.57.2023.04.04.07.58.39.json",
+            "timestamp": "2023.04.04.07.58.39",
+            "trace": "tm.lte.driving",
+            "training_time": 5956.8643345832825
+        },
+        {
+            "model_name": "bootstrapped_ucb.2023.04.04.04.04.57",
+            "path": "/home/lorenzo/Desktop/research-projects/mimic-2/log/mab/history/bootstrapped_ucb.2023.04.04.04.04.57.2023.04.04.09.37.58.json",
+            "timestamp": "2023.04.04.09.37.58",
+            "trace": "tm.lte.short",
+            "training_time": 5930.04981303215
+        },
+        {
+            "model_name": "bootstrapped_ucb.2023.04.04.04.04.57",
+            "path": "/home/lorenzo/Desktop/research-projects/mimic-2/log/mab/history/bootstrapped_ucb.2023.04.04.04.04.57.2023.04.04.11.16.50.json",
+            "timestamp": "2023.04.04.11.16.50",
+            "trace": "tm.umts.driving",
+            "training_time": 6832.868293762207
+        },
+        {
+            "actions": 3,
+            "model_name": "bootstrapped_ucb.2023.04.04.04.04.57",
+            "num_features": 8,
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/history/bootstrapped_ucb.2023.04.04.04.04.57.2023.04.05.15.11.59.json",
+            "step_wait": 0.5,
+            "timestamp": "2023.04.05.15.11.59",
+            "trace": "vz.evdo.driving",
+            "training_time": 207.1748492717743
+        },
+        {
+            "actions": 3,
+            "model_name": "bootstrapped_ucb.2023.04.04.04.04.57",
+            "num_features": 8,
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/history/bootstrapped_ucb.2023.04.04.04.04.57.2023.04.05.15.30.54.json",
+            "step_wait": 0.5,
+            "timestamp": "2023.04.05.15.30.54",
+            "trace": "vz.evdo.driving",
+            "training_time": 6501.475575685501
+        },
+        {
+            "actions": 3,
+            "model_name": "bootstrapped_ucb.2023.04.04.04.04.57",
+            "num_features": 8,
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/history/bootstrapped_ucb.2023.04.04.04.04.57.2023.04.05.17.19.17.json",
+            "step_wait": 0.5,
+            "timestamp": "2023.04.05.17.19.17",
+            "trace": "vz.lte.driving",
+            "training_time": 5741.611724615097
+        },
+        {
+            "actions": 3,
+            "model_name": "bootstrapped_ucb.2023.04.04.04.04.57",
+            "num_features": 8,
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/history/bootstrapped_ucb.2023.04.04.04.04.57.2023.04.05.18.55.01.json",
+            "step_wait": 0.5,
+            "timestamp": "2023.04.05.18.55.01",
+            "trace": "vz.lte.short",
+            "training_time": 5652.043401479721
+        },
+        {
+            "actions": 3,
+            "model_name": "bootstrapped_ucb.2023.04.04.04.04.57",
+            "num_features": 8,
+            "num_kernel_fields": 11,
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/history/bootstrapped_ucb.2023.04.04.04.04.57.2023.04.19.02.00.12.json",
+            "reward": "orca ",
+            "step_wait": 0.5,
+            "steps_per_episode": 500,
+            "timestamp": "2023.04.19.02.00.12",
+            "trace": "vz.evdo.driving",
+            "training_time": 6918.898965835571
+        },
+        {
+            "actions": 3,
+            "model_name": "bootstrapped_ucb.2023.04.19.09.08.39",
+            "num_features": 8,
+            "num_kernel_fields": 11,
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/history/bootstrapped_ucb.2023.04.19.09.08.39.2023.04.19.09.08.39.json",
+            "reward": "orca",
+            "step_wait": 0.5,
+            "steps_per_episode": 500,
+            "timestamp": "2023.04.19.09.08.39",
+            "trace": "tm.lte.short",
+            "training_time": 5600.779112100601
+        },
+        {
+            "actions": 3,
+            "model_name": "bootstrapped_ucb.2023.04.19.09.08.39",
+            "num_features": 8,
+            "num_kernel_fields": 11,
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/history/bootstrapped_ucb.2023.04.19.09.08.39.2023.04.19.10.42.01.json",
+            "reward": "orca",
+            "step_wait": 0.5,
+            "steps_per_episode": 500,
+            "timestamp": "2023.04.19.10.42.01",
+            "trace": "att.lte.driving",
+            "training_time": 6576.712152957916
+        },
+        {
+            "actions": 3,
+            "model_name": "bootstrapped_ucb.2023.04.19.09.08.39",
+            "num_features": 8,
+            "num_kernel_fields": 11,
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/history/bootstrapped_ucb.2023.04.19.09.08.39.2023.04.19.12.31.39.json",
+            "reward": "orca",
+            "step_wait": 0.5,
+            "steps_per_episode": 500,
+            "timestamp": "2023.04.19.12.31.39",
+            "trace": "vz.lte.driving",
+            "training_time": 5844.819992542267
+        },
+        {
+            "actions": 3,
+            "model_name": "bootstrapped_ucb.2023.04.19.09.08.39",
+            "num_features": 8,
+            "num_kernel_fields": 11,
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/history/bootstrapped_ucb.2023.04.19.09.08.39.2023.04.19.14.09.05.json",
+            "reward": "orca",
+            "step_wait": 0.5,
+            "steps_per_episode": 500,
+            "timestamp": "2023.04.19.14.09.05",
+            "trace": "att.lte.driving.2016",
+            "training_time": 6410.462888717651
+        },
+        {
+            "actions": 3,
+            "model_name": "bootstrapped_ucb.2023.04.19.09.08.39",
+            "num_features": 8,
+            "num_kernel_fields": 11,
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/history/bootstrapped_ucb.2023.04.19.09.08.39.2023.04.19.15.55.57.json",
+            "reward": "orca",
+            "step_wait": 0.5,
+            "steps_per_episode": 500,
+            "timestamp": "2023.04.19.15.55.57",
+            "trace": "vz.evdo.driving",
+            "training_time": 6934.579183578491
+        },
+        {
+            "actions": 3,
+            "model_name": "bootstrapped_ucb.2023.04.19.09.08.39",
+            "num_features": 8,
+            "num_kernel_fields": 11,
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/history/bootstrapped_ucb.2023.04.19.09.08.39.2023.04.19.17.51.33.json",
+            "reward": "orca",
+            "step_wait": 0.5,
+            "steps_per_episode": 500,
+            "timestamp": "2023.04.19.17.51.33",
+            "trace": "vz.lte.short",
+            "training_time": 5575.326800584793
+        },
+        {
+            "actions": 3,
+            "model_name": "bootstrapped_ucb.2023.04.19.09.08.39",
+            "num_features": 8,
+            "num_kernel_fields": 11,
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/history/bootstrapped_ucb.2023.04.19.09.08.39.2023.04.19.19.24.30.json",
+            "reward": "orca",
+            "step_wait": 0.5,
+            "steps_per_episode": 500,
+            "timestamp": "2023.04.19.19.24.30",
+            "trace": "tm.umts.driving",
+            "training_time": 6329.724007606506
+        },
+        {
+            "actions": 3,
+            "model_name": "bootstrapped_ucb.2023.04.19.09.08.39",
+            "num_features": 8,
+            "num_kernel_fields": 11,
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/history/bootstrapped_ucb.2023.04.19.09.08.39.2023.04.19.21.10.01.json",
+            "reward": "orca",
+            "step_wait": 0.5,
+            "steps_per_episode": 500,
+            "timestamp": "2023.04.19.21.10.01",
+            "trace": "tm.lte.driving",
+            "training_time": 5679.607065200806
+        },
+        {
+            "actions": 3,
+            "model_name": "bootstrapped_ucb.2023.04.25.13.00.36",
+            "num_features": 8,
+            "num_kernel_fields": 11,
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/history/episode_hist_bootstrapped_ucb.2023.04.25.13.00.36.2023.04.25.13.00.36.json",
+            "reward": "orca",
+            "step_wait": 0.5,
+            "steps_per_episode": 500,
+            "timestamp": "2023.04.25.13.00.36",
+            "trace": "tm.lte.short",
+            "training_time": 5575.352229833603
+        },
+        {
+            "actions": 3,
+            "model_name": "bootstrapped_ucb.2023.04.26.13.20.45",
+            "num_features": 8,
+            "num_kernel_fields": 11,
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/history/episode_hist_bootstrapped_ucb.2023.04.26.13.20.45.2023.04.26.13.20.45.json",
+            "reward": "orca",
+            "step_wait": 0.5,
+            "steps_per_episode": 500,
+            "timestamp": "2023.04.26.13.20.45",
+            "trace": "att.lte.driving",
+            "training_time": 18.82010769844055
+        },
+        {
+            "actions": 3,
+            "model_name": "bootstrapped_ucb.2023.04.26.13.23.54",
+            "num_features": 8,
+            "num_kernel_fields": 11,
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/history/episode_hist_bootstrapped_ucb.2023.04.26.13.23.54.2023.04.26.13.23.54.json",
+            "reward": "orca",
+            "step_wait": 0.5,
+            "steps_per_episode": 500,
+            "timestamp": "2023.04.26.13.23.54",
+            "trace": "att.lte.driving",
+            "training_time": 6619.9671132564545
+        }
+    ],
+    "traces": [
+        {
+            "model_name": "bootstrapped_ucb.2023.04.04.04.04.57",
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/trace/att.lte.driving.bootstrapped_ucb.2023.04.05.22.22.11.csv",
+            "timestamp": "2023.04.05.22.22.11",
+            "trace_name": "att.lte.driving.bootstrapped_ucb.2023.04.05.22.22.11.csv"
+        },
+        {
+            "model_name": "bootstrapped_ucb.2023.04.04.04.04.57",
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/trace/att.lte.driving.2016.bootstrapped_ucb.2023.04.05.22.23.17.csv",
+            "timestamp": "2023.04.05.22.23.17",
+            "trace_name": "att.lte.driving.2016.bootstrapped_ucb.2023.04.05.22.23.17.csv"
+        },
+        {
+            "model_name": "bootstrapped_ucb.2023.04.04.04.04.57",
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/trace/tm.lte.driving.bootstrapped_ucb.2023.04.05.22.24.21.csv",
+            "timestamp": "2023.04.05.22.24.21",
+            "trace_name": "tm.lte.driving.bootstrapped_ucb.2023.04.05.22.24.21.csv"
+        },
+        {
+            "model_name": "bootstrapped_ucb.2023.04.04.04.04.57",
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/trace/tm.lte.short.bootstrapped_ucb.2023.04.05.22.25.27.csv",
+            "timestamp": "2023.04.05.22.25.27",
+            "trace_name": "tm.lte.short.bootstrapped_ucb.2023.04.05.22.25.27.csv"
+        },
+        {
+            "model_name": "bootstrapped_ucb.2023.04.04.04.04.57",
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/trace/tm.umts.driving.bootstrapped_ucb.2023.04.05.22.26.30.csv",
+            "timestamp": "2023.04.05.22.26.30",
+            "trace_name": "tm.umts.driving.bootstrapped_ucb.2023.04.05.22.26.30.csv"
+        },
+        {
+            "model_name": "bootstrapped_ucb.2023.04.04.04.04.57",
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/trace/vz.evdo.driving.bootstrapped_ucb.2023.04.05.22.27.38.csv",
+            "timestamp": "2023.04.05.22.27.38",
+            "trace_name": "vz.evdo.driving.bootstrapped_ucb.2023.04.05.22.27.38.csv"
+        },
+        {
+            "model_name": "bootstrapped_ucb.2023.04.04.04.04.57",
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/trace/vz.lte.driving.bootstrapped_ucb.2023.04.05.22.28.43.csv",
+            "timestamp": "2023.04.05.22.28.43",
+            "trace_name": "vz.lte.driving.bootstrapped_ucb.2023.04.05.22.28.43.csv"
+        },
+        {
+            "model_name": "bootstrapped_ucb.2023.04.04.04.04.57",
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/trace/vz.lte.short.bootstrapped_ucb.2023.04.05.22.29.47.csv",
+            "timestamp": "2023.04.05.22.29.47",
+            "trace_name": "vz.lte.short.bootstrapped_ucb.2023.04.05.22.29.47.csv"
+        },
+        {
+            "model_name": "bootstrapped_ucb.2023.04.04.04.04.57",
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/trace/bus.bootstrapped_ucb.2023.04.05.22.30.51.csv",
+            "timestamp": "2023.04.05.22.30.51",
+            "trace_name": "bus.bootstrapped_ucb.2023.04.05.22.30.51.csv"
+        },
+        {
+            "model_name": "bootstrapped_ucb.2023.04.04.04.04.57",
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/trace/timessquare.bootstrapped_ucb.2023.04.05.22.31.54.csv",
+            "timestamp": "2023.04.05.22.31.54",
+            "trace_name": "timessquare.bootstrapped_ucb.2023.04.05.22.31.54.csv"
+        },
+        {
+            "model_name": "bootstrapped_ucb.2023.04.04.04.04.57",
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/trace/wired.bootstrapped_ucb.2023.04.05.22.32.57.csv",
+            "timestamp": "2023.04.05.22.32.57",
+            "trace_name": "wired.bootstrapped_ucb.2023.04.05.22.32.57.csv"
+        },
+        {
+            "model_name": "bootstrapped_ucb.2023.04.19.09.08.39",
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/trace/att.lte.driving.bootstrapped_ucb.2023.04.20.09.31.16.csv",
+            "timestamp": "2023.04.20.09.31.16",
+            "trace_name": "att.lte.driving.bootstrapped_ucb.2023.04.20.09.31.16.csv"
+        },
+        {
+            "model_name": "bootstrapped_ucb.2023.04.19.09.08.39",
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/trace/att.lte.driving.2016.bootstrapped_ucb.2023.04.20.09.32.21.csv",
+            "timestamp": "2023.04.20.09.32.21",
+            "trace_name": "att.lte.driving.2016.bootstrapped_ucb.2023.04.20.09.32.21.csv"
+        },
+        {
+            "model_name": "bootstrapped_ucb.2023.04.19.09.08.39",
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/trace/tm.lte.driving.bootstrapped_ucb.2023.04.20.09.33.24.csv",
+            "timestamp": "2023.04.20.09.33.24",
+            "trace_name": "tm.lte.driving.bootstrapped_ucb.2023.04.20.09.33.24.csv"
+        },
+        {
+            "model_name": "bootstrapped_ucb.2023.04.19.09.08.39",
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/trace/tm.lte.short.bootstrapped_ucb.2023.04.20.09.34.29.csv",
+            "timestamp": "2023.04.20.09.34.29",
+            "trace_name": "tm.lte.short.bootstrapped_ucb.2023.04.20.09.34.29.csv"
+        },
+        {
+            "model_name": "bootstrapped_ucb.2023.04.19.09.08.39",
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/trace/tm.umts.driving.bootstrapped_ucb.2023.04.20.09.35.32.csv",
+            "timestamp": "2023.04.20.09.35.32",
+            "trace_name": "tm.umts.driving.bootstrapped_ucb.2023.04.20.09.35.32.csv"
+        },
+        {
+            "model_name": "bootstrapped_ucb.2023.04.19.09.08.39",
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/trace/vz.evdo.driving.bootstrapped_ucb.2023.04.20.09.36.42.csv",
+            "timestamp": "2023.04.20.09.36.42",
+            "trace_name": "vz.evdo.driving.bootstrapped_ucb.2023.04.20.09.36.42.csv"
+        },
+        {
+            "model_name": "bootstrapped_ucb.2023.04.19.09.08.39",
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/trace/vz.lte.driving.bootstrapped_ucb.2023.04.20.09.37.48.csv",
+            "timestamp": "2023.04.20.09.37.48",
+            "trace_name": "vz.lte.driving.bootstrapped_ucb.2023.04.20.09.37.48.csv"
+        },
+        {
+            "model_name": "bootstrapped_ucb.2023.04.19.09.08.39",
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/trace/vz.lte.short.bootstrapped_ucb.2023.04.20.09.39.05.csv",
+            "timestamp": "2023.04.20.09.39.05",
+            "trace_name": "vz.lte.short.bootstrapped_ucb.2023.04.20.09.39.05.csv"
+        },
+        {
+            "model_name": "bootstrapped_ucb.2023.04.19.09.08.39",
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/trace/bus.bootstrapped_ucb.2023.04.20.09.40.09.csv",
+            "timestamp": "2023.04.20.09.40.09",
+            "trace_name": "bus.bootstrapped_ucb.2023.04.20.09.40.09.csv"
+        },
+        {
+            "model_name": "bootstrapped_ucb.2023.04.19.09.08.39",
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/trace/timessquare.bootstrapped_ucb.2023.04.20.09.41.12.csv",
+            "timestamp": "2023.04.20.09.41.12",
+            "trace_name": "timessquare.bootstrapped_ucb.2023.04.20.09.41.12.csv"
+        },
+        {
+            "model_name": "bootstrapped_ucb.2023.04.19.09.08.39",
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/trace/wired.bootstrapped_ucb.2023.04.20.09.42.16.csv",
+            "timestamp": "2023.04.20.09.42.16",
+            "trace_name": "wired.bootstrapped_ucb.2023.04.20.09.42.16.csv"
+        },
+        {
+            "model_name": "bootstrapped_ucb.2023.04.19.09.08.39",
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/trace/att.lte.driving.bootstrapped_ucb.2023.04.20.15.11.02.csv",
+            "timestamp": "2023.04.20.15.11.02",
+            "trace_name": "att.lte.driving.bootstrapped_ucb.2023.04.20.15.11.02.csv"
+        },
+        {
+            "model_name": "bootstrapped_ucb.2023.04.19.09.08.39",
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/trace/att.lte.driving.2016.bootstrapped_ucb.2023.04.20.15.12.08.csv",
+            "timestamp": "2023.04.20.15.12.08",
+            "trace_name": "att.lte.driving.2016.bootstrapped_ucb.2023.04.20.15.12.08.csv"
+        },
+        {
+            "model_name": "bootstrapped_ucb.2023.04.19.09.08.39",
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/trace/tm.lte.driving.bootstrapped_ucb.2023.04.20.15.13.13.csv",
+            "timestamp": "2023.04.20.15.13.13",
+            "trace_name": "tm.lte.driving.bootstrapped_ucb.2023.04.20.15.13.13.csv"
+        },
+        {
+            "model_name": "bootstrapped_ucb.2023.04.19.09.08.39",
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/trace/tm.lte.short.bootstrapped_ucb.2023.04.20.15.14.16.csv",
+            "timestamp": "2023.04.20.15.14.16",
+            "trace_name": "tm.lte.short.bootstrapped_ucb.2023.04.20.15.14.16.csv"
+        },
+        {
+            "model_name": "bootstrapped_ucb.2023.04.19.09.08.39",
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/trace/tm.umts.driving.bootstrapped_ucb.2023.04.20.15.15.20.csv",
+            "timestamp": "2023.04.20.15.15.20",
+            "trace_name": "tm.umts.driving.bootstrapped_ucb.2023.04.20.15.15.20.csv"
+        },
+        {
+            "model_name": "bootstrapped_ucb.2023.04.19.09.08.39",
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/trace/vz.evdo.driving.bootstrapped_ucb.2023.04.20.15.16.32.csv",
+            "timestamp": "2023.04.20.15.16.32",
+            "trace_name": "vz.evdo.driving.bootstrapped_ucb.2023.04.20.15.16.32.csv"
+        },
+        {
+            "model_name": "bootstrapped_ucb.2023.04.19.09.08.39",
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/trace/vz.lte.driving.bootstrapped_ucb.2023.04.20.15.17.39.csv",
+            "timestamp": "2023.04.20.15.17.39",
+            "trace_name": "vz.lte.driving.bootstrapped_ucb.2023.04.20.15.17.39.csv"
+        },
+        {
+            "model_name": "bootstrapped_ucb.2023.04.19.09.08.39",
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/trace/vz.lte.short.bootstrapped_ucb.2023.04.20.15.18.44.csv",
+            "timestamp": "2023.04.20.15.18.44",
+            "trace_name": "vz.lte.short.bootstrapped_ucb.2023.04.20.15.18.44.csv"
+        },
+        {
+            "model_name": "bootstrapped_ucb.2023.04.19.09.08.39",
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/trace/bus.bootstrapped_ucb.2023.04.20.15.19.48.csv",
+            "timestamp": "2023.04.20.15.19.48",
+            "trace_name": "bus.bootstrapped_ucb.2023.04.20.15.19.48.csv"
+        },
+        {
+            "model_name": "bootstrapped_ucb.2023.04.19.09.08.39",
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/trace/timessquare.bootstrapped_ucb.2023.04.20.15.20.52.csv",
+            "timestamp": "2023.04.20.15.20.52",
+            "trace_name": "timessquare.bootstrapped_ucb.2023.04.20.15.20.52.csv"
+        },
+        {
+            "model_name": "bootstrapped_ucb.2023.04.19.09.08.39",
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/trace/wired.bootstrapped_ucb.2023.04.20.15.21.55.csv",
+            "timestamp": "2023.04.20.15.21.55",
+            "trace_name": "wired.bootstrapped_ucb.2023.04.20.15.21.55.csv"
+        },
+        {
+            "model_name": "bootstrapped_ucb.2023.04.19.09.08.39",
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/trace/att.lte.driving.bootstrapped_ucb.2023.04.20.15.22.57.csv",
+            "timestamp": "2023.04.20.15.22.57",
+            "trace_name": "att.lte.driving.bootstrapped_ucb.2023.04.20.15.22.57.csv"
+        },
+        {
+            "model_name": "bootstrapped_ucb.2023.04.19.09.08.39",
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/trace/att.lte.driving.2016.bootstrapped_ucb.2023.04.20.15.24.01.csv",
+            "timestamp": "2023.04.20.15.24.01",
+            "trace_name": "att.lte.driving.2016.bootstrapped_ucb.2023.04.20.15.24.01.csv"
+        },
+        {
+            "model_name": "bootstrapped_ucb.2023.04.19.09.08.39",
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/trace/tm.lte.driving.bootstrapped_ucb.2023.04.20.15.25.05.csv",
+            "timestamp": "2023.04.20.15.25.05",
+            "trace_name": "tm.lte.driving.bootstrapped_ucb.2023.04.20.15.25.05.csv"
+        },
+        {
+            "model_name": "bootstrapped_ucb.2023.04.19.09.08.39",
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/trace/tm.lte.short.bootstrapped_ucb.2023.04.20.15.25.08.csv",
+            "timestamp": "2023.04.20.15.25.08",
+            "trace_name": "tm.lte.short.bootstrapped_ucb.2023.04.20.15.25.08.csv"
+        },
+        {
+            "model_name": "bootstrapped_ucb.2023.04.19.09.08.39",
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/trace/tm.umts.driving.bootstrapped_ucb.2023.04.20.15.25.11.csv",
+            "timestamp": "2023.04.20.15.25.11",
+            "trace_name": "tm.umts.driving.bootstrapped_ucb.2023.04.20.15.25.11.csv"
+        },
+        {
+            "model_name": "bootstrapped_ucb.2023.04.19.09.08.39",
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/trace/vz.evdo.driving.bootstrapped_ucb.2023.04.20.15.25.13.csv",
+            "timestamp": "2023.04.20.15.25.13",
+            "trace_name": "vz.evdo.driving.bootstrapped_ucb.2023.04.20.15.25.13.csv"
+        },
+        {
+            "model_name": "bootstrapped_ucb.2023.04.19.09.08.39",
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/trace/vz.lte.driving.bootstrapped_ucb.2023.04.20.15.25.17.csv",
+            "timestamp": "2023.04.20.15.25.17",
+            "trace_name": "vz.lte.driving.bootstrapped_ucb.2023.04.20.15.25.17.csv"
+        },
+        {
+            "model_name": "bootstrapped_ucb.2023.04.19.09.08.39",
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/trace/vz.lte.short.bootstrapped_ucb.2023.04.20.15.25.22.csv",
+            "timestamp": "2023.04.20.15.25.22",
+            "trace_name": "vz.lte.short.bootstrapped_ucb.2023.04.20.15.25.22.csv"
+        },
+        {
+            "model_name": "bootstrapped_ucb.2023.04.19.09.08.39",
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/trace/bus.bootstrapped_ucb.2023.04.20.15.25.24.csv",
+            "timestamp": "2023.04.20.15.25.24",
+            "trace_name": "bus.bootstrapped_ucb.2023.04.20.15.25.24.csv"
+        },
+        {
+            "model_name": "bootstrapped_ucb.2023.04.19.09.08.39",
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/trace/timessquare.bootstrapped_ucb.2023.04.20.15.25.26.csv",
+            "timestamp": "2023.04.20.15.25.26",
+            "trace_name": "timessquare.bootstrapped_ucb.2023.04.20.15.25.26.csv"
+        },
+        {
+            "model_name": "bootstrapped_ucb.2023.04.19.09.08.39",
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/trace/wired.bootstrapped_ucb.2023.04.20.15.25.29.csv",
+            "timestamp": "2023.04.20.15.25.29",
+            "trace_name": "wired.bootstrapped_ucb.2023.04.20.15.25.29.csv"
+        },
+        {
+            "model_name": "bootstrapped_ucb.2023.04.19.09.08.39",
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/trace/att.lte.driving.bootstrapped_ucb.2023.04.20.15.25.31.csv",
+            "timestamp": "2023.04.20.15.25.31",
+            "trace_name": "att.lte.driving.bootstrapped_ucb.2023.04.20.15.25.31.csv"
+        },
+        {
+            "model_name": "bootstrapped_ucb.2023.04.19.09.08.39",
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/trace/att.lte.driving.2016.bootstrapped_ucb.2023.04.20.15.25.35.csv",
+            "timestamp": "2023.04.20.15.25.35",
+            "trace_name": "att.lte.driving.2016.bootstrapped_ucb.2023.04.20.15.25.35.csv"
+        },
+        {
+            "model_name": "bootstrapped_ucb.2023.04.19.09.08.39",
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/trace/tm.lte.driving.bootstrapped_ucb.2023.04.20.15.25.37.csv",
+            "timestamp": "2023.04.20.15.25.37",
+            "trace_name": "tm.lte.driving.bootstrapped_ucb.2023.04.20.15.25.37.csv"
+        },
+        {
+            "model_name": "bootstrapped_ucb.2023.04.19.09.08.39",
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/trace/tm.lte.short.bootstrapped_ucb.2023.04.20.15.25.40.csv",
+            "timestamp": "2023.04.20.15.25.40",
+            "trace_name": "tm.lte.short.bootstrapped_ucb.2023.04.20.15.25.40.csv"
+        },
+        {
+            "model_name": "bootstrapped_ucb.2023.04.19.09.08.39",
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/trace/tm.umts.driving.bootstrapped_ucb.2023.04.20.15.25.43.csv",
+            "timestamp": "2023.04.20.15.25.43",
+            "trace_name": "tm.umts.driving.bootstrapped_ucb.2023.04.20.15.25.43.csv"
+        },
+        {
+            "model_name": "bootstrapped_ucb.2023.04.19.09.08.39",
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/trace/vz.evdo.driving.bootstrapped_ucb.2023.04.20.15.25.45.csv",
+            "timestamp": "2023.04.20.15.25.45",
+            "trace_name": "vz.evdo.driving.bootstrapped_ucb.2023.04.20.15.25.45.csv"
+        },
+        {
+            "model_name": "bootstrapped_ucb.2023.04.19.09.08.39",
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/trace/vz.lte.driving.bootstrapped_ucb.2023.04.20.15.25.49.csv",
+            "timestamp": "2023.04.20.15.25.49",
+            "trace_name": "vz.lte.driving.bootstrapped_ucb.2023.04.20.15.25.49.csv"
+        },
+        {
+            "model_name": "bootstrapped_ucb.2023.04.19.09.08.39",
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/trace/vz.lte.short.bootstrapped_ucb.2023.04.20.15.25.53.csv",
+            "timestamp": "2023.04.20.15.25.53",
+            "trace_name": "vz.lte.short.bootstrapped_ucb.2023.04.20.15.25.53.csv"
+        },
+        {
+            "model_name": "bootstrapped_ucb.2023.04.19.09.08.39",
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/trace/bus.bootstrapped_ucb.2023.04.20.15.25.56.csv",
+            "timestamp": "2023.04.20.15.25.56",
+            "trace_name": "bus.bootstrapped_ucb.2023.04.20.15.25.56.csv"
+        },
+        {
+            "model_name": "bootstrapped_ucb.2023.04.19.09.08.39",
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/trace/timessquare.bootstrapped_ucb.2023.04.20.15.25.58.csv",
+            "timestamp": "2023.04.20.15.25.58",
+            "trace_name": "timessquare.bootstrapped_ucb.2023.04.20.15.25.58.csv"
+        },
+        {
+            "model_name": "bootstrapped_ucb.2023.04.19.09.08.39",
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/trace/wired.bootstrapped_ucb.2023.04.20.15.26.00.csv",
+            "timestamp": "2023.04.20.15.26.00",
+            "trace_name": "wired.bootstrapped_ucb.2023.04.20.15.26.00.csv"
+        },
+        {
+            "model_name": "bootstrapped_ucb.2023.04.19.09.08.39",
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/trace/att.lte.driving.bootstrapped_ucb.2023.04.20.15.26.03.csv",
+            "timestamp": "2023.04.20.15.26.03",
+            "trace_name": "att.lte.driving.bootstrapped_ucb.2023.04.20.15.26.03.csv"
+        },
+        {
+            "model_name": "bootstrapped_ucb.2023.04.19.09.08.39",
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/trace/att.lte.driving.2016.bootstrapped_ucb.2023.04.20.15.26.07.csv",
+            "timestamp": "2023.04.20.15.26.07",
+            "trace_name": "att.lte.driving.2016.bootstrapped_ucb.2023.04.20.15.26.07.csv"
+        },
+        {
+            "model_name": "bootstrapped_ucb.2023.04.19.09.08.39",
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/trace/tm.lte.driving.bootstrapped_ucb.2023.04.20.15.26.09.csv",
+            "timestamp": "2023.04.20.15.26.09",
+            "trace_name": "tm.lte.driving.bootstrapped_ucb.2023.04.20.15.26.09.csv"
+        },
+        {
+            "model_name": "bootstrapped_ucb.2023.04.19.09.08.39",
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/trace/tm.lte.short.bootstrapped_ucb.2023.04.20.15.26.13.csv",
+            "timestamp": "2023.04.20.15.26.13",
+            "trace_name": "tm.lte.short.bootstrapped_ucb.2023.04.20.15.26.13.csv"
+        },
+        {
+            "model_name": "bootstrapped_ucb.2023.04.19.09.08.39",
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/trace/tm.umts.driving.bootstrapped_ucb.2023.04.20.15.26.15.csv",
+            "timestamp": "2023.04.20.15.26.15",
+            "trace_name": "tm.umts.driving.bootstrapped_ucb.2023.04.20.15.26.15.csv"
+        },
+        {
+            "model_name": "bootstrapped_ucb.2023.04.19.09.08.39",
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/trace/vz.evdo.driving.bootstrapped_ucb.2023.04.20.15.26.18.csv",
+            "timestamp": "2023.04.20.15.26.18",
+            "trace_name": "vz.evdo.driving.bootstrapped_ucb.2023.04.20.15.26.18.csv"
+        },
+        {
+            "model_name": "bootstrapped_ucb.2023.04.19.09.08.39",
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/trace/vz.lte.driving.bootstrapped_ucb.2023.04.20.15.26.22.csv",
+            "timestamp": "2023.04.20.15.26.22",
+            "trace_name": "vz.lte.driving.bootstrapped_ucb.2023.04.20.15.26.22.csv"
+        },
+        {
+            "model_name": "bootstrapped_ucb.2023.04.19.09.08.39",
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/trace/vz.lte.short.bootstrapped_ucb.2023.04.20.15.26.26.csv",
+            "timestamp": "2023.04.20.15.26.26",
+            "trace_name": "vz.lte.short.bootstrapped_ucb.2023.04.20.15.26.26.csv"
+        },
+        {
+            "model_name": "bootstrapped_ucb.2023.04.19.09.08.39",
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/trace/bus.bootstrapped_ucb.2023.04.20.15.26.29.csv",
+            "timestamp": "2023.04.20.15.26.29",
+            "trace_name": "bus.bootstrapped_ucb.2023.04.20.15.26.29.csv"
+        },
+        {
+            "model_name": "bootstrapped_ucb.2023.04.19.09.08.39",
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/trace/timessquare.bootstrapped_ucb.2023.04.20.15.26.31.csv",
+            "timestamp": "2023.04.20.15.26.31",
+            "trace_name": "timessquare.bootstrapped_ucb.2023.04.20.15.26.31.csv"
+        },
+        {
+            "model_name": "bootstrapped_ucb.2023.04.19.09.08.39",
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/trace/wired.bootstrapped_ucb.2023.04.20.15.26.33.csv",
+            "timestamp": "2023.04.20.15.26.33",
+            "trace_name": "wired.bootstrapped_ucb.2023.04.20.15.26.33.csv"
+        },
+        {
+            "model_name": "bootstrapped_ucb.2023.04.19.09.08.39",
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/trace/att.lte.driving.bootstrapped_ucb.2023.04.22.14.28.45.csv",
+            "timestamp": "2023.04.22.14.28.45",
+            "trace_name": "att.lte.driving.bootstrapped_ucb.2023.04.22.14.28.45.csv"
+        },
+        {
+            "model_name": "bootstrapped_ucb.2023.04.19.09.08.39",
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/trace/att.lte.driving.2016.bootstrapped_ucb.2023.04.22.14.29.49.csv",
+            "timestamp": "2023.04.22.14.29.49",
+            "trace_name": "att.lte.driving.2016.bootstrapped_ucb.2023.04.22.14.29.49.csv"
+        },
+        {
+            "model_name": "bootstrapped_ucb.2023.04.19.09.08.39",
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/trace/tm.lte.driving.bootstrapped_ucb.2023.04.22.14.30.52.csv",
+            "timestamp": "2023.04.22.14.30.52",
+            "trace_name": "tm.lte.driving.bootstrapped_ucb.2023.04.22.14.30.52.csv"
+        },
+        {
+            "model_name": "bootstrapped_ucb.2023.04.19.09.08.39",
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/trace/tm.lte.short.bootstrapped_ucb.2023.04.22.14.31.56.csv",
+            "timestamp": "2023.04.22.14.31.56",
+            "trace_name": "tm.lte.short.bootstrapped_ucb.2023.04.22.14.31.56.csv"
+        },
+        {
+            "model_name": "bootstrapped_ucb.2023.04.19.09.08.39",
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/trace/tm.umts.driving.bootstrapped_ucb.2023.04.22.14.33.00.csv",
+            "timestamp": "2023.04.22.14.33.00",
+            "trace_name": "tm.umts.driving.bootstrapped_ucb.2023.04.22.14.33.00.csv"
+        },
+        {
+            "model_name": "bootstrapped_ucb.2023.04.19.09.08.39",
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/trace/vz.evdo.driving.bootstrapped_ucb.2023.04.22.14.34.09.csv",
+            "timestamp": "2023.04.22.14.34.09",
+            "trace_name": "vz.evdo.driving.bootstrapped_ucb.2023.04.22.14.34.09.csv"
+        },
+        {
+            "model_name": "bootstrapped_ucb.2023.04.19.09.08.39",
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/trace/vz.lte.driving.bootstrapped_ucb.2023.04.22.14.35.17.csv",
+            "timestamp": "2023.04.22.14.35.17",
+            "trace_name": "vz.lte.driving.bootstrapped_ucb.2023.04.22.14.35.17.csv"
+        },
+        {
+            "model_name": "bootstrapped_ucb.2023.04.19.09.08.39",
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/trace/vz.lte.short.bootstrapped_ucb.2023.04.22.14.36.22.csv",
+            "timestamp": "2023.04.22.14.36.22",
+            "trace_name": "vz.lte.short.bootstrapped_ucb.2023.04.22.14.36.22.csv"
+        },
+        {
+            "model_name": "bootstrapped_ucb.2023.04.19.09.08.39",
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/trace/bus.bootstrapped_ucb.2023.04.22.14.37.25.csv",
+            "timestamp": "2023.04.22.14.37.25",
+            "trace_name": "bus.bootstrapped_ucb.2023.04.22.14.37.25.csv"
+        },
+        {
+            "model_name": "bootstrapped_ucb.2023.04.19.09.08.39",
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/trace/timessquare.bootstrapped_ucb.2023.04.22.14.38.27.csv",
+            "timestamp": "2023.04.22.14.38.27",
+            "trace_name": "timessquare.bootstrapped_ucb.2023.04.22.14.38.27.csv"
+        },
+        {
+            "model_name": "bootstrapped_ucb.2023.04.19.09.08.39",
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/trace/wired.bootstrapped_ucb.2023.04.22.14.39.30.csv",
+            "timestamp": "2023.04.22.14.39.30",
+            "trace_name": "wired.bootstrapped_ucb.2023.04.22.14.39.30.csv"
+        },
+        {
+            "model_name": "bootstrapped_ucb.2023.04.26.13.23.54",
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/trace/att.lte.driving.bootstrapped_ucb.2023.04.26.15.26.36.csv",
+            "timestamp": "2023.04.26.15.26.36",
+            "trace_name": "att.lte.driving.bootstrapped_ucb.2023.04.26.15.26.36.csv"
+        }
+    ]
+}
