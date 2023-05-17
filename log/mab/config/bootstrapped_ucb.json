@@ -726,6 +726,12 @@
             "path": "/home/lorenzo/Desktop/mimic-2/log/mab/trace/att.lte.driving.bootstrapped_ucb.2023.04.26.15.26.36.csv",
             "timestamp": "2023.04.26.15.26.36",
             "trace_name": "att.lte.driving.bootstrapped_ucb.2023.04.26.15.26.36.csv"
+        },
+        {
+            "model_name": "bootstrapped_ucb.2023.05.15.17.14.24",
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/trace/att.lte.driving.2016.bootstrapped_ucb.2023.05.16.19.13.16.csv",
+            "timestamp": "2023.05.16.19.13.16",
+            "trace_name": "att.lte.driving.2016.bootstrapped_ucb.2023.05.16.19.13.16.csv"
         }
     ]
 }

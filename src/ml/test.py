@@ -50,21 +50,11 @@ class Tester(Base):
 
     def init_runners(self) -> dict:
 
-        num_features = int(self.train_config['num_features'])
-        window_len = int(self.train_config['window_len'])
-        jiffies_per_state = int(self.train_config['jiffies_per_state'])
-        num_fields_kernel = int(self.train_config['num_fields_kernel'])
-        steps_per_episode = int(self.train_config['steps_per_episode']) if not(self.train_config["debug"]) \
-            else 5
-        delta = float(self.train_config['delta'])
-        lr = float(self.train_config['lr'])
-        step_wait_seconds = float(self.train_config['step_wait_seconds'])
-
         runners = {
 
             # 'active_explorer': ActiveExplorerRunner(self.nchoices, lr, num_features, window_len, num_fields_kernel, jiffies_per_state, steps_per_episode, delta, step_wait_seconds, self.netlink_communicator, self.moderator),
 
-            'adaptive_greedy_threshold': AdaptiveGreedyThresholdRunner(self.nchoices, lr, num_features, window_len, num_fields_kernel, jiffies_per_state, steps_per_episode, delta, step_wait_seconds, self.netlink_communicator, self.moderator, self.trace, reward_name=self.args.reward, model_name=self.args.model_name),
+            'adaptive_greedy_threshold': AdaptiveGreedyThresholdRunner,
 
             # 'adaptive_greedy_weighted': AdaptiveGreedyWeightedRunner(self.nchoices, lr, num_features, window_len, num_fields_kernel, jiffies_per_state, steps_per_episode, delta, step_wait_seconds, self.netlink_communicator, self.moderator),
 
@@ -72,19 +62,19 @@ class Tester(Base):
 
             # 'bootstrapped_ts': BootstrappedTSRunner(self.nchoices, lr, num_features, window_len, num_fields_kernel, jiffies_per_state, steps_per_episode, delta, step_wait_seconds, self.netlink_communicator, self.moderator),
 
-            'bootstrapped_ucb': BootstrappedUCBRunner(self.nchoices, lr, num_features, window_len, num_fields_kernel, jiffies_per_state, steps_per_episode, delta, step_wait_seconds, self.netlink_communicator, self.moderator, self.trace, reward_name=self.args.reward, model_name=self.args.model_name),
+            'bootstrapped_ucb': BootstrappedUCBRunner, 
 
             # 'epsilon_greedy_decay': EpsilonGreedyDecayRunner(self.nchoices, lr, num_features, window_len, num_fields_kernel, jiffies_per_state, steps_per_episode, delta, step_wait_seconds, self.netlink_communicator, self.moderator),
 
-            'epsilon_greedy': EpsilonGreedyRunner(self.nchoices, lr, num_features, window_len, num_fields_kernel, jiffies_per_state, steps_per_episode, delta, step_wait_seconds, self.netlink_communicator, self.moderator, self.trace, reward_name=self.args.reward, model_name=self.args.model_name),
-
+            'epsilon_greedy': EpsilonGreedyRunner,
+            
             # 'explore_first': ExploreFirstRunner(self.nchoices, lr, num_features, window_len, num_fields_kernel, jiffies_per_state, steps_per_episode, delta, step_wait_seconds, self.netlink_communicator, self.moderator),
 
             # 'separate_classifiers': SeparateClassifiersRunner(self.nchoices, lr, num_features, window_len, num_fields_kernel, jiffies_per_state, steps_per_episode, delta, step_wait_seconds, self.netlink_communicator, self.moderator),
 
             # 'softmax_explorer': SoftmaxExplorerRunner(self.nchoices, lr, num_features, window_len, num_fields_kernel, jiffies_per_state, steps_per_episode, delta, step_wait_seconds, self.netlink_communicator, self.moderator)
         
-            'random_policy': RandomRunner(self.nchoices, lr, num_features, window_len, num_fields_kernel, jiffies_per_state, steps_per_episode, delta, step_wait_seconds, self.netlink_communicator, self.moderator, self.trace, reward_name=self.args.reward, model_name=self.args.model_name)
+            'random_policy': RandomRunner
         }
 
         return runners
@@ -116,13 +106,26 @@ class Tester(Base):
             print(traceback.format_exc())
 
     def run_model(self, model: str, indexer: int) -> None:
+        
+        num_features = int(self.train_config['num_features'])
+        window_len = int(self.train_config['window_len'])
+        jiffies_per_state = int(self.train_config['jiffies_per_state'])
+        num_fields_kernel = int(self.train_config['num_fields_kernel'])
+        steps_per_episode = int(self.train_config['steps_per_episode']) if not(self.train_config["debug"]) \
+            else 5
+        delta = float(self.train_config['delta'])
+        lr = float(self.train_config['lr'])
+        step_wait_seconds = float(self.train_config['step_wait_seconds'])
+        
         try:
             print(f'#{indexer}: running test for model: {model}')
 
             # Start client and server communication (mahimahi + iperf3)
             self.start_communication(tag=f'{self.args.trace}.{model}')
 
-            runner: BaseRunner = self.model_runners[model]
+            runner: BaseRunner = self.model_runners[model](
+                self.nchoices, lr, num_features, window_len, num_fields_kernel, jiffies_per_state, steps_per_episode, delta, step_wait_seconds, self.netlink_communicator, self.moderator, self.trace, reward_name=self.args.reward, model_name=self.args.model_name
+            )
 
             # test
             try:

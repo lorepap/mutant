@@ -51,7 +51,7 @@ class MabBaseRunner(BaseRunner):
         self.num_fields_kernel = num_fields_kernel
 
         if self.model_name != None and self.model_name.split(".")[0]==self.get_tag():
-            self.load_model_by_name(self.config, self.model_path, self.model_name)
+            self.model = self.load_model_by_name(self.config, self.model_path, self.model_name)
         else:
             self.set_latest(self.model_path, retrain)
 
