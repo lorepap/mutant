@@ -30,10 +30,10 @@ def run_experiments(args):
     yaml_data = utils.parse_traces_config()
 
     for model in args.models:
-        for trace in args.traces:
+        for i, trace in enumerate(args.traces):
             print(f"Training {model} on {trace}")
 
-            if args.retrain:
+            if args.retrain or i > 0: # the same model will be retrained on multiple input traces
                 retrain = 1
             else:
                 retrain = 0
