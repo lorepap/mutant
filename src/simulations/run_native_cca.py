@@ -24,18 +24,18 @@ def run_experiments(items):
 
     # Loop over the traces
     for p in items.protocol:
-        #   for i, trace_name in enumerate(trace_data["traces"].keys()):
-        trace_name = 'att.lte.driving.2016'
-        if items.debug:
-            command = f'python3 {SCRIPT_FILENAME} -p {p} -t {trace_name} -e {items.iperf_duration} -x {ip}'
-        else:
-            command = f'python3 {SCRIPT_FILENAME} -p {p} -t {trace_name} -e {items.iperf_duration} -x {ip}'
+        for i, trace_name in enumerate(trace_data["traces"].keys()):
+            # trace_name = 'att.lte.driving.2016'
+            if items.debug:
+                command = f'python3 {SCRIPT_FILENAME} -p {p} -t {trace_name} -e {items.iperf_duration} -x {ip}'
+            else:
+                command = f'python3 {SCRIPT_FILENAME} -p {p} -t {trace_name} -e {items.iperf_duration} -x {ip}'
 
-        subprocess.call(command, shell=True, stderr=sys.stderr)
+            subprocess.call(command, shell=True, stderr=sys.stderr)
         
-        # except subprocess.CalledProcessError as e:
-        #     print(f"Error running command '{command}': {e}")
-        #     raise e
+            # except subprocess.CalledProcessError as e:
+            #     print(f"Error running command '{command}': {e}")
+            #     raise e
 
 if __name__ == "__main__":
     parser = ArgumentParser()

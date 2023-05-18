@@ -2,8 +2,8 @@
 #define __MIMIC_H 1
 
 /* user communication */
-#define ARM_COUNT 3
-#define INIT_MSG "0:cubic;1:bbr;2:hybla"
+#define ARM_COUNT 4
+#define INIT_MSG "0:cubic;1:bbr;2:hybla;3:vegas"
 
 /* tcp_input.c flags */
 #define FLAG_DATA_ACKED		0x04 /* This ACK acknowledged new data.		*/
@@ -47,14 +47,14 @@ struct arm {
 	u32	last_ack;	/* last time when the ACK spacing is close */
 	u32	curr_rtt;	/* the minimum rtt of current round */
 
-// /* Vegas variables */
-// 	u32	beg_snd_nxt;	/* right edge during last RTT */
-// 	u32	beg_snd_una;	/* left edge  during last RTT */
-// 	u32	beg_snd_cwnd;	/* saves the size of the cwnd */
-// 	u8	doing_vegas_now;/* if true, do vegas for this RTT */
-// 	u16	cntRTT;		/* # of RTTs measured within last RTT */
-// 	u32	minRTT;		/* min of RTTs measured within last RTT (in usec) */
-// 	u32	baseRTT;	/* the min of all Vegas RTT measurements seen (in usec) */
+/* Vegas variables */
+	u32	beg_snd_nxt;	/* right edge during last RTT */
+	u32	beg_snd_una;	/* left edge  during last RTT */
+	u32	beg_snd_cwnd;	/* saves the size of the cwnd */
+	u8	doing_vegas_now;/* if true, do vegas for this RTT */
+	u16	cntRTT;		/* # of RTTs measured within last RTT */
+	u32	minRTT;		/* min of RTTs measured within last RTT (in usec) */
+	u32	baseRTT;	/* the min of all Vegas RTT measurements seen (in usec) */
 
 /* Hybla struct */
 	bool  hybla_en;
