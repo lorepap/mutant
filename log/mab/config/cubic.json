@@ -3,21 +3,6 @@
     "runs": [],
     "traces": [
         {
-            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/trace/att.lte.driving.cubic.2023.04.21.19.26.38.csv",
-            "timestamp": "2023.04.21.19.26.38",
-            "trace_name": "att.lte.driving.cubic.2023.04.21.19.26.38.csv"
-        },
-        {
-            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/trace/att.lte.driving.cubic.2023.04.21.19.52.44.csv",
-            "timestamp": "2023.04.21.19.52.44",
-            "trace_name": "att.lte.driving.cubic.2023.04.21.19.52.44.csv"
-        },
-        {
-            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/trace/att.lte.driving.cubic.2023.04.21.19.59.48.csv",
-            "timestamp": "2023.04.21.19.59.48",
-            "trace_name": "att.lte.driving.cubic.2023.04.21.19.59.48.csv"
-        },
-        {
             "path": "/home/lorenzo/Desktop/mimic-2/log/mab/trace/att.lte.driving.cubic.2023.04.21.20.33.54.csv",
             "timestamp": "2023.04.21.20.33.54",
             "trace_name": "att.lte.driving.cubic.2023.04.21.20.33.54.csv"
