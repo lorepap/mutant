@@ -3,6 +3,7 @@
 #include "protocol/cubic.h"
 #include "protocol/hybla.h"
 #include "protocol/bbr.h"
+#include "protocol/vegas.h"
 
 #include "protocol/mimic.h"
 
@@ -219,6 +220,7 @@ static void onInit(struct sock *sk)
     bictcp_init(sk);
 	bbr_init(sk);
 	hybla_init(sk);
+	tcp_vegas_init(sk);
 }
 
 static void onPacketsAcked(struct sock *sk, const struct ack_sample *sample)
@@ -233,6 +235,7 @@ static void onPacketsAcked(struct sock *sk, const struct ack_sample *sample)
 		case 0: bictcp_acked(sk, sample);
 		case 1: return;
 		case 2: return;
+		case 3: tcp_vegas_pkts_acked(sk, sample);
 		default: bictcp_acked(sk, sample);
 	}
 }
@@ -243,6 +246,7 @@ static u32 onUndoCwnd(struct sock *sk){
 		case 0: return tcp_reno_undo_cwnd(sk);
 		case 1: return bbr_undo_cwnd(sk);
 		case 2: return tcp_reno_undo_cwnd(sk);
+		case 3: return tcp_reno_undo_cwnd(sk);
 		default: return tcp_reno_undo_cwnd(sk);
 	}
 }
@@ -253,6 +257,7 @@ static u32 onSshthresh(struct sock *sk){
     	case 0: return bictcp_recalc_ssthresh(sk);
 		case 1: return bbr_ssthresh(sk);
 		case 2: return tcp_reno_ssthresh(sk);
+		case 3: return tcp_reno_ssthresh(sk);
 		default: return bictcp_recalc_ssthresh(sk);
 	}
 }
@@ -264,6 +269,7 @@ static void onAvoidCongestion(struct sock *sk, u32 ack, u32 acked){
     	case 0: bictcp_cong_avoid(sk, ack, acked);
 		case 1: return;
 		case 2: hybla_cong_avoid(sk, ack, acked);
+		case 3: tcp_vegas_cong_avoid(sk, ack, acked);
 		default: bictcp_cong_avoid(sk, ack, acked);
 	}
 }
@@ -275,6 +281,7 @@ static void onCongestionEvent(struct sock *sk, enum tcp_ca_event event)
      	case 0: bictcp_cwnd_event(sk, event);
 		case 1: bbr_cwnd_event(sk, event);
 		case 2: return;
+		case 3: tcp_vegas_cwnd_event;
 		default: bictcp_cwnd_event(sk, event);
 	}
 }
@@ -286,6 +293,7 @@ static void onSetState (struct sock *sk, __u8 new_state)
 		case 0:	bictcp_state(sk, new_state);
 		case 1: bbr_set_state(sk, new_state);
 		case 2: hybla_state(sk, new_state);
+		case 3: tcp_vegas_state(sk, new_state);
 		default: bictcp_state(sk, new_state);
 	}
 }
@@ -407,6 +415,7 @@ static u32 onSndbuf_expand(struct sock *sk)
 		case 0:	return 1;
 		case 1:	return bbr_sndbuf_expand(sk);
 		case 2:	return 1;
+		case 3: return 1;
 		default: return 1;
 	}
 }
@@ -418,6 +427,7 @@ static u32 onMintso_segs(struct sock *sk)
 		case 0:	return 1;
 		case 1: return bbr_min_tso_segs(sk);
 		case 2:	return 1;
+		case 3: return 1;
 		default: return 1;
 	}
 }

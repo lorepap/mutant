@@ -1,0 +1,61 @@
+{
+    "models": [],
+    "runs": [],
+    "traces": [
+        {
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/trace/att.lte.driving.vegas.2023.05.18.12.10.39.csv",
+            "timestamp": "2023.05.18.12.10.39",
+            "trace_name": "att.lte.driving.vegas.2023.05.18.12.10.39.csv"
+        },
+        {
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/trace/att.lte.driving.2016.vegas.2023.05.18.12.13.10.csv",
+            "timestamp": "2023.05.18.12.13.10",
+            "trace_name": "att.lte.driving.2016.vegas.2023.05.18.12.13.10.csv"
+        },
+        {
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/trace/tm.lte.driving.vegas.2023.05.18.12.14.22.csv",
+            "timestamp": "2023.05.18.12.14.22",
+            "trace_name": "tm.lte.driving.vegas.2023.05.18.12.14.22.csv"
+        },
+        {
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/trace/tm.lte.short.vegas.2023.05.18.12.15.26.csv",
+            "timestamp": "2023.05.18.12.15.26",
+            "trace_name": "tm.lte.short.vegas.2023.05.18.12.15.26.csv"
+        },
+        {
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/trace/tm.umts.driving.vegas.2023.05.18.12.17.02.csv",
+            "timestamp": "2023.05.18.12.17.02",
+            "trace_name": "tm.umts.driving.vegas.2023.05.18.12.17.02.csv"
+        },
+        {
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/trace/vz.evdo.driving.vegas.2023.05.18.12.18.45.csv",
+            "timestamp": "2023.05.18.12.18.45",
+            "trace_name": "vz.evdo.driving.vegas.2023.05.18.12.18.45.csv"
+        },
+        {
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/trace/vz.lte.driving.vegas.2023.05.18.12.20.13.csv",
+            "timestamp": "2023.05.18.12.20.13",
+            "trace_name": "vz.lte.driving.vegas.2023.05.18.12.20.13.csv"
+        },
+        {
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/trace/vz.lte.short.vegas.2023.05.18.12.21.38.csv",
+            "timestamp": "2023.05.18.12.21.38",
+            "trace_name": "vz.lte.short.vegas.2023.05.18.12.21.38.csv"
+        },
+        {
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/trace/bus.vegas.2023.05.18.12.23.11.csv",
+            "timestamp": "2023.05.18.12.23.11",
+            "trace_name": "bus.vegas.2023.05.18.12.23.11.csv"
+        },
+        {
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/trace/timessquare.vegas.2023.05.18.12.24.44.csv",
+            "timestamp": "2023.05.18.12.24.44",
+            "trace_name": "timessquare.vegas.2023.05.18.12.24.44.csv"
+        },
+        {
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/trace/wired.vegas.2023.05.18.12.30.58.csv",
+            "timestamp": "2023.05.18.12.30.58",
+            "trace_name": "wired.vegas.2023.05.18.12.30.58.csv"
+        }
+    ]
+}
