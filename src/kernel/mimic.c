@@ -4,7 +4,7 @@
 #include "protocol/hybla.h"
 #include "protocol/bbr.h"
 #include "protocol/vegas.h"
-
+#include "protocol/pcc.h"
 #include "protocol/mimic.h"
 
 #define NETLINK_USER 25
@@ -16,11 +16,13 @@
 #define COMM_BEGIN 1
 #define COMM_SELECT_ARM 2
 #define COMM_TEST_NATIVE_PROT 3
+#define COMM_SELECT_OWL_ACTION 4
 
 // Netlink comm variables
 struct sock *nl_sk = NULL;
 static u32 socketId = -1;
 static u32 selectedProtocolId = 0;
+static u32 owlAction = 0;
 
 /*
 protocols:
@@ -136,6 +138,11 @@ static void onMessageRecievedFromApplicationLayer(struct sk_buff *skb)
 		onStartSingleProtocol(nlh);
 		break;
 
+	case COMM_SELECT_OWL_ACTION:
+		selectedProtocolId = 4;
+		owlAction = nlh->nlmsg_seq;
+		break;
+
     default: // testing
 		printk(KERN_INFO "Test message received!");
         break;
@@ -221,6 +228,7 @@ static void onInit(struct sock *sk)
 	bbr_init(sk);
 	hybla_init(sk);
 	tcp_vegas_init(sk);
+	pcc_init(sk);
 }
 
 static void onPacketsAcked(struct sock *sk, const struct ack_sample *sample)
@@ -236,6 +244,7 @@ static void onPacketsAcked(struct sock *sk, const struct ack_sample *sample)
 		case 1: return;
 		case 2: return;
 		case 3: tcp_vegas_pkts_acked(sk, sample);
+		case 4: pcc_pkts_acked(sk, sample);
 		default: bictcp_acked(sk, sample);
 	}
 }
@@ -247,6 +256,7 @@ static u32 onUndoCwnd(struct sock *sk){
 		case 1: return bbr_undo_cwnd(sk);
 		case 2: return tcp_reno_undo_cwnd(sk);
 		case 3: return tcp_reno_undo_cwnd(sk);
+		case 4: return pcc_undo_cwnd(sk);
 		default: return tcp_reno_undo_cwnd(sk);
 	}
 }
@@ -258,6 +268,7 @@ static u32 onSshthresh(struct sock *sk){
 		case 1: return bbr_ssthresh(sk);
 		case 2: return tcp_reno_ssthresh(sk);
 		case 3: return tcp_reno_ssthresh(sk);
+		case 4: return pcc_ssthresh(sk);
 		default: return bictcp_recalc_ssthresh(sk);
 	}
 }
@@ -270,6 +281,7 @@ static void onAvoidCongestion(struct sock *sk, u32 ack, u32 acked){
 		case 1: return;
 		case 2: hybla_cong_avoid(sk, ack, acked);
 		case 3: tcp_vegas_cong_avoid(sk, ack, acked);
+		case 4: pcc_cong_avoid(sk, ack, acked);
 		default: bictcp_cong_avoid(sk, ack, acked);
 	}
 }
@@ -281,7 +293,8 @@ static void onCongestionEvent(struct sock *sk, enum tcp_ca_event event)
      	case 0: bictcp_cwnd_event(sk, event);
 		case 1: bbr_cwnd_event(sk, event);
 		case 2: return;
-		case 3: tcp_vegas_cwnd_event;
+		case 3: tcp_vegas_cwnd_event(sk, event);
+		case 4: pcc_cwnd_event(sk, event);
 		default: bictcp_cwnd_event(sk, event);
 	}
 }
@@ -294,6 +307,7 @@ static void onSetState (struct sock *sk, __u8 new_state)
 		case 1: bbr_set_state(sk, new_state);
 		case 2: hybla_state(sk, new_state);
 		case 3: tcp_vegas_state(sk, new_state);
+		case 4: pcc_set_state(sk, new_state);
 		default: bictcp_state(sk, new_state);
 	}
 }
@@ -307,6 +321,11 @@ static void onMimicCongControl(struct sock *sk, const struct rate_sample *rs, u3
 	{
 		// printk(KERN_INFO "Running bbr %s", __FUNCTION__);
 		bbr_main(sk, rs);
+		return;
+	}
+	else if (selectedProtocolId == 4)
+	{
+		pcc_process_sample(sk, rs);
 		return;
 	}
 	
@@ -412,10 +431,7 @@ static u32 onSndbuf_expand(struct sock *sk)
 {
 	switch (selectedProtocolId)
 	{
-		case 0:	return 1;
 		case 1:	return bbr_sndbuf_expand(sk);
-		case 2:	return 1;
-		case 3: return 1;
 		default: return 1;
 	}
 }
@@ -424,12 +440,20 @@ static u32 onMintso_segs(struct sock *sk)
 {
 	switch (selectedProtocolId)
 	{
-		case 0:	return 1;
 		case 1: return bbr_min_tso_segs(sk);
-		case 2:	return 1;
-		case 3: return 1;
 		default: return 1;
 	}
+}
+
+static void mimic_release(struct sock *sk){
+	if (selectedProtocolId == 4) // PCC
+	{
+		pcc_release(sk);
+	}
+}
+
+static void mimic_ack_event(struct sock *sk, u32 flags)
+{
 }
 
 static struct tcp_congestion_ops tcp_mimic __read_mostly = {
@@ -444,6 +468,8 @@ static struct tcp_congestion_ops tcp_mimic __read_mostly = {
 	// .cong_control = onCongControl,
 	.sndbuf_expand	= onSndbuf_expand,
 	.min_tso_segs	= onMintso_segs,
+	.release        = mimic_release,
+	.in_ack_event = mimic_ack_event,
     .owner = THIS_MODULE,
     .name = "mimic"
 };
