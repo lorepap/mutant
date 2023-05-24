@@ -24,7 +24,8 @@ protocols = {
     "cubic": 0,
     "bbr": 1,
     "hybla": 2,
-    "vegas": 3
+    "vegas": 3,
+    "pcc": 4
 }
 
 class SingleProtocolAgent(Agent):

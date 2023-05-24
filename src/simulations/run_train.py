@@ -22,6 +22,7 @@ from ml.helper import context, utils
 from ml.helper.debug import set_debug
 
 TRAINING_FILENAME = os.path.join(context.ml_dir, "train.py")
+TESTING_FILENAME = os.path.join(context.ml_dir, "test.py")
 
 def run_experiments(args):
     ip = utils.get_private_ip()
@@ -47,6 +48,14 @@ def run_experiments(args):
             
             except subprocess.CalledProcessError as e:
                 print(f"Error running command '{command}': {e}")
+        
+        # # Testing the model
+        # command = f"python3 {TESTING_FILENAME} -m {model} -t {trace} -x {ip}"
+        # try:
+        #     subprocess.check_call(command, shell=True, stderr=sys.stderr, stdin=sys.stdin, stdout=sys.stdout, bufsize=1)
+
+        # except subprocess.CalledProcessError as e:
+        #     print(f"Error running command '{command}': {e}")
 
     
 if __name__ == "__main__":

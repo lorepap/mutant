@@ -52,28 +52,28 @@ class Tester(Base):
 
         runners = {
 
-            # 'active_explorer': ActiveExplorerRunner(self.nchoices, lr, num_features, window_len, num_fields_kernel, jiffies_per_state, steps_per_episode, delta, step_wait_seconds, self.netlink_communicator, self.moderator),
+            'active_explorer': ActiveExplorerRunner,
 
             'adaptive_greedy_threshold': AdaptiveGreedyThresholdRunner,
 
-            # 'adaptive_greedy_weighted': AdaptiveGreedyWeightedRunner(self.nchoices, lr, num_features, window_len, num_fields_kernel, jiffies_per_state, steps_per_episode, delta, step_wait_seconds, self.netlink_communicator, self.moderator),
+            'adaptive_greedy_weighted': AdaptiveGreedyWeightedRunner,
 
-            # 'adaptive_greedy_percentile': AdaptiveGreedyPercentileRunner(self.nchoices, lr, num_features, window_len, num_fields_kernel, jiffies_per_state, steps_per_episode, delta, step_wait_seconds, self.netlink_communicator, self.moderator),
+            'adaptive_greedy_percentile': AdaptiveGreedyPercentileRunner,
 
-            # 'bootstrapped_ts': BootstrappedTSRunner(self.nchoices, lr, num_features, window_len, num_fields_kernel, jiffies_per_state, steps_per_episode, delta, step_wait_seconds, self.netlink_communicator, self.moderator),
+            'bootstrapped_ts': BootstrappedTSRunner,
 
             'bootstrapped_ucb': BootstrappedUCBRunner, 
 
-            # 'epsilon_greedy_decay': EpsilonGreedyDecayRunner(self.nchoices, lr, num_features, window_len, num_fields_kernel, jiffies_per_state, steps_per_episode, delta, step_wait_seconds, self.netlink_communicator, self.moderator),
-
+            'epsilon_greedy_decay': EpsilonGreedyDecayRunner,
+            
             'epsilon_greedy': EpsilonGreedyRunner,
             
-            # 'explore_first': ExploreFirstRunner(self.nchoices, lr, num_features, window_len, num_fields_kernel, jiffies_per_state, steps_per_episode, delta, step_wait_seconds, self.netlink_communicator, self.moderator),
+            'explore_first': ExploreFirstRunner,
 
-            # 'separate_classifiers': SeparateClassifiersRunner(self.nchoices, lr, num_features, window_len, num_fields_kernel, jiffies_per_state, steps_per_episode, delta, step_wait_seconds, self.netlink_communicator, self.moderator),
+            'separate_classifiers': SeparateClassifiersRunner,
 
-            # 'softmax_explorer': SoftmaxExplorerRunner(self.nchoices, lr, num_features, window_len, num_fields_kernel, jiffies_per_state, steps_per_episode, delta, step_wait_seconds, self.netlink_communicator, self.moderator)
-        
+            'softmax_explorer': SoftmaxExplorerRunner,
+
             'random_policy': RandomRunner
         }
 
@@ -123,8 +123,13 @@ class Tester(Base):
             # Start client and server communication (mahimahi + iperf3)
             self.start_communication(tag=f'{self.args.trace}.{model}')
 
-            runner: BaseRunner = self.model_runners[model](
-                self.nchoices, lr, num_features, window_len, num_fields_kernel, jiffies_per_state, steps_per_episode, delta, step_wait_seconds, self.netlink_communicator, self.moderator, self.trace, reward_name=self.args.reward, model_name=self.args.model_name
+            runner = self.model_runners[model](
+                self.nchoices, lr, num_features, window_len, 
+                num_fields_kernel, jiffies_per_state, 
+                steps_per_episode, delta, step_wait_seconds, 
+                self.netlink_communicator, self.moderator, 
+                trace=self.trace, reward_name=self.args.reward, 
+                model_name=self.args.model_name
             )
 
             # test

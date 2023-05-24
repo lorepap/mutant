@@ -11,11 +11,11 @@ class BootstrappedUCBRunner(MabBaseRunner):
     def __init__(self, nchoices: int, lr: int, num_features: int,
                  window_len: int, num_fields_kernel: int, jiffies_per_state: int,
                  steps_per_episode: int, delta: float, step_wait_seconds: float, 
-                 comm: NetlinkCommunicator, moderator: Moderator, trace: str, **kwargs) -> None:
+                 comm: NetlinkCommunicator, moderator: Moderator, **kwargs) -> None:
 
         super(BootstrappedUCBRunner, self).__init__(nchoices, lr, num_features, window_len,
                                                     num_fields_kernel, jiffies_per_state, steps_per_episode, 
-                                                    delta, step_wait_seconds,comm, moderator, trace, **kwargs)
+                                                    delta, step_wait_seconds,comm, moderator, **kwargs)
 
         self.kwargs = kwargs
         self.moderator = moderator

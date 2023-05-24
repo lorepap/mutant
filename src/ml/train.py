@@ -51,16 +51,12 @@ class Trainer(Base):
         else:
             self.debug_mode = False
 
-        self.train_episodes = int(self.train_config['train_episodes']) if not(self.debug_mode) else 2
+        self.train_episodes = int(self.train_config['train_episodes']) if not(self.debug_mode) else 1
         self.test_episodes = int(self.train_config['test_episodes'])
         self.steps_per_episode = int(self.train_config['steps_per_episode']) if not(self.debug_mode) else 5
 
-        print(f"[DEBUG] Steps per episode {self.steps_per_episode}\n")
-
         if self.args.retrain == 1:
-            self.train_episodes = int(self.train_config['retrain_episodes'])
-
-        print(f'We will be training for {self.train_episodes} epochs\n')
+            self.train_episodes = int(self.train_config['retrain_episodes']) if not(self.debug_mode) else 1
 
         self.model_runners = self.init_runners()
 
@@ -86,30 +82,65 @@ class Trainer(Base):
 
         runners = {
 
-            # 'active_explorer': ActiveExplorerRunner(self.nchoices, lr, num_features, window_len, num_fields_kernel, jiffies_per_state, steps_per_episode, delta, step_wait_seconds, self.netlink_communicator, self.moderator),
+            # 'owl': OwlRunner(self.nchoices, lr, num_features, window_len, num_fields_kernel, 
+            #                  jiffies_per_state, steps_per_episode, delta, self.netlink_communicator, 
+            #                  self.moderator),
 
+            'active_explorer': ActiveExplorerRunner(self.nchoices, 
+                    lr, num_features, window_len, num_fields_kernel, jiffies_per_state, 
+                    steps_per_episode, delta, step_wait_seconds, self.netlink_communicator, 
+                    self.moderator, trace=self.trace, retrain=self.args.retrain, reward_name=self.args.reward),
+                    
             'adaptive_greedy_threshold': AdaptiveGreedyThresholdRunner(self.nchoices, 
-                    lr, num_features, window_len, num_fields_kernel, jiffies_per_state, steps_per_episode, delta, step_wait_seconds, self.netlink_communicator, self.moderator, self.trace, retrain=self.args.retrain, reward_name=self.args.reward),
+                    lr, num_features, window_len, num_fields_kernel, jiffies_per_state, 
+                    steps_per_episode, delta, step_wait_seconds, self.netlink_communicator, 
+                    self.moderator, trace=self.trace, retrain=self.args.retrain, reward_name=self.args.reward),
 
-            # 'adaptive_greedy_weighted': AdaptiveGreedyWeightedRunner(self.nchoices, lr, num_features, window_len, num_fields_kernel, jiffies_per_state, steps_per_episode, delta, step_wait_seconds, self.netlink_communicator, self.moderator),
+            'adaptive_greedy_weighted': AdaptiveGreedyWeightedRunner(self.nchoices, 
+                    lr, num_features, window_len, num_fields_kernel, jiffies_per_state, 
+                    steps_per_episode, delta, step_wait_seconds, self.netlink_communicator, 
+                    self.moderator, trace=self.trace, retrain=self.args.retrain, reward_name=self.args.reward),
 
-            # 'adaptive_greedy_percentile': AdaptiveGreedyPercentileRunner(self.nchoices, lr, num_features, window_len, num_fields_kernel, jiffies_per_state, steps_per_episode, delta, step_wait_seconds, self.netlink_communicator, self.moderator),
+            'adaptive_greedy_percentile': AdaptiveGreedyPercentileRunner(self.nchoices, 
+                    lr, num_features, window_len, num_fields_kernel, jiffies_per_state, 
+                    steps_per_episode, delta, step_wait_seconds, self.netlink_communicator, 
+                    self.moderator, trace=self.trace, retrain=self.args.retrain, reward_name=self.args.reward),
 
-            # 'bootstrapped_ts': BootstrappedTSRunner(self.nchoices, lr, num_features, window_len, num_fields_kernel, jiffies_per_state, steps_per_episode, delta, step_wait_seconds, self.netlink_communicator, self.moderator),
+            'bootstrapped_ts': BootstrappedTSRunner(self.nchoices, 
+                    lr, num_features, window_len, num_fields_kernel, jiffies_per_state, 
+                    steps_per_episode, delta, step_wait_seconds, self.netlink_communicator, 
+                    self.moderator, trace=self.trace, retrain=self.args.retrain, reward_name=self.args.reward),
 
             'bootstrapped_ucb': BootstrappedUCBRunner(self.nchoices, 
-                    lr, num_features, window_len, num_fields_kernel, jiffies_per_state, steps_per_episode, delta, step_wait_seconds, self.netlink_communicator, self.moderator, self.trace, retrain=self.args.retrain, reward_name=self.args.reward),
+                    lr, num_features, window_len, num_fields_kernel, 
+                    jiffies_per_state, steps_per_episode, delta, step_wait_seconds, 
+                    self.netlink_communicator, self.moderator, trace=self.trace, retrain=self.args.retrain, 
+                    reward_name=self.args.reward),
 
-            # 'epsilon_greedy_decay': EpsilonGreedyDecayRunner(self.nchoices, lr, num_features, window_len, num_fields_kernel, jiffies_per_state, steps_per_episode, delta, step_wait_seconds, self.netlink_communicator, self.moderator),
+            'epsilon_greedy_decay': EpsilonGreedyDecayRunner(self.nchoices, 
+                    lr, num_features, window_len, num_fields_kernel, jiffies_per_state, 
+                    steps_per_episode, delta, step_wait_seconds, self.netlink_communicator, 
+                    self.moderator, trace=self.trace, retrain=self.args.retrain, reward_name=self.args.reward),
 
             'epsilon_greedy': EpsilonGreedyRunner(self.nchoices, 
-                    lr, num_features, window_len, num_fields_kernel, jiffies_per_state, steps_per_episode, delta, step_wait_seconds, self.netlink_communicator, self.moderator, self.trace, retrain=self.args.retrain, reward_name=self.args.reward),
+                    lr, num_features, window_len, num_fields_kernel, jiffies_per_state, 
+                    steps_per_episode, delta, step_wait_seconds, self.netlink_communicator, 
+                    self.moderator, trace=self.trace, retrain=self.args.retrain, reward_name=self.args.reward),
 
-            # 'explore_first': ExploreFirstRunner(self.nchoices, lr, num_features, window_len, num_fields_kernel, jiffies_per_state, steps_per_episode, delta, step_wait_seconds, self.netlink_communicator, self.moderator),
+            'explore_first': ExploreFirstRunner(self.nchoices, 
+                    lr, num_features, window_len, num_fields_kernel, jiffies_per_state, 
+                    steps_per_episode, delta, step_wait_seconds, self.netlink_communicator, 
+                    self.moderator, trace=self.trace, retrain=self.args.retrain, reward_name=self.args.reward),
 
-            # 'separate_classifiers': SeparateClassifiersRunner(self.nchoices, lr, num_features, window_len, num_fields_kernel, jiffies_per_state, steps_per_episode, delta, step_wait_seconds, self.netlink_communicator, self.moderator),
+            'separate_classifiers': SeparateClassifiersRunner(self.nchoices, 
+                    lr, num_features, window_len, num_fields_kernel, jiffies_per_state, 
+                    steps_per_episode, delta, step_wait_seconds, self.netlink_communicator, 
+                    self.moderator, trace=self.trace, retrain=self.args.retrain, reward_name=self.args.reward),
 
-            # 'softmax_explorer': SoftmaxExplorerRunner(self.nchoices, lr, num_features, window_len, num_fields_kernel, jiffies_per_state, steps_per_episode, delta, step_wait_seconds, self.netlink_communicator, self.moderator)
+            'softmax_explorer': SoftmaxExplorerRunner(self.nchoices, 
+                    lr, num_features, window_len, num_fields_kernel, jiffies_per_state, 
+                    steps_per_episode, delta, step_wait_seconds, self.netlink_communicator, 
+                    self.moderator, trace=self.trace, retrain=self.args.retrain, reward_name=self.args.reward)
         }
 
         return runners
@@ -176,7 +207,7 @@ class Trainer(Base):
             # self.start_communication(tag=f'{self.args.trace}.{model}')
 
             # print(f'#{indexer}: running test for model: {model}')
-            # runner.test(self.test_episodes, self.args.trace)
+            # runner.test(self.test_episodes)
 
             # self.stop_communication()
 

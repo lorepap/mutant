@@ -23,8 +23,8 @@ class MabBaseRunner(BaseRunner):
     def __init__(self, nchoices: int, lr: int, num_features: int,
                  window_len: int, num_fields_kernel: int, jiffies_per_state: int,
                  steps_per_episode: int, delta: float, step_wait_seconds: float, 
-                 comm: NetlinkCommunicator, moderator: Moderator, trace: str, 
-                 retrain: bool=False, reward_name: str='orca', model_name:str=None, selected_model:str=None) -> None:
+                 comm: NetlinkCommunicator, moderator: Moderator, trace: str=None, 
+                 retrain: bool=False, reward_name: str='orca', model_name:str=None) -> None:
 
         super(MabBaseRunner, self).__init__()
 
@@ -33,7 +33,6 @@ class MabBaseRunner(BaseRunner):
         self.moderator = moderator
         self.num_features = num_features
         self.model_name = model_name
-        self.selected_model = selected_model
 
         self.base_config_dir = os.path.join(context.entry_dir, 'log/mab/config')
         self.config_path = os.path.join(
@@ -108,7 +107,9 @@ class MabBaseRunner(BaseRunner):
         self.environment.enable_log_traces()
         
         self.model.test(self.environment,
-                        nb_episodes=episodes, visualize=False, callbacks=[cb])
+                        nb_episodes=episodes, 
+                        visualize=False, 
+                        callbacks=[cb])
 
         tag = f'{self.trace_name}.{self.get_tag()}'
 

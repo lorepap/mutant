@@ -2,8 +2,8 @@
 #define __MIMIC_H 1
 
 /* user communication */
-#define ARM_COUNT 4
-#define INIT_MSG "0:cubic;1:bbr;2:hybla;3:vegas"
+#define ARM_COUNT 5
+#define INIT_MSG "0:cubic;1:bbr;2:hybla;3:vegas;4:pcc"
 
 /* tcp_input.c flags */
 #define FLAG_DATA_ACKED		0x04 /* This ACK acknowledged new data.		*/
@@ -24,6 +24,33 @@ TODO: import directly from tcp_input.c -- possible overhead issues --
 static void tcp_cong_avoid(struct sock *sk, u32 ack, u32 acked);
 static inline bool tcp_may_raise_cwnd(const struct sock *sk, const int flag);
 static void tcp_update_pacing_rate(struct sock *sk);
+
+// PCC utilities
+struct pcc_interval {
+	u64 rate;
+
+	u32 segs_sent_start;
+	u32 segs_sent_end;
+
+	s64 utility;
+	u32 lost;
+	u32 delivered;
+};
+
+enum PCC_DECISION {
+	PCC_RATE_UP,
+	PCC_RATE_DOWN,
+	PCC_RATE_STAY,
+};
+
+enum PCC_MODE {
+	PCC_SLOW_START, 
+	PCC_DECISION_MAKING,
+	PCC_RATE_ADJUSMENT,
+	PCC_LOSS, /* When tcp is in loss state, its stats can't be trusted */
+};
+
+// ---------------------------------------------------------------------------- //
 
 struct arm {
 
@@ -105,6 +132,28 @@ struct arm {
 		extra_acked_win_idx:1,	/* current index in extra_acked array */
 		unused_c:6;
 
+	struct pcc_interval *intervals;
+	struct pcc_interval *single_interval;
+	int send_index;
+	int recive_index;
+
+	enum PCC_MODE mimic_mode;
+	u64 rate;
+	u64 last_rate;
+	u32 epsilon;
+	bool wait_mode;
+
+	enum PCC_DECISION last_decision;
+	u32 lost_base;
+	u32 delivered_base;
+
+	// debug helpers
+	int id;
+	int intervals_count;
+
+	u32 segs_sent;
+	u32 packets_counted;
+	u32 double_counted;
 };
 
 
