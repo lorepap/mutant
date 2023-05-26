@@ -27,7 +27,7 @@ class Base():
         self.server: IperfServer = None
         self.moderator: Moderator = Moderator(self.args.iperf == 1)
         self.trace = self.args.trace
-        print("[DEBUG] trace:", self.trace)
+
 
     def is_kernel_initialized(self) -> bool:
         cmd = ['cat', '/proc/sys/net/ipv4/tcp_congestion_control']
@@ -108,16 +108,15 @@ class Base():
 
         msg = self.netlink_communicator.create_netlink_msg(
             'INIT_COMMUNICATION', msg_flags=self.netlink_communicator.INIT_COMM_FLAG)
-
+ 
         self.netlink_communicator.send_msg(msg)
 
         print("Communication initiated")
 
-        self.nchoices, self.nprotocols = utils.get_number_of_actions(
+        total_choices, total_prots = utils.get_number_of_actions(
             self.netlink_communicator)
 
-        print(
-            f'\n\n----- Number of protocols available is {self.nchoices} ----- \n\n')
+        print(f'\n\n----- Number of protocols available in kernel is {total_choices} ----- \n\n')
 
     def close_communication(self) -> None:
 

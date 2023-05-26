@@ -40,7 +40,7 @@ def run_experiments(args):
                 retrain = 0
 
             # generate command to execute for this trace        
-            command = f"python3 {TRAINING_FILENAME} -m {model} -t {trace} -x {ip} -e 86400 -rt {retrain} -rw {args.reward} --iperf_dir log/iperf/{args.nchoices}_arms"
+            command = f"python3 {TRAINING_FILENAME} -m {model} -t {trace} -x {ip} -e 86400 -rt {retrain} -rw {args.reward} -n {args.nchoices} --iperf_dir log/iperf/{args.nchoices}_arms"
             print("Executing", command)
             # execute each command and wait for it to finish
             try:

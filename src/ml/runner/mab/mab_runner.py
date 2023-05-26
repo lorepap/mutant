@@ -124,7 +124,8 @@ class MabBaseRunner(BaseRunner):
                 'model_name': self.model.get_model_name(),
                 'trace_name': log_name,
                 'path': log_path,
-                'timestamp': self.now
+                'timestamp': self.now,
+                "n_arms": self.nchoices
             })
             self.save_config(self.config_path, self.config)
 

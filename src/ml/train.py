@@ -57,7 +57,9 @@ class Trainer(Base):
 
         if self.args.retrain == 1:
             self.train_episodes = int(self.train_config['retrain_episodes']) if not(self.debug_mode) else 1
-
+        
+        self.nchoices = self.args.nchoices
+        print("[DEBUG] N CHOICES:", self.nchoices)
         self.model_runners = self.init_runners()
 
     def init_runners(self) -> dict:

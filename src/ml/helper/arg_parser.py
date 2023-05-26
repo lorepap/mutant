@@ -90,6 +90,9 @@ def add_base_arguments(parser: argparse.ArgumentParser) -> None:
     
     parser.add_argument('--reward', '-rw', type=str, help='Name of the reward for the training',
                         default='orca')
+    
+    parser.add_argument('--nchoices', '-n', type=int, help='Number of arms',
+                    default=4)
 
     # single protocol mode
     parser.add_argument("--protocol", "-prot", help="Native protocol under test within mimic", default="cubic")
