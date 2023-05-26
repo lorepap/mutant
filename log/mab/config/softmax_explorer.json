@@ -1,0 +1,90 @@
+{
+    "models": [
+        {
+            "name": "softmax_explorer.2023.05.22.12.59.43",
+            "prod_score": 0.17944740346205057,
+            "score": 0.17944740346205057,
+            "timestamp": "2023.05.22.12.59.43"
+        },
+        {
+            "name": "softmax_explorer.2023.05.23.15.04.15",
+            "prod_score": 1.2458799999999925,
+            "score": 1.2458799999999925,
+            "timestamp": "2023.05.24.11.34.33"
+        }
+    ],
+    "runs": [
+        {
+            "actions": 5,
+            "model_name": "softmax_explorer.2023.05.22.12.59.43",
+            "num_features": 8,
+            "num_kernel_fields": 11,
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/history/episode_hist_softmax_explorer.2023.05.22.12.59.43.2023.05.22.12.59.43.json",
+            "reward": "orca",
+            "step_wait": 0.5,
+            "steps_per_episode": 500,
+            "timestamp": "2023.05.22.12.59.43",
+            "trace": null,
+            "training_time": 70424.06219649315
+        },
+        {
+            "actions": 5,
+            "model_name": "softmax_explorer.2023.05.23.15.04.15",
+            "num_features": 8,
+            "num_kernel_fields": 11,
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/history/episode_hist_softmax_explorer.2023.05.23.15.04.15.2023.05.23.15.04.15.json",
+            "reward": "orca",
+            "step_wait": 0.5,
+            "steps_per_episode": 500,
+            "timestamp": "2023.05.23.15.04.15",
+            "trace": null,
+            "training_time": 68215.74891114235
+        },
+        {
+            "actions": 5,
+            "model_name": "softmax_explorer.2023.05.23.15.04.15",
+            "num_features": 8,
+            "num_kernel_fields": 11,
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/history/episode_hist_softmax_explorer.2023.05.23.15.04.15.2023.05.24.10.01.13.json",
+            "reward": "orca",
+            "step_wait": 0.5,
+            "steps_per_episode": 500,
+            "timestamp": "2023.05.24.10.01.13",
+            "trace": null,
+            "training_time": 5597.021059513092
+        },
+        {
+            "actions": 5,
+            "model_name": "softmax_explorer.2023.05.23.15.04.15",
+            "num_features": 8,
+            "num_kernel_fields": 11,
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/history/episode_hist_softmax_explorer.2023.05.23.15.04.15.2023.05.24.11.34.33.json",
+            "reward": "orca",
+            "step_wait": 0.5,
+            "steps_per_episode": 500,
+            "timestamp": "2023.05.24.11.34.33",
+            "trace": null,
+            "training_time": 5766.491358995438
+        }
+    ],
+    "traces": [
+        {
+            "model_name": "softmax_explorer.2023.05.23.15.04.15",
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/trace/None.softmax_explorer.2023.05.25.10.01.01.csv",
+            "timestamp": "2023.05.25.10.01.01",
+            "trace_name": "None.softmax_explorer.2023.05.25.10.01.01.csv"
+        },
+        {
+            "model_name": "softmax_explorer.2023.05.23.15.04.15",
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/trace/None.softmax_explorer.2023.05.25.10.02.13.csv",
+            "timestamp": "2023.05.25.10.02.13",
+            "trace_name": "None.softmax_explorer.2023.05.25.10.02.13.csv"
+        },
+        {
+            "model_name": "softmax_explorer.2023.05.23.15.04.15",
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/trace/None.softmax_explorer.2023.05.25.10.03.18.csv",
+            "timestamp": "2023.05.25.10.03.18",
+            "trace_name": "None.softmax_explorer.2023.05.25.10.03.18.csv"
+        }
+    ]
+}

@@ -2,7 +2,7 @@
     "models": [
         {
             "name": "owl.2022.01.28.15.06.36",
-            "path": "/home/lorenzo/Desktop/mimic-0/log/owl/model/owl.2022.01.28.15.06.36.h5",
+            "path": "/home/lorenzo/Desktop/mimic-2/log/owl/model/owl.2022.01.28.15.06.36.h5",
             "prod_score": 0.6351209253417456,
             "score": 0.6351209253417456,
             "timestamp": "2023.01.16.11.01.45"
@@ -11,167 +11,167 @@
     "runs": [
         {
             "name": "owl.2022.01.28.15.06.36",
-            "path": "/home/lorenzo/Desktop/mimic-0/log/owl/history/owl.2022.01.28.15.06.36.json",
+            "path": "/home/lorenzo/Desktop/mimic-2/log/owl/history/owl.2022.01.28.15.06.36.json",
             "timestamp": "2022.01.28.15.06.36"
         },
         {
             "name": "owl.2022.01.28.15.06.36",
-            "path": "/home/lorenzo/Desktop/mimic-0/log/owl/history/owl.2022.01.28.15.06.36.2022.02.01.20.53.01.json",
+            "path": "/home/lorenzo/Desktop/mimic-2/log/owl/history/owl.2022.01.28.15.06.36.2022.02.01.20.53.01.json",
             "timestamp": "2022.02.01.20.53.01"
         },
         {
             "name": "owl.2022.01.28.15.06.36",
-            "path": "/home/lorenzo/Desktop/mimic-0/log/owl/history/owl.2022.01.28.15.06.36.2022.02.01.20.58.33.json",
+            "path": "/home/lorenzo/Desktop/mimic-2/log/owl/history/owl.2022.01.28.15.06.36.2022.02.01.20.58.33.json",
             "timestamp": "2022.02.01.20.58.33"
         },
         {
             "name": "owl.2022.01.28.15.06.36",
-            "path": "/home/lorenzo/Desktop/mimic-0/log/owl/history/owl.2022.01.28.15.06.36.2022.02.02.12.52.18.json",
+            "path": "/home/lorenzo/Desktop/mimic-2/log/owl/history/owl.2022.01.28.15.06.36.2022.02.02.12.52.18.json",
             "timestamp": "2022.02.02.12.52.18"
         },
         {
             "name": "owl.2022.01.28.15.06.36",
-            "path": "/home/lorenzo/Desktop/mimic-0/log/owl/history/owl.2022.01.28.15.06.36.2022.02.02.22.07.54.json",
+            "path": "/home/lorenzo/Desktop/mimic-2/log/owl/history/owl.2022.01.28.15.06.36.2022.02.02.22.07.54.json",
             "timestamp": "2022.02.02.22.07.54"
         },
         {
             "name": "owl.2022.01.28.15.06.36",
-            "path": "/home/lorenzo/Desktop/mimic-0/log/owl/history/owl.2022.01.28.15.06.36.2022.02.03.05.57.57.json",
+            "path": "/home/lorenzo/Desktop/mimic-2/log/owl/history/owl.2022.01.28.15.06.36.2022.02.03.05.57.57.json",
             "timestamp": "2022.02.03.05.57.57"
         },
         {
             "name": "owl.2022.01.28.15.06.36",
-            "path": "/home/lorenzo/Desktop/mimic-0/log/owl/history/owl.2022.01.28.15.06.36.2022.02.03.20.23.51.json",
+            "path": "/home/lorenzo/Desktop/mimic-2/log/owl/history/owl.2022.01.28.15.06.36.2022.02.03.20.23.51.json",
             "timestamp": "2022.02.03.20.23.51"
         },
         {
             "name": "owl.2022.01.28.15.06.36",
-            "path": "/home/lorenzo/Desktop/mimic-0/log/owl/history/owl.2022.01.28.15.06.36.2022.02.04.10.39.01.json",
+            "path": "/home/lorenzo/Desktop/mimic-2/log/owl/history/owl.2022.01.28.15.06.36.2022.02.04.10.39.01.json",
             "timestamp": "2022.02.04.10.39.01"
         },
         {
             "name": "owl.2022.01.28.15.06.36",
-            "path": "/home/lorenzo/Desktop/mimic-0/log/owl/history/owl.2022.01.28.15.06.36.2022.02.04.17.43.54.json",
+            "path": "/home/lorenzo/Desktop/mimic-2/log/owl/history/owl.2022.01.28.15.06.36.2022.02.04.17.43.54.json",
             "timestamp": "2022.02.04.17.43.54"
         },
         {
             "name": "owl.2022.01.28.15.06.36",
-            "path": "/home/lorenzo/Desktop/mimic-0/log/owl/history/owl.2022.01.28.15.06.36.2022.02.04.23.24.44.json",
+            "path": "/home/lorenzo/Desktop/mimic-2/log/owl/history/owl.2022.01.28.15.06.36.2022.02.04.23.24.44.json",
             "timestamp": "2022.02.04.23.24.44"
         },
         {
             "name": "owl.2022.01.28.15.06.36",
-            "path": "/home/lorenzo/Desktop/mimic-0/log/owl/history/owl.2022.01.28.15.06.36.2022.02.05.23.34.22.json",
+            "path": "/home/lorenzo/Desktop/mimic-2/log/owl/history/owl.2022.01.28.15.06.36.2022.02.05.23.34.22.json",
             "timestamp": "2022.02.05.23.34.22"
         },
         {
             "name": "owl.2022.01.28.15.06.36",
-            "path": "/home/lorenzo/Desktop/mimic-0/log/owl/history/owl.2022.01.28.15.06.36.2022.02.08.13.52.33.json",
+            "path": "/home/lorenzo/Desktop/mimic-2/log/owl/history/owl.2022.01.28.15.06.36.2022.02.08.13.52.33.json",
             "timestamp": "2022.02.08.13.52.33"
         },
         {
             "name": "owl.2022.01.28.15.06.36",
-            "path": "/home/lorenzo/Desktop/mimic-0/log/owl/history/owl.2022.01.28.15.06.36.2022.02.08.13.54.06.json",
+            "path": "/home/lorenzo/Desktop/mimic-2/log/owl/history/owl.2022.01.28.15.06.36.2022.02.08.13.54.06.json",
             "timestamp": "2022.02.08.13.54.06"
         },
         {
             "name": "owl.2022.01.28.15.06.36",
-            "path": "/home/lorenzo/Desktop/mimic-0/log/owl/history/owl.2022.01.28.15.06.36.2023.01.13.19.09.00.json",
+            "path": "/home/lorenzo/Desktop/mimic-2/log/owl/history/owl.2022.01.28.15.06.36.2023.01.13.19.09.00.json",
             "timestamp": "2023.01.13.19.09.00"
         },
         {
             "name": "owl.2022.01.28.15.06.36",
-            "path": "/home/lorenzo/Desktop/mimic-0/log/owl/history/owl.2022.01.28.15.06.36.2023.01.16.11.01.21.json",
+            "path": "/home/lorenzo/Desktop/mimic-2/log/owl/history/owl.2022.01.28.15.06.36.2023.01.16.11.01.21.json",
             "timestamp": "2023.01.16.11.01.21"
         },
         {
             "name": "owl.2022.01.28.15.06.36",
-            "path": "/home/lorenzo/Desktop/mimic-0/log/owl/history/owl.2022.01.28.15.06.36.2023.01.16.11.01.45.json",
+            "path": "/home/lorenzo/Desktop/mimic-2/log/owl/history/owl.2022.01.28.15.06.36.2023.01.16.11.01.45.json",
             "timestamp": "2023.01.16.11.01.45"
         }
     ],
     "traces": [
         {
             "model_name": "owl.2022.01.28.15.06.36",
-            "path": "/home/lorenzo/Desktop/mimic-0/log/owl/trace/owl.2022.01.28.15.06.36.csv",
+            "path": "/home/lorenzo/Desktop/mimic-2/log/owl/trace/owl.2022.01.28.15.06.36.csv",
             "timestamp": "2022.01.28.15.06.36",
             "trace_name": "owl.2022.01.28.15.06.36.csv"
         },
         {
             "model_name": "owl.2022.01.28.15.06.36",
-            "path": "/home/lorenzo/Desktop/mimic-0/log/owl/trace/owl.2022.02.01.20.58.33.csv",
+            "path": "/home/lorenzo/Desktop/mimic-2/log/owl/trace/owl.2022.02.01.20.58.33.csv",
             "timestamp": "2022.02.01.20.58.33",
             "trace_name": "owl.2022.02.01.20.58.33.csv"
         },
         {
             "model_name": "owl.2022.01.28.15.06.36",
-            "path": "/home/lorenzo/Desktop/mimic-0/log/owl/trace/owl.2022.02.03.05.57.57.csv",
+            "path": "/home/lorenzo/Desktop/mimic-2/log/owl/trace/owl.2022.02.03.05.57.57.csv",
             "timestamp": "2022.02.03.05.57.57",
             "trace_name": "owl.2022.02.03.05.57.57.csv"
         },
         {
             "model_name": "owl.2022.01.28.15.06.36",
-            "path": "/home/lorenzo/Desktop/mimic-0/log/owl/trace/owl.2022.02.03.20.23.51.csv",
+            "path": "/home/lorenzo/Desktop/mimic-2/log/owl/trace/owl.2022.02.03.20.23.51.csv",
             "timestamp": "2022.02.03.20.23.51",
             "trace_name": "owl.2022.02.03.20.23.51.csv"
         },
         {
             "model_name": "owl.2022.01.28.15.06.36",
-            "path": "/home/lorenzo/Desktop/mimic-0/log/owl/trace/owl.2022.02.04.10.39.01.csv",
+            "path": "/home/lorenzo/Desktop/mimic-2/log/owl/trace/owl.2022.02.04.10.39.01.csv",
             "timestamp": "2022.02.04.10.39.01",
             "trace_name": "owl.2022.02.04.10.39.01.csv"
         },
         {
             "model_name": "owl.2022.01.28.15.06.36",
-            "path": "/home/lorenzo/Desktop/mimic-0/log/owl/trace/owl.2022.02.04.17.43.54.csv",
+            "path": "/home/lorenzo/Desktop/mimic-2/log/owl/trace/owl.2022.02.04.17.43.54.csv",
             "timestamp": "2022.02.04.17.43.54",
             "trace_name": "owl.2022.02.04.17.43.54.csv"
         },
         {
             "model_name": "owl.2022.01.28.15.06.36",
-            "path": "/home/lorenzo/Desktop/mimic-0/log/owl/trace/owl.2022.02.04.23.24.44.csv",
+            "path": "/home/lorenzo/Desktop/mimic-2/log/owl/trace/owl.2022.02.04.23.24.44.csv",
             "timestamp": "2022.02.04.23.24.44",
             "trace_name": "owl.2022.02.04.23.24.44.csv"
         },
         {
             "model_name": "owl.2022.01.28.15.06.36",
-            "path": "/home/lorenzo/Desktop/mimic-0/log/owl/trace/owl.2022.02.05.23.34.22.csv",
+            "path": "/home/lorenzo/Desktop/mimic-2/log/owl/trace/owl.2022.02.05.23.34.22.csv",
             "timestamp": "2022.02.05.23.34.22",
             "trace_name": "owl.2022.02.05.23.34.22.csv"
         },
         {
             "model_name": "owl.2022.01.28.15.06.36",
-            "path": "/home/lorenzo/Desktop/mimic-0/log/owl/trace/owl.2022.02.08.13.54.06.csv",
+            "path": "/home/lorenzo/Desktop/mimic-2/log/owl/trace/owl.2022.02.08.13.54.06.csv",
             "timestamp": "2022.02.08.13.54.06",
             "trace_name": "owl.2022.02.08.13.54.06.csv"
         },
         {
             "model_name": "owl.2022.01.28.15.06.36",
-            "path": "/home/lorenzo/Desktop/mimic-0/log/owl/trace/att.lte.driving.owl.2022.03.17.23.34.24.csv",
+            "path": "/home/lorenzo/Desktop/mimic-2/log/owl/trace/att.lte.driving.owl.2022.03.17.23.34.24.csv",
             "timestamp": "2022.03.17.23.34.24",
             "trace_name": "att.lte.driving.owl.2022.03.17.23.34.24.csv"
         },
         {
             "model_name": "owl.2022.01.28.15.06.36",
-            "path": "/home/lorenzo/Desktop/mimic-0/log/owl/trace/att.lte.driving.2016.owl.2022.03.17.23.59.07.csv",
+            "path": "/home/lorenzo/Desktop/mimic-2/log/owl/trace/att.lte.driving.2016.owl.2022.03.17.23.59.07.csv",
             "timestamp": "2022.03.17.23.59.07",
             "trace_name": "att.lte.driving.2016.owl.2022.03.17.23.59.07.csv"
         },
         {
             "model_name": "owl.2022.01.28.15.06.36",
-            "path": "/home/lorenzo/Desktop/mimic-0/log/owl/trace/tm.lte.short.owl.2022.03.18.00.24.34.csv",
+            "path": "/home/lorenzo/Desktop/mimic-2/log/owl/trace/tm.lte.short.owl.2022.03.18.00.24.34.csv",
             "timestamp": "2022.03.18.00.24.34",
             "trace_name": "tm.lte.short.owl.2022.03.18.00.24.34.csv"
         },
         {
             "model_name": "owl.2022.01.28.15.06.36",
-            "path": "/home/lorenzo/Desktop/mimic-0/log/owl/trace/vz.lte.short.owl.2022.03.18.02.01.07.csv",
+            "path": "/home/lorenzo/Desktop/mimic-2/log/owl/trace/vz.lte.short.owl.2022.03.18.02.01.07.csv",
             "timestamp": "2022.03.18.02.01.07",
             "trace_name": "vz.lte.short.owl.2022.03.18.02.01.07.csv"
         },
         {
             "model_name": "owl.2022.01.28.15.06.36",
-            "path": "/home/lorenzo/Desktop/mimic-0/log/owl/trace/att.lte.driving.owl.2023.01.16.11.01.45.csv",
+            "path": "/home/lorenzo/Desktop/mimic-2/log/owl/trace/att.lte.driving.owl.2023.01.16.11.01.45.csv",
             "timestamp": "2023.01.16.11.01.45",
             "trace_name": "att.lte.driving.owl.2023.01.16.11.01.45.csv"
         }

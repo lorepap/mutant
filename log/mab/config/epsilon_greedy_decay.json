@@ -1,0 +1,58 @@
+{
+    "models": [
+        {
+            "name": "epsilon_greedy_decay.2023.05.20.14.44.07",
+            "prod_score": 7.012995000000001,
+            "score": 7.012995000000001,
+            "timestamp": "2023.05.20.16.29.01"
+        }
+    ],
+    "runs": [
+        {
+            "actions": 4,
+            "model_name": "epsilon_greedy_decay.2023.05.20.14.44.07",
+            "num_features": 8,
+            "num_kernel_fields": 11,
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/history/episode_hist_epsilon_greedy_decay.2023.05.20.14.44.07.2023.05.20.14.44.07.json",
+            "reward": "orca",
+            "step_wait": 0.5,
+            "steps_per_episode": 500,
+            "timestamp": "2023.05.20.14.44.07",
+            "trace": null,
+            "training_time": 6293.164114952087
+        },
+        {
+            "actions": 4,
+            "model_name": "epsilon_greedy_decay.2023.05.20.14.44.07",
+            "num_features": 8,
+            "num_kernel_fields": 11,
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/history/episode_hist_epsilon_greedy_decay.2023.05.20.14.44.07.2023.05.20.16.29.01.json",
+            "reward": "orca",
+            "step_wait": 0.5,
+            "steps_per_episode": 500,
+            "timestamp": "2023.05.20.16.29.01",
+            "trace": null,
+            "training_time": 5543.043244600296
+        }
+    ],
+    "traces": [
+        {
+            "model_name": "epsilon_greedy_decay.2023.05.20.14.44.07",
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/trace/None.epsilon_greedy_decay.2023.05.25.10.04.35.csv",
+            "timestamp": "2023.05.25.10.04.35",
+            "trace_name": "None.epsilon_greedy_decay.2023.05.25.10.04.35.csv"
+        },
+        {
+            "model_name": "epsilon_greedy_decay.2023.05.20.14.44.07",
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/trace/None.epsilon_greedy_decay.2023.05.25.10.05.39.csv",
+            "timestamp": "2023.05.25.10.05.39",
+            "trace_name": "None.epsilon_greedy_decay.2023.05.25.10.05.39.csv"
+        },
+        {
+            "model_name": "epsilon_greedy_decay.2023.05.20.14.44.07",
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/trace/None.epsilon_greedy_decay.2023.05.25.10.06.43.csv",
+            "timestamp": "2023.05.25.10.06.43",
+            "trace_name": "None.epsilon_greedy_decay.2023.05.25.10.06.43.csv"
+        }
+    ]
+}

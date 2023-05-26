@@ -1,0 +1,103 @@
+{
+    "models": [
+        {
+            "name": "bootstrapped_ts.2023.05.20.07.55.48",
+            "prod_score": 12.832489999999998,
+            "score": 12.832489999999998,
+            "timestamp": "2023.05.20.09.43.49"
+        },
+        {
+            "name": "bootstrapped_ts.2023.05.23.08.34.40",
+            "prod_score": 0.3020333333333333,
+            "score": 0.3020333333333333,
+            "timestamp": "2023.05.23.08.34.40"
+        },
+        {
+            "name": "bootstrapped_ts.2023.05.23.08.37.41",
+            "prod_score": 2.5913300000000037,
+            "score": 2.5913300000000037,
+            "timestamp": "2023.05.23.13.25.11"
+        }
+    ],
+    "runs": [
+        {
+            "actions": 4,
+            "model_name": "bootstrapped_ts.2023.05.20.07.55.48",
+            "num_features": 8,
+            "num_kernel_fields": 11,
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/history/episode_hist_bootstrapped_ts.2023.05.20.07.55.48.2023.05.20.07.55.48.json",
+            "reward": "orca",
+            "step_wait": 0.5,
+            "steps_per_episode": 500,
+            "timestamp": "2023.05.20.07.55.48",
+            "trace": null,
+            "training_time": 6479.425421237946
+        },
+        {
+            "actions": 4,
+            "model_name": "bootstrapped_ts.2023.05.20.07.55.48",
+            "num_features": 8,
+            "num_kernel_fields": 11,
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/history/episode_hist_bootstrapped_ts.2023.05.20.07.55.48.2023.05.20.09.43.49.json",
+            "reward": "orca",
+            "step_wait": 0.5,
+            "steps_per_episode": 500,
+            "timestamp": "2023.05.20.09.43.49",
+            "trace": null,
+            "training_time": 5747.508944034576
+        },
+        {
+            "actions": 5,
+            "model_name": "bootstrapped_ts.2023.05.23.08.34.40",
+            "num_features": 8,
+            "num_kernel_fields": 11,
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/history/episode_hist_bootstrapped_ts.2023.05.23.08.34.40.2023.05.23.08.34.40.json",
+            "reward": "orca",
+            "step_wait": 0.5,
+            "steps_per_episode": 500,
+            "timestamp": "2023.05.23.08.34.40",
+            "trace": null,
+            "training_time": 145.44956946372986
+        },
+        {
+            "actions": 5,
+            "model_name": "bootstrapped_ts.2023.05.23.08.37.41",
+            "num_features": 8,
+            "num_kernel_fields": 11,
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/history/episode_hist_bootstrapped_ts.2023.05.23.08.37.41.2023.05.23.08.37.41.json",
+            "reward": "orca",
+            "step_wait": 0.5,
+            "steps_per_episode": 500,
+            "timestamp": "2023.05.23.08.37.41",
+            "trace": null,
+            "training_time": 6541.40380859375
+        },
+        {
+            "actions": 5,
+            "model_name": "bootstrapped_ts.2023.05.23.08.37.41",
+            "num_features": 8,
+            "num_kernel_fields": 11,
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/history/episode_hist_bootstrapped_ts.2023.05.23.08.37.41.2023.05.23.10.26.46.json",
+            "reward": "orca",
+            "step_wait": 0.5,
+            "steps_per_episode": 500,
+            "timestamp": "2023.05.23.10.26.46",
+            "trace": null,
+            "training_time": 10702.471332550049
+        },
+        {
+            "actions": 5,
+            "model_name": "bootstrapped_ts.2023.05.23.08.37.41",
+            "num_features": 8,
+            "num_kernel_fields": 11,
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/history/episode_hist_bootstrapped_ts.2023.05.23.08.37.41.2023.05.23.13.25.11.json",
+            "reward": "orca",
+            "step_wait": 0.5,
+            "steps_per_episode": 500,
+            "timestamp": "2023.05.23.13.25.11",
+            "trace": null,
+            "training_time": 5941.615474939346
+        }
+    ],
+    "traces": []
+}

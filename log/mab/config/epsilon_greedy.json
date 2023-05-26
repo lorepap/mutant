@@ -11,6 +11,18 @@
             "prod_score": 19310511.506415,
             "score": 19310511.506415,
             "timestamp": "2023.04.04.02.33.56"
+        },
+        {
+            "name": "epsilon_greedy.2023.05.20.18.01.27",
+            "prod_score": 4.777646666666646,
+            "score": 4.777646666666646,
+            "timestamp": "2023.05.20.18.01.27"
+        },
+        {
+            "name": "epsilon_greedy.2023.05.25.03.40.37",
+            "prod_score": -4.388460000000005,
+            "score": -4.388460000000005,
+            "timestamp": "2023.05.25.06.56.32"
         }
     ],
     "runs": [
@@ -96,6 +108,58 @@
             "timestamp": "2023.04.26.20.52.03",
             "trace": "att.lte.driving",
             "training_time": 6491.7111229896545
+        },
+        {
+            "actions": 4,
+            "model_name": "epsilon_greedy.2023.05.20.18.01.27",
+            "num_features": 8,
+            "num_kernel_fields": 11,
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/history/episode_hist_epsilon_greedy.2023.05.20.18.01.27.2023.05.20.18.01.27.json",
+            "reward": "orca",
+            "step_wait": 0.5,
+            "steps_per_episode": 500,
+            "timestamp": "2023.05.20.18.01.27",
+            "trace": "att.lte.driving.2016",
+            "training_time": 4990.321714878082
+        },
+        {
+            "actions": 5,
+            "model_name": "epsilon_greedy.2023.05.25.03.40.37",
+            "num_features": 8,
+            "num_kernel_fields": 11,
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/history/episode_hist_epsilon_greedy.2023.05.25.03.40.37.2023.05.25.03.40.37.json",
+            "reward": "orca",
+            "step_wait": 0.5,
+            "steps_per_episode": 500,
+            "timestamp": "2023.05.25.03.40.37",
+            "trace": "att.lte.driving.2016",
+            "training_time": 6215.3081884384155
+        },
+        {
+            "actions": 5,
+            "model_name": "epsilon_greedy.2023.05.25.03.40.37",
+            "num_features": 8,
+            "num_kernel_fields": 11,
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/history/episode_hist_epsilon_greedy.2023.05.25.03.40.37.2023.05.25.05.24.16.json",
+            "reward": "orca",
+            "step_wait": 0.5,
+            "steps_per_episode": 500,
+            "timestamp": "2023.05.25.05.24.16",
+            "trace": "tm.lte.driving",
+            "training_time": 5531.96727180481
+        },
+        {
+            "actions": 5,
+            "model_name": "epsilon_greedy.2023.05.25.03.40.37",
+            "num_features": 8,
+            "num_kernel_fields": 11,
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/history/episode_hist_epsilon_greedy.2023.05.25.03.40.37.2023.05.25.06.56.32.json",
+            "reward": "orca",
+            "step_wait": 0.5,
+            "steps_per_episode": 500,
+            "timestamp": "2023.05.25.06.56.32",
+            "trace": "vz.lte.driving",
+            "training_time": 5639.111808300018
         }
     ],
     "traces": [
@@ -164,6 +228,24 @@
             "path": "/home/lorenzo/Desktop/mimic-2/log/mab/trace/wired.epsilon_greedy.2023.04.05.21.19.18.csv",
             "timestamp": "2023.04.05.21.19.18",
             "trace_name": "wired.epsilon_greedy.2023.04.05.21.19.18.csv"
+        },
+        {
+            "model_name": "epsilon_greedy.2023.05.25.03.40.37",
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/trace/att.lte.driving.2016.epsilon_greedy.2023.05.25.10.07.50.csv",
+            "timestamp": "2023.05.25.10.07.50",
+            "trace_name": "att.lte.driving.2016.epsilon_greedy.2023.05.25.10.07.50.csv"
+        },
+        {
+            "model_name": "epsilon_greedy.2023.05.25.03.40.37",
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/trace/tm.lte.driving.epsilon_greedy.2023.05.25.10.09.03.csv",
+            "timestamp": "2023.05.25.10.09.03",
+            "trace_name": "tm.lte.driving.epsilon_greedy.2023.05.25.10.09.03.csv"
+        },
+        {
+            "model_name": "epsilon_greedy.2023.05.25.03.40.37",
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/trace/vz.lte.driving.epsilon_greedy.2023.05.25.10.10.07.csv",
+            "timestamp": "2023.05.25.10.10.07",
+            "trace_name": "vz.lte.driving.epsilon_greedy.2023.05.25.10.10.07.csv"
         }
     ]
 }
