@@ -22,7 +22,7 @@ class ActiveExplorerRunner(MabBaseRunner):
     def load_basic(self) -> Any:
         try:
 
-            model = ActiveExplorerAgent(self.nchoices)
+            model = ActiveExplorerAgent(self.nchoices, moderator=self.moderator)
             model.compile(self.get_optimizer(), metrics=['mae'])
             return model
 

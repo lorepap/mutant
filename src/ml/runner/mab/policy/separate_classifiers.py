@@ -22,7 +22,7 @@ class SeparateClassifiersRunner(MabBaseRunner):
     def load_basic(self) -> Any:
         try:
 
-            model = SeparateClassifiersAgent(self.nchoices)
+            model = SeparateClassifiersAgent(self.nchoices, moderator=self.moderator)
             model.compile(self.get_optimizer(), metrics=['mae'])
             return model
 

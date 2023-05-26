@@ -27,6 +27,7 @@ class Base():
         self.server: IperfServer = None
         self.moderator: Moderator = Moderator(self.args.iperf == 1)
         self.trace = self.args.trace
+        print("[DEBUG] trace:", self.trace)
 
     def is_kernel_initialized(self) -> bool:
         cmd = ['cat', '/proc/sys/net/ipv4/tcp_congestion_control']

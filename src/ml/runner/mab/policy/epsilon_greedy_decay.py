@@ -23,7 +23,7 @@ class EpsilonGreedyDecayRunner(MabBaseRunner):
     def load_basic(self) -> Any:
         try:
 
-            model = EpsilonGreedyDecayAgent(self.nchoices)
+            model = EpsilonGreedyDecayAgent(self.nchoices, moderator=self.moderator)
             model.compile(self.get_optimizer(), metrics=['mae'])
             return model
 

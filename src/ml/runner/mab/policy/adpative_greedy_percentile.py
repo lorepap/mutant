@@ -23,7 +23,7 @@ class AdaptiveGreedyPercentileRunner(MabBaseRunner):
     def load_basic(self) -> Any:
         try:
 
-            model = AdaptiveGreedyPercentileAgent(self.nchoices)
+            model = AdaptiveGreedyPercentileAgent(self.nchoices, moderator=self.moderator)
             model.compile(self.get_optimizer(), metrics=['mae'])
             return model
 

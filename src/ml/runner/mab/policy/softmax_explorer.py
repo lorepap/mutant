@@ -23,7 +23,7 @@ class SoftmaxExplorerRunner(MabBaseRunner):
     def load_basic(self) -> Any:
         try:
 
-            model = SoftmaxExplorerAgent(self.nchoices)
+            model = SoftmaxExplorerAgent(self.nchoices, moderator=self.moderator)
             model.compile(self.get_optimizer(), metrics=['mae'])
             return model
 

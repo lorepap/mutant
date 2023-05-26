@@ -21,7 +21,7 @@ class AdaptiveGreedyWeightedRunner(MabBaseRunner):
     def load_basic(self) -> Any:
         try:
 
-            model = AdaptiveGreedyWeightedAgent(self.nchoices)
+            model = AdaptiveGreedyWeightedAgent(self.nchoices, moderator=self.moderator)
             model.compile(self.get_optimizer(), metrics=['mae'])
             return model
 

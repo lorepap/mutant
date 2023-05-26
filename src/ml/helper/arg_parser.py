@@ -53,14 +53,14 @@ def verify_pantheon_protocols(protocols) -> list:
     return all_protocols
 
 
-def verify_trace(trace: str) -> list:
+def verify_trace(trace) -> list:
     yaml_config = utils.parse_traces_config()
     all_traces = yaml_config['traces'].keys()
     print(all_traces)
 
     if trace not in all_traces:
-        sys.exit(
-            '%s is not a trace included in config/traces.yml' % trace)
+            sys.exit(
+            '%s is not a trace included in config/traces.yml' % t)
 
     return all_traces
 
@@ -68,7 +68,7 @@ def verify_trace(trace: str) -> list:
 def add_base_arguments(parser: argparse.ArgumentParser) -> None:
 
     parser.add_argument('--trace', '-t', type=str,
-                        help='--trace: Name of mahimahi trace file used', default="none")
+                        help='--trace: Name of mahimahi traces file used', default="none")
 
     parser.add_argument('--ip', '-x', type=str,
                         help='--ip: IP of iperf server machine', default="10.120.8.116")

@@ -22,7 +22,7 @@ class BootstrappedTSRunner(MabBaseRunner):
     def load_basic(self) -> Any:
         try:
 
-            model = BootstrappedTSAgent(self.nchoices)
+            model = BootstrappedTSAgent(self.nchoices, moderator=self.moderator)
             model.compile(self.get_optimizer(), metrics=['mae'])
             return model
 
