@@ -2,7 +2,7 @@
 
 # Introduction
 
-MIMIC is a Machine Learning powered congestion control protocol. Using a pool of trained reinforcement learning models, it selects at each time instance the best protocol to handle congestion at the kernel level.
+Mutant is a Machine Learning powered congestion control protocol. Using a RL-based algorithm, it selects at each time instance the best protocol to handle congestion at the kernel level.
 
 # Architecture
 ![system-1](https://github.com/lorepap/mutant/assets/56161227/98336005-256a-49dc-a053-f345f6becae2)
@@ -18,13 +18,13 @@ Follow the steps below to get started
 
 Run the following command to install required modules
 ```bash
-~/mimic$ sh scripts/setup.sh
+~/mutant$ sh scripts/setup.sh
 ```
 
 Make sure you have the latest pip version. Install the following requirements.
 ```bash
-~/mimic$ cd src
-~/mimic/src$ source venv/bin/activate
+~/mutant$ cd src
+~/mutant/src$ source venv/bin/activate
 (venv) ~/src$ pip3 install --upgrade setuptools pip
 (venv) ~/src$ pip3 install -r requirements.txt
 ```
@@ -32,9 +32,9 @@ Make sure you have the latest pip version. Install the following requirements.
 
 ### 2. Build kernel module
 
-Open a new terminal and run the following bash scripts from the root of the project to build and install the kernel. This will also set _mimic_ as the default congestion avoidance protocol
+Open a new terminal and run the following bash scripts from the root of the project to build and install the kernel. This will also set mutant as the default congestion avoidance protocol
 ```bash
-~/mimic$ sh scripts/init_kernel.sh
+~/mutant$ sh scripts/init_kernel.sh
 ```
 
 # Train
