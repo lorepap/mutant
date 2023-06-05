@@ -18,6 +18,7 @@ TEST_FILENAME = os.path.join(context.ml_dir, "test.py")
 
 def run_experiments(items):
     ip = utils.get_private_ip()
+    print("[DEBUG] IP found:", ip)
     # read trace names and paths from YAML file
     # trace_data = utils.parse_traces_config()
     for model in items.models:

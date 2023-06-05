@@ -16,7 +16,6 @@
 #define COMM_BEGIN 1
 #define COMM_SELECT_ARM 2
 #define COMM_TEST_NATIVE_PROT 3
-#define COMM_SELECT_OWL_ACTION 4
 
 // Netlink comm variables
 struct sock *nl_sk = NULL;
@@ -87,6 +86,7 @@ static void onConnectionStarted(struct nlmsghdr *nlh)
 
     // Inform application layer of the number of protocols available
     snprintf(message, MAX_PAYLOAD - 1, "%u;%s", ARM_COUNT, INIT_MSG);
+	snprintf(message, MAX_PAYLOAD - 1, "%u;%s", ARM_COUNT, INIT_MSG);
     sendMessageToApplicationLayer(message, socketId);
 }
 
@@ -136,11 +136,6 @@ static void onMessageRecievedFromApplicationLayer(struct sk_buff *skb)
 
 	case COMM_TEST_NATIVE_PROT:
 		onStartSingleProtocol(nlh);
-		break;
-
-	case COMM_SELECT_OWL_ACTION:
-		selectedProtocolId = 4;
-		owlAction = nlh->nlmsg_seq;
 		break;
 
     default: // testing

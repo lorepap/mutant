@@ -5,6 +5,12 @@
             "prod_score": 7.012995000000001,
             "score": 7.012995000000001,
             "timestamp": "2023.05.20.16.29.01"
+        },
+        {
+            "name": "epsilon_greedy_decay.2023.05.29.05.56.16",
+            "prod_score": 65.88747500000002,
+            "score": 65.88747500000002,
+            "timestamp": "2023.05.29.10.36.24"
         }
     ],
     "runs": [
@@ -33,6 +39,58 @@
             "timestamp": "2023.05.20.16.29.01",
             "trace": null,
             "training_time": 5543.043244600296
+        },
+        {
+            "actions": 3,
+            "model_name": "epsilon_greedy_decay.2023.05.27.00.50.58",
+            "num_features": 8,
+            "num_kernel_fields": 11,
+            "path": "/home/lorenzo/mimic-2/log/mab/history/episode_hist_epsilon_greedy_decay.2023.05.27.00.50.58.2023.05.27.00.50.58.json",
+            "reward": "orca",
+            "step_wait": 0.5,
+            "steps_per_episode": 500,
+            "timestamp": "2023.05.27.00.50.58",
+            "trace": null,
+            "training_time": 92.46983766555786
+        },
+        {
+            "actions": 3,
+            "model_name": "epsilon_greedy_decay.2023.05.29.05.56.16",
+            "num_features": 8,
+            "num_kernel_fields": 11,
+            "path": "/home/lorenzo/mimic-2/log/mab/history/episode_hist_epsilon_greedy_decay.2023.05.29.05.56.16.2023.05.29.05.56.16.json",
+            "reward": "orca",
+            "step_wait": 0.5,
+            "steps_per_episode": 500,
+            "timestamp": "2023.05.29.05.56.16",
+            "trace": null,
+            "training_time": 11305.334022521973
+        },
+        {
+            "actions": 3,
+            "model_name": "epsilon_greedy_decay.2023.05.29.05.56.16",
+            "num_features": 8,
+            "num_kernel_fields": 11,
+            "path": "/home/lorenzo/mimic-2/log/mab/history/episode_hist_epsilon_greedy_decay.2023.05.29.05.56.16.2023.05.29.09.04.43.json",
+            "reward": "orca",
+            "step_wait": 0.5,
+            "steps_per_episode": 500,
+            "timestamp": "2023.05.29.09.04.43",
+            "trace": null,
+            "training_time": 5499.307323932648
+        },
+        {
+            "actions": 3,
+            "model_name": "epsilon_greedy_decay.2023.05.29.05.56.16",
+            "num_features": 8,
+            "num_kernel_fields": 11,
+            "path": "/home/lorenzo/mimic-2/log/mab/history/episode_hist_epsilon_greedy_decay.2023.05.29.05.56.16.2023.05.29.10.36.24.json",
+            "reward": "orca",
+            "step_wait": 0.5,
+            "steps_per_episode": 500,
+            "timestamp": "2023.05.29.10.36.24",
+            "trace": null,
+            "training_time": 5617.887885093689
         }
     ],
     "traces": [
@@ -53,6 +111,45 @@
             "path": "/home/lorenzo/Desktop/mimic-2/log/mab/trace/None.epsilon_greedy_decay.2023.05.25.10.06.43.csv",
             "timestamp": "2023.05.25.10.06.43",
             "trace_name": "None.epsilon_greedy_decay.2023.05.25.10.06.43.csv"
+        },
+        {
+            "model_name": "epsilon_greedy_decay.2023.05.20.14.44.07",
+            "path": "/home/lorenzo/mimic-2/log/mab/trace/None.epsilon_greedy_decay.2023.05.26.19.26.32.csv",
+            "timestamp": "2023.05.26.19.26.32",
+            "trace_name": "None.epsilon_greedy_decay.2023.05.26.19.26.32.csv"
+        },
+        {
+            "model_name": "epsilon_greedy_decay.2023.05.20.14.44.07",
+            "path": "/home/lorenzo/mimic-2/log/mab/trace/None.epsilon_greedy_decay.2023.05.26.19.27.35.csv",
+            "timestamp": "2023.05.26.19.27.35",
+            "trace_name": "None.epsilon_greedy_decay.2023.05.26.19.27.35.csv"
+        },
+        {
+            "model_name": "epsilon_greedy_decay.2023.05.20.14.44.07",
+            "path": "/home/lorenzo/mimic-2/log/mab/trace/None.epsilon_greedy_decay.2023.05.26.19.28.40.csv",
+            "timestamp": "2023.05.26.19.28.40",
+            "trace_name": "None.epsilon_greedy_decay.2023.05.26.19.28.40.csv"
+        },
+        {
+            "model_name": "epsilon_greedy_decay.2023.05.20.14.44.07",
+            "n_arms": 4,
+            "path": "/home/lorenzo/mimic-2/log/mab/trace/None.epsilon_greedy_decay.2023.05.26.23.38.00.csv",
+            "timestamp": "2023.05.26.23.38.00",
+            "trace_name": "None.epsilon_greedy_decay.2023.05.26.23.38.00.csv"
+        },
+        {
+            "model_name": "epsilon_greedy_decay.2023.05.20.14.44.07",
+            "n_arms": 4,
+            "path": "/home/lorenzo/mimic-2/log/mab/trace/None.epsilon_greedy_decay.2023.05.26.23.40.18.csv",
+            "timestamp": "2023.05.26.23.40.18",
+            "trace_name": "None.epsilon_greedy_decay.2023.05.26.23.40.18.csv"
+        },
+        {
+            "model_name": "epsilon_greedy_decay.2023.05.20.14.44.07",
+            "n_arms": 4,
+            "path": "/home/lorenzo/mimic-2/log/mab/trace/None.epsilon_greedy_decay.2023.05.26.23.44.07.csv",
+            "timestamp": "2023.05.26.23.44.07",
+            "trace_name": "None.epsilon_greedy_decay.2023.05.26.23.44.07.csv"
         }
     ]
 }

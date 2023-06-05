@@ -98,6 +98,42 @@
             "path": "/home/lorenzo/Desktop/mimic-2/log/mab/trace/None.adaptive_greedy_percentile.2023.05.25.09.52.28.csv",
             "timestamp": "2023.05.25.09.52.28",
             "trace_name": "None.adaptive_greedy_percentile.2023.05.25.09.52.28.csv"
+        },
+        {
+            "model_name": "adaptive_greedy_percentile.2023.05.24.18.00.03",
+            "path": "/home/lorenzo/mimic-2/log/mab/trace/None.adaptive_greedy_percentile.2023.05.26.18.55.03.csv",
+            "timestamp": "2023.05.26.18.55.03",
+            "trace_name": "None.adaptive_greedy_percentile.2023.05.26.18.55.03.csv"
+        },
+        {
+            "model_name": "adaptive_greedy_percentile.2023.05.24.18.00.03",
+            "path": "/home/lorenzo/mimic-2/log/mab/trace/None.adaptive_greedy_percentile.2023.05.26.18.57.31.csv",
+            "timestamp": "2023.05.26.18.57.31",
+            "trace_name": "None.adaptive_greedy_percentile.2023.05.26.18.57.31.csv"
+        },
+        {
+            "model_name": "adaptive_greedy_percentile.2023.05.24.18.00.03",
+            "path": "/home/lorenzo/mimic-2/log/mab/trace/None.adaptive_greedy_percentile.2023.05.26.18.58.53.csv",
+            "timestamp": "2023.05.26.18.58.53",
+            "trace_name": "None.adaptive_greedy_percentile.2023.05.26.18.58.53.csv"
+        },
+        {
+            "model_name": "adaptive_greedy_percentile.2023.05.24.18.00.03",
+            "path": "/home/lorenzo/mimic-2/log/mab/trace/None.adaptive_greedy_percentile.2023.05.26.19.03.30.csv",
+            "timestamp": "2023.05.26.19.03.30",
+            "trace_name": "None.adaptive_greedy_percentile.2023.05.26.19.03.30.csv"
+        },
+        {
+            "model_name": "adaptive_greedy_percentile.2023.05.24.18.00.03",
+            "path": "/home/lorenzo/mimic-2/log/mab/trace/None.adaptive_greedy_percentile.2023.05.26.19.04.42.csv",
+            "timestamp": "2023.05.26.19.04.42",
+            "trace_name": "None.adaptive_greedy_percentile.2023.05.26.19.04.42.csv"
+        },
+        {
+            "model_name": "adaptive_greedy_percentile.2023.05.24.18.00.03",
+            "path": "/home/lorenzo/mimic-2/log/mab/trace/None.adaptive_greedy_percentile.2023.05.26.19.05.46.csv",
+            "timestamp": "2023.05.26.19.05.46",
+            "trace_name": "None.adaptive_greedy_percentile.2023.05.26.19.05.46.csv"
         }
     ]
 }

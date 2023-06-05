@@ -246,6 +246,18 @@
             "path": "/home/lorenzo/Desktop/mimic-2/log/mab/trace/vz.lte.driving.epsilon_greedy.2023.05.25.10.10.07.csv",
             "timestamp": "2023.05.25.10.10.07",
             "trace_name": "vz.lte.driving.epsilon_greedy.2023.05.25.10.10.07.csv"
+        },
+        {
+            "model_name": "epsilon_greedy.2023.05.25.03.40.37",
+            "path": "/home/lorenzo/mimic-2/log/mab/trace/att.lte.driving.2016.epsilon_greedy.2023.05.26.19.29.46.csv",
+            "timestamp": "2023.05.26.19.29.46",
+            "trace_name": "att.lte.driving.2016.epsilon_greedy.2023.05.26.19.29.46.csv"
+        },
+        {
+            "model_name": "epsilon_greedy.2023.05.25.03.40.37",
+            "path": "/home/lorenzo/mimic-2/log/mab/trace/vz.lte.driving.epsilon_greedy.2023.05.26.20.35.32.csv",
+            "timestamp": "2023.05.26.20.35.32",
+            "trace_name": "vz.lte.driving.epsilon_greedy.2023.05.26.20.35.32.csv"
         }
     ]
 }

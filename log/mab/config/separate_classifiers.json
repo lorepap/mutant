@@ -66,6 +66,24 @@
             "path": "/home/lorenzo/Desktop/mimic-2/log/mab/trace/None.separate_classifiers.2023.05.25.09.59.42.csv",
             "timestamp": "2023.05.25.09.59.42",
             "trace_name": "None.separate_classifiers.2023.05.25.09.59.42.csv"
+        },
+        {
+            "model_name": "separate_classifiers.2023.05.24.22.50.20",
+            "path": "/home/lorenzo/mimic-2/log/mab/trace/None.separate_classifiers.2023.05.26.19.19.39.csv",
+            "timestamp": "2023.05.26.19.19.39",
+            "trace_name": "None.separate_classifiers.2023.05.26.19.19.39.csv"
+        },
+        {
+            "model_name": "separate_classifiers.2023.05.24.22.50.20",
+            "path": "/home/lorenzo/mimic-2/log/mab/trace/None.separate_classifiers.2023.05.26.19.20.49.csv",
+            "timestamp": "2023.05.26.19.20.49",
+            "trace_name": "None.separate_classifiers.2023.05.26.19.20.49.csv"
+        },
+        {
+            "model_name": "separate_classifiers.2023.05.24.22.50.20",
+            "path": "/home/lorenzo/mimic-2/log/mab/trace/None.separate_classifiers.2023.05.26.19.21.53.csv",
+            "timestamp": "2023.05.26.19.21.53",
+            "trace_name": "None.separate_classifiers.2023.05.26.19.21.53.csv"
         }
     ]
 }

@@ -1,8 +1,8 @@
-cmd_/home/lorenzo/Desktop/mimic-2/src/kernel/mimic.o := gcc -Wp,-MD,/home/lorenzo/Desktop/mimic-2/src/kernel/.mimic.o.d  -nostdinc -isystem /usr/lib/gcc/x86_64-linux-gnu/7/include -I./arch/x86/include -I./arch/x86/include/generated  -I./include -I./arch/x86/include/uapi -I./arch/x86/include/generated/uapi -I./include/uapi -I./include/generated/uapi -include ./include/linux/kconfig.h -include ./include/linux/compiler_types.h -D__KERNEL__ -Wall -Wundef -Werror=strict-prototypes -Wno-trigraphs -fno-strict-aliasing -fno-common -fshort-wchar -fno-PIE -Werror=implicit-function-declaration -Werror=implicit-int -Werror=return-type -Wno-format-security -std=gnu89 -mno-sse -mno-mmx -mno-sse2 -mno-3dnow -mno-avx -m64 -falign-jumps=1 -falign-loops=1 -mno-80387 -mno-fp-ret-in-387 -mpreferred-stack-boundary=3 -mskip-rax-setup -mtune=generic -mno-red-zone -mcmodel=kernel -DCONFIG_X86_X32_ABI -DCONFIG_AS_CFI=1 -DCONFIG_AS_CFI_SIGNAL_FRAME=1 -DCONFIG_AS_CFI_SECTIONS=1 -DCONFIG_AS_SSSE3=1 -DCONFIG_AS_AVX=1 -DCONFIG_AS_AVX2=1 -DCONFIG_AS_AVX512=1 -DCONFIG_AS_SHA1_NI=1 -DCONFIG_AS_SHA256_NI=1 -Wno-sign-compare -fno-asynchronous-unwind-tables -mindirect-branch=thunk-extern -mindirect-branch-register -fno-jump-tables -fno-delete-null-pointer-checks -Wno-frame-address -Wno-format-truncation -Wno-format-overflow -O2 --param=allow-store-data-races=0 -Wframe-larger-than=1024 -fstack-protector-strong -Wimplicit-fallthrough -Wno-unused-but-set-variable -Wno-unused-const-variable -fno-omit-frame-pointer -fno-optimize-sibling-calls -fno-var-tracking-assignments -g -gdwarf-4 -pg -mrecord-mcount -mfentry -DCC_USING_FENTRY -Wdeclaration-after-statement -Wvla -Wno-pointer-sign -Wno-array-bounds -Wno-stringop-overflow -Wno-restrict -Wno-maybe-uninitialized -fno-strict-overflow -fno-merge-all-constants -fmerge-constants -fno-stack-check -fconserve-stack -Werror=date-time -Werror=incompatible-pointer-types -Werror=designated-init  -DMODULE  -DKBUILD_BASENAME='"mimic"' -DKBUILD_MODNAME='"mimic"' -c -o /home/lorenzo/Desktop/mimic-2/src/kernel/mimic.o /home/lorenzo/Desktop/mimic-2/src/kernel/mimic.c
+cmd_/home/lorenzo/mimic-2/src/kernel/mimic.o := gcc -Wp,-MD,/home/lorenzo/mimic-2/src/kernel/.mimic.o.d  -nostdinc -isystem /usr/lib/gcc/aarch64-linux-gnu/9/include -I./arch/arm64/include -I./arch/arm64/include/generated  -I./include -I./arch/arm64/include/uapi -I./arch/arm64/include/generated/uapi -I./include/uapi -I./include/generated/uapi -include ./include/linux/kconfig.h -include ./include/linux/compiler_types.h -D__KERNEL__ -mlittle-endian -DKASAN_SHADOW_SCALE_SHIFT=3 -Wall -Wundef -Werror=strict-prototypes -Wno-trigraphs -fno-strict-aliasing -fno-common -fshort-wchar -fno-PIE -Werror=implicit-function-declaration -Werror=implicit-int -Werror=return-type -Wno-format-security -std=gnu89 -mgeneral-regs-only -DCONFIG_AS_LSE=1 -DCONFIG_CC_HAS_K_CONSTRAINT=1 -fno-asynchronous-unwind-tables -Wno-psabi -mabi=lp64 -mbranch-protection=none -DKASAN_SHADOW_SCALE_SHIFT=3 -fno-delete-null-pointer-checks -Wno-frame-address -Wno-format-truncation -Wno-format-overflow -Wno-address-of-packed-member -O2 --param=allow-store-data-races=0 -Wframe-larger-than=1024 -fstack-protector-strong -Wimplicit-fallthrough -Wno-unused-but-set-variable -Wno-unused-const-variable -fno-omit-frame-pointer -fno-optimize-sibling-calls -fno-var-tracking-assignments -g -pg -Wdeclaration-after-statement -Wvla -Wno-pointer-sign -Wno-stringop-truncation -Wno-array-bounds -Wno-stringop-overflow -Wno-restrict -Wno-maybe-uninitialized -fno-strict-overflow -fno-merge-all-constants -fmerge-constants -fno-stack-check -fconserve-stack -Werror=date-time -Werror=incompatible-pointer-types -Werror=designated-init -fmacro-prefix-map=./= -Wno-packed-not-aligned -mstack-protector-guard=sysreg -mstack-protector-guard-reg=sp_el0 -mstack-protector-guard-offset=1296    -fsanitize=shift  -fsanitize=integer-divide-by-zero  -fsanitize=unreachable  -fsanitize=signed-integer-overflow  -fsanitize=bounds  -fsanitize=object-size  -fsanitize=bool  -fsanitize=enum  -Wno-maybe-uninitialized  -DMODULE  -DKBUILD_BASENAME='"mimic"' -DKBUILD_MODNAME='"mimic"' -c -o /home/lorenzo/mimic-2/src/kernel/mimic.o /home/lorenzo/mimic-2/src/kernel/mimic.c
 
-source_/home/lorenzo/Desktop/mimic-2/src/kernel/mimic.o := /home/lorenzo/Desktop/mimic-2/src/kernel/mimic.c
+source_/home/lorenzo/mimic-2/src/kernel/mimic.o := /home/lorenzo/mimic-2/src/kernel/mimic.c
 
-deps_/home/lorenzo/Desktop/mimic-2/src/kernel/mimic.o := \
+deps_/home/lorenzo/mimic-2/src/kernel/mimic.o := \
   include/linux/kconfig.h \
     $(wildcard include/config/cpu/big/endian.h) \
     $(wildcard include/config/booger.h) \
@@ -19,7 +19,7 @@ deps_/home/lorenzo/Desktop/mimic-2/src/kernel/mimic.o := \
     $(wildcard include/config/arch/use/builtin/bswap.h) \
   include/uapi/asm-generic/errno.h \
   include/uapi/asm-generic/errno-base.h \
-  /home/lorenzo/Desktop/mimic-2/src/kernel/protocol/cubic.h \
+  /home/lorenzo/mimic-2/src/kernel/protocol/cubic.h \
   include/linux/mm.h \
     $(wildcard include/config/need/multiple/nodes.h) \
     $(wildcard include/config/sysctl.h) \
@@ -65,7 +65,7 @@ deps_/home/lorenzo/Desktop/mimic-2/src/kernel/mimic.o := \
     $(wildcard include/config/hugetlbfs.h) \
   include/linux/errno.h \
   include/uapi/linux/errno.h \
-  arch/x86/include/generated/uapi/asm/errno.h \
+  arch/arm64/include/generated/uapi/asm/errno.h \
   include/linux/mmdebug.h \
     $(wildcard include/config/debug/vm.h) \
     $(wildcard include/config/debug/virtual.h) \
@@ -73,10 +73,11 @@ deps_/home/lorenzo/Desktop/mimic-2/src/kernel/mimic.o := \
   include/linux/bug.h \
     $(wildcard include/config/generic/bug.h) \
     $(wildcard include/config/bug/on/data/corruption.h) \
-  arch/x86/include/asm/bug.h \
-    $(wildcard include/config/x86/32.h) \
-    $(wildcard include/config/debug/bugverbose.h) \
+  arch/arm64/include/asm/bug.h \
   include/linux/stringify.h \
+  arch/arm64/include/asm/asm-bug.h \
+    $(wildcard include/config/debug/bugverbose.h) \
+  arch/arm64/include/asm/brk-imm.h \
   include/asm-generic/bug.h \
     $(wildcard include/config/bug.h) \
     $(wildcard include/config/generic/bug/relative/pointers.h) \
@@ -89,34 +90,27 @@ deps_/home/lorenzo/Desktop/mimic-2/src/kernel/mimic.o := \
     $(wildcard include/config/kasan.h) \
   include/linux/compiler_types.h \
   include/uapi/linux/types.h \
-  arch/x86/include/generated/uapi/asm/types.h \
+  arch/arm64/include/generated/uapi/asm/types.h \
   include/uapi/asm-generic/types.h \
   include/asm-generic/int-ll64.h \
   include/uapi/asm-generic/int-ll64.h \
-  arch/x86/include/uapi/asm/bitsperlong.h \
+  arch/arm64/include/uapi/asm/bitsperlong.h \
   include/asm-generic/bitsperlong.h \
     $(wildcard include/config/64bit.h) \
   include/uapi/asm-generic/bitsperlong.h \
   include/uapi/linux/posix_types.h \
   include/linux/stddef.h \
   include/uapi/linux/stddef.h \
-  arch/x86/include/asm/posix_types.h \
-  arch/x86/include/uapi/asm/posix_types_64.h \
+  arch/arm64/include/uapi/asm/posix_types.h \
   include/uapi/asm-generic/posix_types.h \
-  arch/x86/include/asm/barrier.h \
-  arch/x86/include/asm/alternative.h \
+  arch/arm64/include/asm/barrier.h \
+  include/linux/kasan-checks.h \
   include/linux/types.h \
     $(wildcard include/config/have/uid16.h) \
     $(wildcard include/config/uid16.h) \
     $(wildcard include/config/arch/dma/addr/t/64bit.h) \
     $(wildcard include/config/phys/addr/t/64bit.h) \
-  arch/x86/include/asm/asm.h \
-  arch/x86/include/asm/nops.h \
-    $(wildcard include/config/mk7.h) \
-    $(wildcard include/config/x86/p6/nop.h) \
-    $(wildcard include/config/x86/64.h) \
   include/asm-generic/barrier.h \
-  include/linux/kasan-checks.h \
   include/linux/kernel.h \
     $(wildcard include/config/preempt/voluntary.h) \
     $(wildcard include/config/debug/atomic/sleep.h) \
@@ -125,7 +119,7 @@ deps_/home/lorenzo/Desktop/mimic-2/src/kernel/mimic.o := \
     $(wildcard include/config/panic/timeout.h) \
     $(wildcard include/config/tracing.h) \
     $(wildcard include/config/ftrace/mcount/record.h) \
-  /usr/lib/gcc/x86_64-linux-gnu/7/include/stdarg.h \
+  /usr/lib/gcc/aarch64-linux-gnu/9/include/stdarg.h \
   include/linux/limits.h \
   include/uapi/linux/limits.h \
   include/linux/linkage.h \
@@ -136,44 +130,60 @@ deps_/home/lorenzo/Desktop/mimic-2/src/kernel/mimic.o := \
     $(wildcard include/config/modules.h) \
     $(wildcard include/config/trim/unused/ksyms.h) \
     $(wildcard include/config/unused/symbols.h) \
-  arch/x86/include/asm/linkage.h \
-    $(wildcard include/config/x86/alignment/16.h) \
+  arch/arm64/include/asm/linkage.h \
   include/linux/bitops.h \
   include/linux/bits.h \
   include/linux/const.h \
   include/uapi/linux/const.h \
-  arch/x86/include/asm/bitops.h \
-    $(wildcard include/config/x86/cmov.h) \
-  arch/x86/include/asm/rmwcc.h \
-    $(wildcard include/config/cc/has/asm/goto.h) \
+  arch/arm64/include/asm/bitops.h \
+  include/asm-generic/bitops/builtin-__ffs.h \
+  include/asm-generic/bitops/builtin-ffs.h \
+  include/asm-generic/bitops/builtin-__fls.h \
+  include/asm-generic/bitops/builtin-fls.h \
+  include/asm-generic/bitops/ffz.h \
+  include/asm-generic/bitops/fls64.h \
   include/asm-generic/bitops/find.h \
     $(wildcard include/config/generic/find/first/bit.h) \
   include/asm-generic/bitops/sched.h \
-  arch/x86/include/asm/arch_hweight.h \
-  arch/x86/include/asm/cpufeatures.h \
-  arch/x86/include/asm/required-features.h \
-    $(wildcard include/config/x86/minimum/cpu/family.h) \
-    $(wildcard include/config/math/emulation.h) \
-    $(wildcard include/config/x86/pae.h) \
-    $(wildcard include/config/x86/cmpxchg64.h) \
-    $(wildcard include/config/x86/use/3dnow.h) \
-    $(wildcard include/config/matom.h) \
-    $(wildcard include/config/paravirt.h) \
-  arch/x86/include/asm/disabled-features.h \
-    $(wildcard include/config/x86/smap.h) \
-    $(wildcard include/config/x86/intel/umip.h) \
-    $(wildcard include/config/x86/intel/memory/protection/keys.h) \
-    $(wildcard include/config/x86/5level.h) \
-    $(wildcard include/config/page/table/isolation.h) \
+  include/asm-generic/bitops/hweight.h \
+  include/asm-generic/bitops/arch_hweight.h \
   include/asm-generic/bitops/const_hweight.h \
-  include/asm-generic/bitops-instrumented.h \
+  include/asm-generic/bitops/atomic.h \
+  include/linux/atomic.h \
+  arch/arm64/include/asm/atomic.h \
+  arch/arm64/include/asm/cmpxchg.h \
+  include/linux/build_bug.h \
+  arch/arm64/include/asm/lse.h \
+    $(wildcard include/config/as/lse.h) \
+    $(wildcard include/config/arm64/lse/atomics.h) \
+  arch/arm64/include/asm/atomic_ll_sc.h \
+    $(wildcard include/config/cc/has/k/constraint.h) \
+  include/linux/jump_label.h \
+    $(wildcard include/config/jump/label.h) \
+    $(wildcard include/config/have/arch/jump/label/relative.h) \
+  arch/arm64/include/asm/jump_label.h \
+  arch/arm64/include/asm/insn.h \
+  arch/arm64/include/asm/alternative.h \
+    $(wildcard include/config/arm64/uao.h) \
+  arch/arm64/include/asm/cpucaps.h \
+  include/linux/init.h \
+    $(wildcard include/config/strict/kernel/rwx.h) \
+    $(wildcard include/config/strict/module/rwx.h) \
+  arch/arm64/include/asm/atomic_lse.h \
+  include/asm-generic/atomic-instrumented.h \
+  include/linux/atomic-fallback.h \
+    $(wildcard include/config/generic/atomic64.h) \
+  include/asm-generic/atomic-long.h \
+  include/asm-generic/bitops/lock.h \
+  include/asm-generic/bitops/non-atomic.h \
   include/asm-generic/bitops/le.h \
-  arch/x86/include/uapi/asm/byteorder.h \
+  arch/arm64/include/uapi/asm/byteorder.h \
   include/linux/byteorder/little_endian.h \
   include/uapi/linux/byteorder/little_endian.h \
   include/linux/swab.h \
   include/uapi/linux/swab.h \
-  arch/x86/include/uapi/asm/swab.h \
+  arch/arm64/include/generated/uapi/asm/swab.h \
+  include/uapi/asm-generic/swab.h \
   include/linux/byteorder/generic.h \
   include/asm-generic/bitops/ext2-atomic-setbit.h \
   include/linux/log2.h \
@@ -188,25 +198,21 @@ deps_/home/lorenzo/Desktop/mimic-2/src/kernel/mimic.o := \
     $(wildcard include/config/printk/nmi.h) \
     $(wildcard include/config/printk.h) \
     $(wildcard include/config/dynamic/debug.h) \
-  include/linux/init.h \
-    $(wildcard include/config/strict/kernel/rwx.h) \
-    $(wildcard include/config/strict/module/rwx.h) \
   include/linux/kern_levels.h \
   include/linux/cache.h \
     $(wildcard include/config/arch/has/cache/line/size.h) \
   include/uapi/linux/kernel.h \
   include/uapi/linux/sysinfo.h \
-  arch/x86/include/asm/cache.h \
-    $(wildcard include/config/x86/l1/cache/shift.h) \
-    $(wildcard include/config/x86/internode/cache/shift.h) \
-    $(wildcard include/config/x86/vsmp.h) \
+  arch/arm64/include/asm/cache.h \
+  arch/arm64/include/asm/cputype.h \
+  arch/arm64/include/asm/sysreg.h \
+    $(wildcard include/config/broken/gas/inst.h) \
+    $(wildcard include/config/arm64/pa/bits/52.h) \
+    $(wildcard include/config/arm64/4k/pages.h) \
+    $(wildcard include/config/arm64/16k/pages.h) \
+    $(wildcard include/config/arm64/64k/pages.h) \
   include/linux/dynamic_debug.h \
-    $(wildcard include/config/jump/label.h) \
-  include/linux/jump_label.h \
-    $(wildcard include/config/have/arch/jump/label/relative.h) \
-  arch/x86/include/asm/jump_label.h \
-  include/linux/build_bug.h \
-  arch/x86/include/asm/div64.h \
+  arch/arm64/include/generated/asm/div64.h \
   include/asm-generic/div64.h \
   include/linux/gfp.h \
     $(wildcard include/config/lockdep.h) \
@@ -245,17 +251,8 @@ deps_/home/lorenzo/Desktop/mimic-2/src/kernel/mimic.o := \
   include/linux/poison.h \
     $(wildcard include/config/illegal/pointer/value.h) \
     $(wildcard include/config/page/poisoning/zero.h) \
-  arch/x86/include/asm/preempt.h \
-  arch/x86/include/asm/percpu.h \
-    $(wildcard include/config/x86/64/smp.h) \
-  include/asm-generic/percpu.h \
-    $(wildcard include/config/have/setup/per/cpu/area.h) \
-  include/linux/threads.h \
-    $(wildcard include/config/nr/cpus.h) \
-    $(wildcard include/config/base/small.h) \
-  include/linux/percpu-defs.h \
-    $(wildcard include/config/debug/force/weak/per/cpu.h) \
-    $(wildcard include/config/amd/mem/encrypt.h) \
+  arch/arm64/include/asm/preempt.h \
+    $(wildcard include/config/preempt.h) \
   include/linux/thread_info.h \
     $(wildcard include/config/thread/info/in/task.h) \
     $(wildcard include/config/have/arch/within/stack/frames.h) \
@@ -266,144 +263,119 @@ deps_/home/lorenzo/Desktop/mimic-2/src/kernel/mimic.o := \
     $(wildcard include/config/arch/supports/int128.h) \
   include/uapi/linux/time.h \
   include/uapi/linux/time_types.h \
-  arch/x86/include/asm/current.h \
-  arch/x86/include/asm/thread_info.h \
-    $(wildcard include/config/vm86.h) \
-    $(wildcard include/config/frame/pointer.h) \
-    $(wildcard include/config/compat.h) \
-    $(wildcard include/config/ia32/emulation.h) \
-  arch/x86/include/asm/page.h \
-  arch/x86/include/asm/page_types.h \
-    $(wildcard include/config/physical/start.h) \
-    $(wildcard include/config/physical/align.h) \
-    $(wildcard include/config/dynamic/physical/mask.h) \
-  include/linux/mem_encrypt.h \
-    $(wildcard include/config/arch/has/mem/encrypt.h) \
-  arch/x86/include/asm/mem_encrypt.h \
-  arch/x86/include/uapi/asm/bootparam.h \
-  include/linux/screen_info.h \
-  include/uapi/linux/screen_info.h \
-  include/linux/apm_bios.h \
-  include/uapi/linux/apm_bios.h \
-  include/uapi/linux/ioctl.h \
-  arch/x86/include/generated/uapi/asm/ioctl.h \
-  include/asm-generic/ioctl.h \
-  include/uapi/asm-generic/ioctl.h \
-  include/linux/edd.h \
-  include/uapi/linux/edd.h \
-  arch/x86/include/asm/ist.h \
-  arch/x86/include/uapi/asm/ist.h \
-  include/video/edid.h \
-  include/uapi/video/edid.h \
-  arch/x86/include/asm/page_64_types.h \
-    $(wildcard include/config/dynamic/memory/layout.h) \
-    $(wildcard include/config/randomize/base.h) \
-  arch/x86/include/asm/kaslr.h \
-    $(wildcard include/config/randomize/memory.h) \
-  arch/x86/include/asm/page_64.h \
-    $(wildcard include/config/x86/vsyscall/emulation.h) \
-  include/linux/range.h \
+  arch/arm64/include/asm/current.h \
+  arch/arm64/include/asm/thread_info.h \
+    $(wildcard include/config/arm64/sw/ttbr0/pan.h) \
+  arch/arm64/include/asm/memory.h \
+    $(wildcard include/config/arm64/va/bits.h) \
+    $(wildcard include/config/arm64/va/bits/52.h) \
+    $(wildcard include/config/kasan/shadow/offset.h) \
+    $(wildcard include/config/vmap/stack.h) \
+    $(wildcard include/config/debug/align/rodata.h) \
+    $(wildcard include/config/efi.h) \
+    $(wildcard include/config/arm/gic/v3/its.h) \
+  include/linux/sizes.h \
+  arch/arm64/include/asm/page-def.h \
+    $(wildcard include/config/arm64/page/shift.h) \
+    $(wildcard include/config/arm64/cont/shift.h) \
   include/asm-generic/memory_model.h \
   include/linux/pfn.h \
-  include/asm-generic/getorder.h \
-  arch/x86/include/asm/cpufeature.h \
-    $(wildcard include/config/x86/feature/names.h) \
-  arch/x86/include/asm/processor.h \
-    $(wildcard include/config/kvm.h) \
-    $(wildcard include/config/stackprotector.h) \
-    $(wildcard include/config/paravirt/xxl.h) \
-    $(wildcard include/config/x86/debugctlmsr.h) \
-    $(wildcard include/config/cpu/sup/amd.h) \
-    $(wildcard include/config/xen.h) \
-  arch/x86/include/asm/processor-flags.h \
-  arch/x86/include/uapi/asm/processor-flags.h \
-  arch/x86/include/asm/math_emu.h \
-  arch/x86/include/asm/ptrace.h \
-  arch/x86/include/asm/segment.h \
-    $(wildcard include/config/xen/pv.h) \
-    $(wildcard include/config/x86/32/lazy/gs.h) \
-  arch/x86/include/uapi/asm/ptrace.h \
-  arch/x86/include/uapi/asm/ptrace-abi.h \
-  arch/x86/include/asm/paravirt_types.h \
-    $(wildcard include/config/pgtable/levels.h) \
-    $(wildcard include/config/paravirt/debug.h) \
-  arch/x86/include/asm/desc_defs.h \
-  arch/x86/include/asm/kmap_types.h \
-    $(wildcard include/config/debug/highmem.h) \
-  include/asm-generic/kmap_types.h \
-  arch/x86/include/asm/pgtable_types.h \
-    $(wildcard include/config/proc/fs.h) \
-  arch/x86/include/asm/pgtable_64_types.h \
-  arch/x86/include/asm/sparsemem.h \
-  include/asm-generic/pgtable-nop4d.h \
-  arch/x86/include/asm/nospec-branch.h \
-  include/linux/static_key.h \
-  include/linux/frame.h \
-  arch/x86/include/asm/alternative-asm.h \
-  arch/x86/include/asm/msr-index.h \
-  arch/x86/include/asm/unwind_hints.h \
-  arch/x86/include/asm/orc_types.h \
-  arch/x86/include/asm/spinlock_types.h \
-    $(wildcard include/config/paravirt/spinlocks.h) \
-  include/asm-generic/qspinlock_types.h \
-  include/asm-generic/qrwlock_types.h \
-  arch/x86/include/uapi/asm/sigcontext.h \
-  arch/x86/include/asm/msr.h \
-    $(wildcard include/config/tracepoints.h) \
-  arch/x86/include/asm/msr-index.h \
-  arch/x86/include/asm/cpumask.h \
-  include/linux/cpumask.h \
-    $(wildcard include/config/cpumask/offstack.h) \
-    $(wildcard include/config/hotplug/cpu.h) \
-    $(wildcard include/config/debug/per/cpu/maps.h) \
-  include/linux/bitmap.h \
-  include/linux/string.h \
-    $(wildcard include/config/binary/printf.h) \
-    $(wildcard include/config/fortify/source.h) \
-  include/uapi/linux/string.h \
-  arch/x86/include/asm/string.h \
-  arch/x86/include/asm/string_64.h \
-    $(wildcard include/config/x86/mce.h) \
-    $(wildcard include/config/arch/has/uaccess/flushcache.h) \
-  include/linux/atomic.h \
-  arch/x86/include/asm/atomic.h \
-  arch/x86/include/asm/cmpxchg.h \
-  arch/x86/include/asm/cmpxchg_64.h \
-  arch/x86/include/asm/atomic64_64.h \
-  include/asm-generic/atomic-instrumented.h \
-  include/linux/atomic-fallback.h \
-    $(wildcard include/config/generic/atomic64.h) \
-  include/asm-generic/atomic-long.h \
-  arch/x86/include/uapi/asm/msr.h \
-  include/linux/tracepoint-defs.h \
-  arch/x86/include/asm/paravirt.h \
-  arch/x86/include/asm/frame.h \
-  arch/x86/include/asm/special_insns.h \
-  arch/x86/include/asm/fpu/types.h \
-  include/linux/personality.h \
-  include/uapi/linux/personality.h \
-  include/linux/err.h \
+  arch/arm64/include/asm/stack_pointer.h \
   include/linux/irqflags.h \
     $(wildcard include/config/trace/irqflags.h) \
     $(wildcard include/config/irqsoff/tracer.h) \
     $(wildcard include/config/preempt/tracer.h) \
     $(wildcard include/config/trace/irqflags/support.h) \
-  arch/x86/include/asm/irqflags.h \
+  arch/arm64/include/asm/irqflags.h \
+  arch/arm64/include/asm/ptrace.h \
+    $(wildcard include/config/compat.h) \
+  arch/arm64/include/asm/cpufeature.h \
+    $(wildcard include/config/arm64/sve.h) \
+    $(wildcard include/config/arm64/cnp.h) \
+    $(wildcard include/config/arm64/ptr/auth.h) \
+    $(wildcard include/config/arm64/pseudo/nmi.h) \
+    $(wildcard include/config/arm64/debug/priority/masking.h) \
+    $(wildcard include/config/arm64/ssbd.h) \
+    $(wildcard include/config/arm64/pa/bits.h) \
+  arch/arm64/include/asm/hwcap.h \
+  arch/arm64/include/uapi/asm/hwcap.h \
+  arch/arm64/include/uapi/asm/ptrace.h \
+  arch/arm64/include/uapi/asm/sve_context.h \
   include/linux/bottom_half.h \
-  arch/x86/include/generated/asm/mmiowb.h \
+  arch/arm64/include/generated/asm/mmiowb.h \
   include/asm-generic/mmiowb.h \
     $(wildcard include/config/mmiowb.h) \
   include/linux/spinlock_types.h \
+  arch/arm64/include/asm/spinlock_types.h \
+  include/asm-generic/qspinlock_types.h \
+    $(wildcard include/config/paravirt.h) \
+    $(wildcard include/config/nr/cpus.h) \
+  include/asm-generic/qrwlock_types.h \
   include/linux/lockdep.h \
     $(wildcard include/config/lock/stat.h) \
   include/linux/rwlock_types.h \
-  arch/x86/include/asm/spinlock.h \
-  arch/x86/include/asm/qspinlock.h \
-  include/asm-generic/qspinlock.h \
-  arch/x86/include/asm/qrwlock.h \
+  arch/arm64/include/asm/spinlock.h \
+  arch/arm64/include/generated/asm/qrwlock.h \
   include/asm-generic/qrwlock.h \
+  arch/arm64/include/asm/processor.h \
+    $(wildcard include/config/kuser/helpers.h) \
+    $(wildcard include/config/arm64/force/52bit.h) \
+    $(wildcard include/config/have/hw/breakpoint.h) \
+    $(wildcard include/config/arm64/tagged/addr/abi.h) \
+    $(wildcard include/config/gcc/plugin/stackleak.h) \
+  include/linux/string.h \
+    $(wildcard include/config/binary/printf.h) \
+    $(wildcard include/config/fortify/source.h) \
+  include/uapi/linux/string.h \
+  arch/arm64/include/asm/string.h \
+    $(wildcard include/config/arch/has/uaccess/flushcache.h) \
+  arch/arm64/include/asm/hw_breakpoint.h \
+  arch/arm64/include/asm/virt.h \
+  arch/arm64/include/asm/sections.h \
+  include/asm-generic/sections.h \
+  arch/arm64/include/asm/pgtable-hwdef.h \
+    $(wildcard include/config/pgtable/levels.h) \
+  arch/arm64/include/asm/pointer_auth.h \
+  include/linux/random.h \
+    $(wildcard include/config/arch/random.h) \
+  include/linux/once.h \
+  include/uapi/linux/random.h \
+  include/uapi/linux/ioctl.h \
+  arch/arm64/include/generated/uapi/asm/ioctl.h \
+  include/asm-generic/ioctl.h \
+  include/uapi/asm-generic/ioctl.h \
+  include/linux/irqnr.h \
+  include/uapi/linux/irqnr.h \
+  include/linux/prandom.h \
+  include/linux/percpu.h \
+    $(wildcard include/config/need/per/cpu/embed/first/chunk.h) \
+    $(wildcard include/config/need/per/cpu/page/first/chunk.h) \
+    $(wildcard include/config/have/setup/per/cpu/area.h) \
+  include/linux/smp.h \
+    $(wildcard include/config/up/late/init.h) \
+  include/linux/cpumask.h \
+    $(wildcard include/config/cpumask/offstack.h) \
+    $(wildcard include/config/hotplug/cpu.h) \
+    $(wildcard include/config/debug/per/cpu/maps.h) \
+  include/linux/threads.h \
+    $(wildcard include/config/base/small.h) \
+  include/linux/bitmap.h \
+  include/linux/llist.h \
+    $(wildcard include/config/arch/have/nmi/safe/cmpxchg.h) \
+  arch/arm64/include/asm/smp.h \
+    $(wildcard include/config/arm64/acpi/parking/protocol.h) \
+  arch/arm64/include/asm/percpu.h \
+  include/asm-generic/percpu.h \
+  include/linux/percpu-defs.h \
+    $(wildcard include/config/debug/force/weak/per/cpu.h) \
+    $(wildcard include/config/amd/mem/encrypt.h) \
+  include/linux/siphash.h \
+    $(wildcard include/config/have/efficient/unaligned/access.h) \
+  arch/arm64/include/asm/fpsimd.h \
+  arch/arm64/include/uapi/asm/sigcontext.h \
+  arch/arm64/include/generated/asm/qspinlock.h \
+  include/asm-generic/qspinlock.h \
   include/linux/rwlock.h \
-    $(wildcard include/config/preempt.h) \
   include/linux/spinlock_api_smp.h \
     $(wildcard include/config/inline/spin/lock.h) \
     $(wildcard include/config/inline/spin/lock/bh.h) \
@@ -445,6 +417,7 @@ deps_/home/lorenzo/Desktop/mimic-2/src/kernel/mimic.o := \
     $(wildcard include/config/hugetlb/page/size/variable.h) \
   include/linux/page-flags-layout.h \
   include/generated/bounds.h \
+  arch/arm64/include/asm/sparsemem.h \
   include/linux/mm_types.h \
     $(wildcard include/config/have/aligned/struct/page.h) \
     $(wildcard include/config/userfaultfd.h) \
@@ -457,10 +430,15 @@ deps_/home/lorenzo/Desktop/mimic-2/src/kernel/mimic.o := \
   include/linux/mm_types_task.h \
     $(wildcard include/config/split/ptlock/cpus.h) \
     $(wildcard include/config/arch/enable/split/pmd/ptlock.h) \
-  arch/x86/include/asm/tlbbatch.h \
+  arch/arm64/include/asm/page.h \
+  include/linux/personality.h \
+  include/uapi/linux/personality.h \
+  arch/arm64/include/asm/pgtable-types.h \
+  include/asm-generic/5level-fixup.h \
+  include/asm-generic/getorder.h \
   include/linux/auxvec.h \
   include/uapi/linux/auxvec.h \
-  arch/x86/include/uapi/asm/auxvec.h \
+  arch/arm64/include/uapi/asm/auxvec.h \
   include/linux/rbtree.h \
   include/linux/rcupdate.h \
     $(wildcard include/config/preempt/rcu.h) \
@@ -478,21 +456,16 @@ deps_/home/lorenzo/Desktop/mimic-2/src/kernel/mimic.o := \
   include/linux/rwsem.h \
     $(wildcard include/config/rwsem/spin/on/owner.h) \
     $(wildcard include/config/debug/rwsems.h) \
+  include/linux/err.h \
   include/linux/osq_lock.h \
   include/linux/completion.h \
   include/linux/uprobes.h \
     $(wildcard include/config/uprobes.h) \
-  arch/x86/include/asm/uprobes.h \
-  include/linux/notifier.h \
-    $(wildcard include/config/tree/srcu.h) \
-  include/linux/mutex.h \
-    $(wildcard include/config/mutex/spin/on/owner.h) \
-    $(wildcard include/config/debug/mutexes.h) \
-  include/linux/debug_locks.h \
-    $(wildcard include/config/debug/locking/api/selftests.h) \
-  include/linux/srcu.h \
-    $(wildcard include/config/tiny/srcu.h) \
-    $(wildcard include/config/srcu.h) \
+  arch/arm64/include/asm/uprobes.h \
+  arch/arm64/include/asm/debug-monitors.h \
+  arch/arm64/include/asm/esr.h \
+  arch/arm64/include/asm/probes.h \
+    $(wildcard include/config/kprobes.h) \
   include/linux/workqueue.h \
     $(wildcard include/config/debug/objects/work.h) \
     $(wildcard include/config/freezer.h) \
@@ -509,13 +482,17 @@ deps_/home/lorenzo/Desktop/mimic-2/src/kernel/mimic.o := \
   include/linux/timex.h \
   include/uapi/linux/timex.h \
   include/uapi/linux/param.h \
-  arch/x86/include/generated/uapi/asm/param.h \
+  arch/arm64/include/uapi/asm/param.h \
   include/asm-generic/param.h \
     $(wildcard include/config/hz.h) \
   include/uapi/asm-generic/param.h \
-  arch/x86/include/asm/timex.h \
-    $(wildcard include/config/x86/tsc.h) \
-  arch/x86/include/asm/tsc.h \
+  arch/arm64/include/asm/timex.h \
+  arch/arm64/include/asm/arch_timer.h \
+    $(wildcard include/config/arm/arch/timer/ool/workaround.h) \
+  include/clocksource/arm_arch_timer.h \
+    $(wildcard include/config/arm/arch/timer.h) \
+  include/linux/timecounter.h \
+  include/asm-generic/timex.h \
   include/linux/jiffies.h \
   include/generated/timeconst.h \
   include/linux/timekeeping.h \
@@ -523,13 +500,12 @@ deps_/home/lorenzo/Desktop/mimic-2/src/kernel/mimic.o := \
   include/linux/debugobjects.h \
     $(wildcard include/config/debug/objects.h) \
     $(wildcard include/config/debug/objects/free.h) \
-  include/linux/rcu_segcblist.h \
-  include/linux/srcutree.h \
-  include/linux/rcu_node_tree.h \
-    $(wildcard include/config/rcu/fanout.h) \
-    $(wildcard include/config/rcu/fanout/leaf.h) \
-  arch/x86/include/asm/mmu.h \
-    $(wildcard include/config/modify/ldt/syscall.h) \
+  arch/arm64/include/asm/mmu.h \
+    $(wildcard include/config/unmap/kernel/at/el0.h) \
+    $(wildcard include/config/randomize/base.h) \
+    $(wildcard include/config/cavium/erratum/27456.h) \
+    $(wildcard include/config/harden/branch/predictor.h) \
+    $(wildcard include/config/harden/el2/vectors.h) \
   include/linux/page-flags.h \
     $(wildcard include/config/arch/uses/pg/uncached.h) \
     $(wildcard include/config/memory/failure.h) \
@@ -540,90 +516,38 @@ deps_/home/lorenzo/Desktop/mimic-2/src/kernel/mimic.o := \
     $(wildcard include/config/arch/has/add/pages.h) \
     $(wildcard include/config/have/arch/nodedata/extension.h) \
     $(wildcard include/config/have/bootmem/info/node.h) \
-  arch/x86/include/asm/mmzone.h \
-  arch/x86/include/asm/mmzone_64.h \
-  arch/x86/include/asm/smp.h \
-    $(wildcard include/config/x86/local/apic.h) \
-    $(wildcard include/config/x86/io/apic.h) \
-    $(wildcard include/config/debug/nmi/selftest.h) \
-  arch/x86/include/asm/mpspec.h \
-    $(wildcard include/config/eisa.h) \
-    $(wildcard include/config/x86/mpparse.h) \
-  arch/x86/include/asm/mpspec_def.h \
-  arch/x86/include/asm/x86_init.h \
-  arch/x86/include/asm/apicdef.h \
-  arch/x86/include/asm/apic.h \
-    $(wildcard include/config/x86/x2apic.h) \
-  arch/x86/include/asm/fixmap.h \
-    $(wildcard include/config/provide/ohci1394/dma/init.h) \
-    $(wildcard include/config/pci/mmconfig.h) \
-    $(wildcard include/config/x86/intel/mid.h) \
-    $(wildcard include/config/acpi/apei/ghes.h) \
-    $(wildcard include/config/intel/txt.h) \
-  arch/x86/include/asm/acpi.h \
-    $(wildcard include/config/acpi/apei.h) \
-    $(wildcard include/config/acpi.h) \
-    $(wildcard include/config/acpi/numa.h) \
-  include/acpi/pdc_intel.h \
-  arch/x86/include/asm/numa.h \
-    $(wildcard include/config/numa/emu.h) \
-  arch/x86/include/asm/topology.h \
-    $(wildcard include/config/sched/mc/prio.h) \
+  include/linux/notifier.h \
+    $(wildcard include/config/tree/srcu.h) \
+  include/linux/mutex.h \
+    $(wildcard include/config/mutex/spin/on/owner.h) \
+    $(wildcard include/config/debug/mutexes.h) \
+  include/linux/debug_locks.h \
+    $(wildcard include/config/debug/locking/api/selftests.h) \
+  include/linux/srcu.h \
+    $(wildcard include/config/tiny/srcu.h) \
+    $(wildcard include/config/srcu.h) \
+  include/linux/rcu_segcblist.h \
+  include/linux/srcutree.h \
+  include/linux/rcu_node_tree.h \
+    $(wildcard include/config/rcu/fanout.h) \
+    $(wildcard include/config/rcu/fanout/leaf.h) \
+  arch/arm64/include/asm/mmzone.h \
+  arch/arm64/include/asm/numa.h \
+  arch/arm64/include/asm/topology.h \
+  include/linux/arch_topology.h \
+    $(wildcard include/config/generic/arch/topology.h) \
   include/asm-generic/topology.h \
-  arch/x86/include/asm/realmode.h \
-    $(wildcard include/config/acpi/sleep.h) \
-  arch/x86/include/asm/io.h \
-    $(wildcard include/config/mtrr.h) \
-    $(wildcard include/config/x86/pat.h) \
-  arch/x86/include/generated/asm/early_ioremap.h \
-  include/asm-generic/early_ioremap.h \
-    $(wildcard include/config/generic/early/ioremap.h) \
-  include/asm-generic/iomap.h \
-    $(wildcard include/config/has/ioport/map.h) \
-    $(wildcard include/config/pci.h) \
-    $(wildcard include/config/generic/iomap.h) \
-  include/asm-generic/pci_iomap.h \
-    $(wildcard include/config/no/generic/pci/ioport/map.h) \
-    $(wildcard include/config/generic/pci/iomap.h) \
-  include/asm-generic/io.h \
-    $(wildcard include/config/virt/to/bus.h) \
-  include/linux/logic_pio.h \
-    $(wildcard include/config/indirect/pio.h) \
-  include/linux/fwnode.h \
-  include/linux/vmalloc.h \
-  include/linux/llist.h \
-    $(wildcard include/config/arch/have/nmi/safe/cmpxchg.h) \
-  include/linux/overflow.h \
-  arch/x86/include/uapi/asm/vsyscall.h \
-  include/asm-generic/fixmap.h \
-  arch/x86/include/asm/hardirq.h \
-    $(wildcard include/config/kvm/intel.h) \
-    $(wildcard include/config/have/kvm.h) \
-    $(wildcard include/config/x86/thermal/vector.h) \
-    $(wildcard include/config/x86/mce/threshold.h) \
-    $(wildcard include/config/x86/mce/amd.h) \
-    $(wildcard include/config/x86/hv/callback/vector.h) \
-    $(wildcard include/config/hyperv.h) \
-  arch/x86/include/asm/io_apic.h \
-  arch/x86/include/asm/irq_vectors.h \
-    $(wildcard include/config/pci/msi.h) \
   include/linux/topology.h \
     $(wildcard include/config/use/percpu/numa/node/id.h) \
     $(wildcard include/config/sched/smt.h) \
-  include/linux/arch_topology.h \
-    $(wildcard include/config/generic/arch/topology.h) \
-  include/linux/percpu.h \
-    $(wildcard include/config/need/per/cpu/embed/first/chunk.h) \
-    $(wildcard include/config/need/per/cpu/page/first/chunk.h) \
-  include/linux/smp.h \
-    $(wildcard include/config/up/late/init.h) \
   include/linux/mmap_lock.h \
+  include/linux/range.h \
   include/linux/percpu-refcount.h \
   include/linux/bit_spinlock.h \
   include/linux/shrinker.h \
   include/linux/resource.h \
   include/uapi/linux/resource.h \
-  arch/x86/include/generated/uapi/asm/resource.h \
+  arch/arm64/include/generated/uapi/asm/resource.h \
   include/asm-generic/resource.h \
   include/uapi/asm-generic/resource.h \
   include/linux/page_ext.h \
@@ -634,17 +558,17 @@ deps_/home/lorenzo/Desktop/mimic-2/src/kernel/mimic.o := \
   include/linux/stackdepot.h \
   include/linux/page_ref.h \
     $(wildcard include/config/debug/page/ref.h) \
+  include/linux/tracepoint-defs.h \
+  include/linux/static_key.h \
   include/linux/memremap.h \
   include/linux/ioport.h \
     $(wildcard include/config/io/strict/devmem.h) \
-  include/linux/sizes.h \
-  arch/x86/include/asm/pgtable.h \
-    $(wildcard include/config/debug/wx.h) \
-    $(wildcard include/config/have/arch/transparent/hugepage/pud.h) \
-    $(wildcard include/config/have/arch/soft/dirty.h) \
-    $(wildcard include/config/arch/enable/thp/migration.h) \
-  arch/x86/include/asm/fpu/xstate.h \
-  include/linux/uaccess.h \
+  include/linux/overflow.h \
+  arch/arm64/include/asm/pgtable.h \
+  arch/arm64/include/asm/proc-fns.h \
+  arch/arm64/include/asm/pgtable-prot.h \
+  arch/arm64/include/asm/tlbflush.h \
+    $(wildcard include/config/arm64/workaround/repeat/tlbi.h) \
   include/linux/sched.h \
     $(wildcard include/config/virt/cpu/accounting/native.h) \
     $(wildcard include/config/sched/info.h) \
@@ -660,6 +584,7 @@ deps_/home/lorenzo/Desktop/mimic-2/src/kernel/mimic.o := \
     $(wildcard include/config/compat/brk.h) \
     $(wildcard include/config/cgroups.h) \
     $(wildcard include/config/blk/cgroup.h) \
+    $(wildcard include/config/stackprotector.h) \
     $(wildcard include/config/arch/has/scaled/cputime.h) \
     $(wildcard include/config/virt/cpu/accounting/gen.h) \
     $(wildcard include/config/posix/cputimers.h) \
@@ -682,10 +607,8 @@ deps_/home/lorenzo/Desktop/mimic-2/src/kernel/mimic.o := \
     $(wildcard include/config/function/graph/tracer.h) \
     $(wildcard include/config/kcov.h) \
     $(wildcard include/config/bcache.h) \
-    $(wildcard include/config/vmap/stack.h) \
     $(wildcard include/config/livepatch.h) \
     $(wildcard include/config/security.h) \
-    $(wildcard include/config/gcc/plugin/stackleak.h) \
     $(wildcard include/config/arch/task/struct/on/stack.h) \
     $(wildcard include/config/debug/rseq.h) \
   include/uapi/linux/sched.h \
@@ -702,15 +625,17 @@ deps_/home/lorenzo/Desktop/mimic-2/src/kernel/mimic.o := \
   include/linux/highuid.h \
   include/linux/rhashtable-types.h \
   include/uapi/linux/ipc.h \
-  arch/x86/include/generated/uapi/asm/ipcbuf.h \
+  arch/arm64/include/generated/uapi/asm/ipcbuf.h \
   include/uapi/asm-generic/ipcbuf.h \
-  arch/x86/include/uapi/asm/sembuf.h \
+  arch/arm64/include/generated/uapi/asm/sembuf.h \
+  include/uapi/asm-generic/sembuf.h \
   include/linux/shm.h \
   include/uapi/linux/shm.h \
   include/uapi/asm-generic/hugetlb_encode.h \
-  arch/x86/include/uapi/asm/shmbuf.h \
+  arch/arm64/include/generated/uapi/asm/shmbuf.h \
   include/uapi/asm-generic/shmbuf.h \
-  arch/x86/include/asm/shmparam.h \
+  arch/arm64/include/asm/shmparam.h \
+  include/asm-generic/shmparam.h \
   include/linux/kcov.h \
   include/uapi/linux/kcov.h \
   include/linux/plist.h \
@@ -727,13 +652,10 @@ deps_/home/lorenzo/Desktop/mimic-2/src/kernel/mimic.o := \
     $(wildcard include/config/seccomp/filter.h) \
     $(wildcard include/config/checkpoint/restore.h) \
   include/uapi/linux/seccomp.h \
-  arch/x86/include/asm/seccomp.h \
-  arch/x86/include/asm/unistd.h \
-  arch/x86/include/uapi/asm/unistd.h \
-  arch/x86/include/generated/uapi/asm/unistd_64.h \
-  arch/x86/include/generated/asm/unistd_64_x32.h \
-  arch/x86/include/asm/ia32_unistd.h \
-  arch/x86/include/generated/asm/unistd_32_ia32.h \
+  arch/arm64/include/asm/seccomp.h \
+  arch/arm64/include/asm/unistd.h \
+  arch/arm64/include/uapi/asm/unistd.h \
+  include/uapi/asm-generic/unistd.h \
   include/asm-generic/seccomp.h \
   include/uapi/linux/unistd.h \
   include/linux/latencytop.h \
@@ -742,10 +664,11 @@ deps_/home/lorenzo/Desktop/mimic-2/src/kernel/mimic.o := \
   include/linux/signal_types.h \
     $(wildcard include/config/old/sigaction.h) \
   include/uapi/linux/signal.h \
-  arch/x86/include/asm/signal.h \
-  arch/x86/include/uapi/asm/signal.h \
+  arch/arm64/include/uapi/asm/signal.h \
+  include/asm-generic/signal.h \
+  include/uapi/asm-generic/signal.h \
   include/uapi/asm-generic/signal-defs.h \
-  arch/x86/include/uapi/asm/siginfo.h \
+  arch/arm64/include/generated/uapi/asm/siginfo.h \
   include/uapi/asm-generic/siginfo.h \
   include/linux/task_io_accounting.h \
     $(wildcard include/config/task/io/accounting.h) \
@@ -753,19 +676,15 @@ deps_/home/lorenzo/Desktop/mimic-2/src/kernel/mimic.o := \
     $(wildcard include/config/posix/timers.h) \
   include/linux/alarmtimer.h \
   include/uapi/linux/rseq.h \
-  arch/x86/include/asm/uaccess.h \
-    $(wildcard include/config/cc/has/asm/goto/tied/output.h) \
-    $(wildcard include/config/x86/intel/usercopy.h) \
-  arch/x86/include/asm/smap.h \
-  arch/x86/include/asm/extable.h \
-  arch/x86/include/asm/uaccess_64.h \
-  arch/x86/include/asm/user.h \
-  arch/x86/include/asm/user_64.h \
-  arch/x86/include/asm/fpu/api.h \
-    $(wildcard include/config/x86/debug/fpu.h) \
-  arch/x86/include/asm/pgtable_64.h \
-  arch/x86/include/asm/pgtable-invert.h \
+  arch/arm64/include/asm/fixmap.h \
+    $(wildcard include/config/acpi/apei/ghes.h) \
+    $(wildcard include/config/arm/sde/interface.h) \
+  arch/arm64/include/asm/boot.h \
+  include/asm-generic/fixmap.h \
   include/asm-generic/pgtable.h \
+    $(wildcard include/config/have/arch/transparent/hugepage/pud.h) \
+    $(wildcard include/config/have/arch/soft/dirty.h) \
+    $(wildcard include/config/arch/enable/thp/migration.h) \
     $(wildcard include/config/have/arch/huge/vmap.h) \
     $(wildcard include/config/x86/espfix64.h) \
   include/linux/huge_mm.h \
@@ -800,7 +719,14 @@ deps_/home/lorenzo/Desktop/mimic-2/src/kernel/mimic.o := \
     $(wildcard include/config/have/arch/hash.h) \
   include/linux/path.h \
   include/linux/stat.h \
-  arch/x86/include/uapi/asm/stat.h \
+  arch/arm64/include/asm/stat.h \
+  arch/arm64/include/generated/uapi/asm/stat.h \
+  include/uapi/asm-generic/stat.h \
+  arch/arm64/include/asm/compat.h \
+  include/asm-generic/compat.h \
+  include/linux/sched/task_stack.h \
+    $(wildcard include/config/debug/stack/usage.h) \
+  include/uapi/linux/magic.h \
   include/uapi/linux/stat.h \
   include/linux/list_lru.h \
     $(wildcard include/config/memcg/kmem.h) \
@@ -814,7 +740,7 @@ deps_/home/lorenzo/Desktop/mimic-2/src/kernel/mimic.o := \
   include/linux/fcntl.h \
     $(wildcard include/config/arch/32bit/off/t.h) \
   include/uapi/linux/fcntl.h \
-  arch/x86/include/generated/uapi/asm/fcntl.h \
+  arch/arm64/include/uapi/asm/fcntl.h \
   include/uapi/asm-generic/fcntl.h \
   include/uapi/linux/fiemap.h \
   include/linux/migrate_mode.h \
@@ -851,6 +777,7 @@ deps_/home/lorenzo/Desktop/mimic-2/src/kernel/mimic.o := \
     $(wildcard include/config/modules/tree/lookup.h) \
     $(wildcard include/config/module/sig.h) \
     $(wildcard include/config/kallsyms.h) \
+    $(wildcard include/config/tracepoints.h) \
     $(wildcard include/config/bpf/events.h) \
     $(wildcard include/config/event/tracing.h) \
     $(wildcard include/config/module/unload.h) \
@@ -861,11 +788,10 @@ deps_/home/lorenzo/Desktop/mimic-2/src/kernel/mimic.o := \
   include/linux/sysctl.h \
   include/uapi/linux/sysctl.h \
   include/linux/elf.h \
-  arch/x86/include/asm/elf.h \
-    $(wildcard include/config/x86/x32/abi.h) \
-  arch/x86/include/asm/fsgsbase.h \
-  arch/x86/include/asm/vdso.h \
-    $(wildcard include/config/x86/x32.h) \
+  arch/arm64/include/asm/elf.h \
+    $(wildcard include/config/compat/vdso.h) \
+  arch/arm64/include/generated/asm/user.h \
+  include/asm-generic/user.h \
   include/uapi/linux/elf.h \
   include/uapi/linux/elf-em.h \
   include/linux/kobject.h \
@@ -883,42 +809,22 @@ deps_/home/lorenzo/Desktop/mimic-2/src/kernel/mimic.o := \
   include/linux/rbtree_latch.h \
   include/linux/error-injection.h \
   include/asm-generic/error-injection.h \
-  arch/x86/include/asm/module.h \
-    $(wildcard include/config/unwinder/orc.h) \
-    $(wildcard include/config/m486.h) \
-    $(wildcard include/config/m586.h) \
-    $(wildcard include/config/m586tsc.h) \
-    $(wildcard include/config/m586mmx.h) \
-    $(wildcard include/config/mcore2.h) \
-    $(wildcard include/config/m686.h) \
-    $(wildcard include/config/mpentiumii.h) \
-    $(wildcard include/config/mpentiumiii.h) \
-    $(wildcard include/config/mpentiumm.h) \
-    $(wildcard include/config/mpentium4.h) \
-    $(wildcard include/config/mk6.h) \
-    $(wildcard include/config/mk8.h) \
-    $(wildcard include/config/melan.h) \
-    $(wildcard include/config/mcrusoe.h) \
-    $(wildcard include/config/mefficeon.h) \
-    $(wildcard include/config/mwinchipc6.h) \
-    $(wildcard include/config/mwinchip3d.h) \
-    $(wildcard include/config/mcyrixiii.h) \
-    $(wildcard include/config/mviac3/2.h) \
-    $(wildcard include/config/mviac7.h) \
-    $(wildcard include/config/mgeodegx1.h) \
-    $(wildcard include/config/mgeode/lx.h) \
+  arch/arm64/include/asm/module.h \
+    $(wildcard include/config/arm64/module/plts.h) \
+    $(wildcard include/config/dynamic/ftrace.h) \
+    $(wildcard include/config/arm64/erratum/843419.h) \
   include/asm-generic/module.h \
     $(wildcard include/config/have/mod/arch/specific.h) \
     $(wildcard include/config/modules/use/elf/rel.h) \
     $(wildcard include/config/modules/use/elf/rela.h) \
-  arch/x86/include/asm/orc_types.h \
-  /home/lorenzo/Desktop/mimic-2/src/kernel/protocol/mimic.h \
+  /home/lorenzo/mimic-2/src/kernel/protocol/mimic.h \
   include/net/tcp.h \
     $(wildcard include/config/syn/cookies.h) \
     $(wildcard include/config/ipv6.h) \
     $(wildcard include/config/net/l3/master/dev.h) \
     $(wildcard include/config/inet.h) \
     $(wildcard include/config/tcp/md5sig.h) \
+    $(wildcard include/config/proc/fs.h) \
     $(wildcard include/config/bpf.h) \
     $(wildcard include/config/smc.h) \
     $(wildcard include/config/tls/device.h) \
@@ -938,7 +844,6 @@ deps_/home/lorenzo/Desktop/mimic-2/src/kernel/mimic.o := \
     $(wildcard include/config/network/secmark.h) \
     $(wildcard include/config/net.h) \
     $(wildcard include/config/debug/net.h) \
-    $(wildcard include/config/have/efficient/unaligned/access.h) \
     $(wildcard include/config/network/phy/timestamping.h) \
     $(wildcard include/config/xfrm.h) \
     $(wildcard include/config/netfilter/xt/target/trace.h) \
@@ -946,9 +851,9 @@ deps_/home/lorenzo/Desktop/mimic-2/src/kernel/mimic.o := \
     $(wildcard include/config/ip/vs.h) \
   include/linux/bvec.h \
   include/linux/socket.h \
-  arch/x86/include/generated/uapi/asm/socket.h \
+  arch/arm64/include/generated/uapi/asm/socket.h \
   include/uapi/asm-generic/socket.h \
-  arch/x86/include/generated/uapi/asm/sockios.h \
+  arch/arm64/include/generated/uapi/asm/sockios.h \
   include/uapi/asm-generic/sockios.h \
   include/uapi/linux/sockios.h \
   include/linux/uio.h \
@@ -965,23 +870,19 @@ deps_/home/lorenzo/Desktop/mimic-2/src/kernel/mimic.o := \
     $(wildcard include/config/slob.h) \
   include/linux/kasan.h \
     $(wildcard include/config/kasan/generic.h) \
+  include/linux/uaccess.h \
+  arch/arm64/include/asm/uaccess.h \
+    $(wildcard include/config/arm64/pan.h) \
+  arch/arm64/include/asm/kernel-pgtable.h \
+  arch/arm64/include/asm/extable.h \
   include/uapi/linux/uio.h \
   include/uapi/linux/socket.h \
   include/linux/net.h \
-  include/linux/random.h \
-    $(wildcard include/config/arch/random.h) \
-  include/linux/once.h \
-  include/uapi/linux/random.h \
-  include/linux/irqnr.h \
-  include/uapi/linux/irqnr.h \
-  include/linux/prandom.h \
-  include/linux/siphash.h \
-  arch/x86/include/asm/archrandom.h \
   include/uapi/linux/net.h \
   include/linux/textsearch.h \
   include/net/checksum.h \
-  arch/x86/include/asm/checksum.h \
-  arch/x86/include/asm/checksum_64.h \
+  arch/arm64/include/asm/checksum.h \
+  include/asm-generic/checksum.h \
   include/linux/dma-mapping.h \
     $(wildcard include/config/dma/declare/coherent.h) \
     $(wildcard include/config/arch/has/sync/dma/for/device.h) \
@@ -993,6 +894,7 @@ deps_/home/lorenzo/Desktop/mimic-2/src/kernel/mimic.o := \
     $(wildcard include/config/arch/has/teardown/dma/ops.h) \
     $(wildcard include/config/need/dma/map/state.h) \
   include/linux/device.h \
+    $(wildcard include/config/acpi.h) \
     $(wildcard include/config/debug/devres.h) \
     $(wildcard include/config/generic/msi/irq/domain.h) \
     $(wildcard include/config/pinctrl.h) \
@@ -1008,12 +910,8 @@ deps_/home/lorenzo/Desktop/mimic-2/src/kernel/mimic.o := \
     $(wildcard include/config/pm/clk.h) \
     $(wildcard include/config/pm/generic/domains.h) \
   include/linux/ratelimit.h \
-  arch/x86/include/asm/device.h \
-    $(wildcard include/config/intel/iommu.h) \
-    $(wildcard include/config/amd/iommu.h) \
-    $(wildcard include/config/sta2x11.h) \
-    $(wildcard include/config/x86/dev/dma/ops.h) \
-    $(wildcard include/config/pci/domains.h) \
+  arch/arm64/include/asm/device.h \
+    $(wildcard include/config/iommu/api.h) \
   include/linux/pm_wakeup.h \
   include/linux/dma-debug.h \
     $(wildcard include/config/dma/api/debug.h) \
@@ -1024,10 +922,26 @@ deps_/home/lorenzo/Desktop/mimic-2/src/kernel/mimic.o := \
     $(wildcard include/config/sgl/alloc.h) \
     $(wildcard include/config/arch/no/sg/chain.h) \
     $(wildcard include/config/sg/pool.h) \
-  arch/x86/include/asm/dma-mapping.h \
-  arch/x86/include/asm/swiotlb.h \
-  include/linux/swiotlb.h \
-  include/linux/dma-contiguous.h \
+  arch/arm64/include/asm/io.h \
+  arch/arm64/include/generated/asm/early_ioremap.h \
+  include/asm-generic/early_ioremap.h \
+    $(wildcard include/config/generic/early/ioremap.h) \
+  include/asm-generic/io.h \
+    $(wildcard include/config/generic/iomap.h) \
+    $(wildcard include/config/has/ioport/map.h) \
+    $(wildcard include/config/virt/to/bus.h) \
+  include/asm-generic/pci_iomap.h \
+    $(wildcard include/config/pci.h) \
+    $(wildcard include/config/no/generic/pci/ioport/map.h) \
+    $(wildcard include/config/generic/pci/iomap.h) \
+  include/linux/logic_pio.h \
+    $(wildcard include/config/indirect/pio.h) \
+  include/linux/fwnode.h \
+  include/linux/vmalloc.h \
+  include/linux/mem_encrypt.h \
+    $(wildcard include/config/arch/has/mem/encrypt.h) \
+  arch/arm64/include/generated/asm/dma-mapping.h \
+  include/asm-generic/dma-mapping.h \
   include/linux/netdev_features.h \
   include/linux/sched/clock.h \
     $(wildcard include/config/have/unstable/sched/clock.h) \
@@ -1057,6 +971,11 @@ deps_/home/lorenzo/Desktop/mimic-2/src/kernel/mimic.o := \
     $(wildcard include/config/virt/cpu/accounting.h) \
   include/linux/context_tracking_state.h \
     $(wildcard include/config/context/tracking.h) \
+  arch/arm64/include/asm/hardirq.h \
+  arch/arm64/include/asm/irq.h \
+  include/asm-generic/irq.h \
+  arch/arm64/include/asm/kvm_arm.h \
+  include/linux/irq_cpustat.h \
   include/linux/list_nulls.h \
   include/linux/netdevice.h \
     $(wildcard include/config/dcb.h) \
@@ -1090,25 +1009,20 @@ deps_/home/lorenzo/Desktop/mimic-2/src/kernel/mimic.o := \
     $(wildcard include/config/cgroup/net/prio.h) \
     $(wildcard include/config/net/flow/limit.h) \
   include/linux/delay.h \
-  arch/x86/include/asm/delay.h \
+  arch/arm64/include/generated/asm/delay.h \
   include/asm-generic/delay.h \
   include/linux/prefetch.h \
   include/linux/dynamic_queue_limits.h \
   include/linux/ethtool.h \
   include/linux/compat.h \
     $(wildcard include/config/arch/has/syscall/wrapper.h) \
+    $(wildcard include/config/x86/x32/abi.h) \
     $(wildcard include/config/compat/old/sigaction.h) \
     $(wildcard include/config/odd/rt/sigaction.h) \
   include/uapi/linux/if.h \
   include/uapi/linux/hdlc/ioctl.h \
   include/uapi/linux/aio_abi.h \
-  arch/x86/include/asm/compat.h \
-  include/linux/sched/task_stack.h \
-    $(wildcard include/config/debug/stack/usage.h) \
-  include/uapi/linux/magic.h \
-  arch/x86/include/asm/user32.h \
-  include/asm-generic/compat.h \
-  arch/x86/include/asm/syscall_wrapper.h \
+  arch/arm64/include/asm/syscall_wrapper.h \
   include/uapi/linux/ethtool.h \
   include/linux/if_ether.h \
   include/net/net_namespace.h \
@@ -1208,9 +1122,6 @@ deps_/home/lorenzo/Desktop/mimic-2/src/kernel/mimic.o := \
     $(wildcard include/config/generic/irq/probe.h) \
     $(wildcard include/config/irq/timings.h) \
   include/linux/irqreturn.h \
-  arch/x86/include/asm/irq.h \
-  arch/x86/include/asm/sections.h \
-  include/asm-generic/sections.h \
   include/linux/cgroup-defs.h \
   include/linux/bpf-cgroup.h \
   include/linux/bpf.h \
@@ -1290,11 +1201,24 @@ deps_/home/lorenzo/Desktop/mimic-2/src/kernel/mimic.o := \
     $(wildcard include/config/bsd/disklabel.h) \
     $(wildcard include/config/unixware/disklabel.h) \
     $(wildcard include/config/minix/subpartition.h) \
-  arch/x86/include/asm/local.h \
+  arch/arm64/include/generated/asm/local.h \
+  include/asm-generic/local.h \
   include/linux/pagemap.h \
   include/linux/highmem.h \
-  arch/x86/include/asm/cacheflush.h \
-  include/asm-generic/cacheflush.h \
+    $(wildcard include/config/x86/32.h) \
+    $(wildcard include/config/debug/highmem.h) \
+  arch/arm64/include/asm/cacheflush.h \
+  include/linux/kgdb.h \
+    $(wildcard include/config/have/arch/kgdb.h) \
+    $(wildcard include/config/kgdb.h) \
+    $(wildcard include/config/serial/kgdb/nmi.h) \
+  arch/arm64/include/asm/kgdb.h \
+  include/linux/ptrace.h \
+  include/linux/pid_namespace.h \
+    $(wildcard include/config/pid/ns.h) \
+  include/uapi/linux/ptrace.h \
+  arch/arm64/include/generated/asm/kmap_types.h \
+  include/asm-generic/kmap_types.h \
   include/linux/hugetlb_inline.h \
   include/linux/mempool.h \
   include/linux/bio.h \
@@ -1308,13 +1232,14 @@ deps_/home/lorenzo/Desktop/mimic-2/src/kernel/mimic.o := \
   include/linux/cryptohash.h \
   include/linux/set_memory.h \
     $(wildcard include/config/arch/has/set/memory.h) \
-  arch/x86/include/asm/set_memory.h \
+  arch/arm64/include/generated/asm/set_memory.h \
   include/asm-generic/set_memory.h \
   include/linux/kallsyms.h \
     $(wildcard include/config/kallsyms/all.h) \
   include/linux/if_vlan.h \
   include/linux/etherdevice.h \
-  arch/x86/include/asm/unaligned.h \
+  arch/arm64/include/generated/asm/unaligned.h \
+  include/asm-generic/unaligned.h \
   include/linux/unaligned/access_ok.h \
   include/linux/unaligned/generic.h \
   include/linux/rtnetlink.h \
@@ -1337,7 +1262,7 @@ deps_/home/lorenzo/Desktop/mimic-2/src/kernel/mimic.o := \
   include/linux/rculist_nulls.h \
   include/linux/poll.h \
   include/uapi/linux/poll.h \
-  arch/x86/include/generated/uapi/asm/poll.h \
+  arch/arm64/include/generated/uapi/asm/poll.h \
   include/uapi/asm-generic/poll.h \
   include/uapi/linux/eventpoll.h \
   include/net/dst.h \
@@ -1392,14 +1317,15 @@ deps_/home/lorenzo/Desktop/mimic-2/src/kernel/mimic.o := \
   include/uapi/linux/lwtunnel.h \
   include/net/inet_ecn.h \
   include/net/dsfield.h \
-  /home/lorenzo/Desktop/mimic-2/src/kernel/protocol/hybla.h \
-  /home/lorenzo/Desktop/mimic-2/src/kernel/protocol/bbr.h \
+  /home/lorenzo/mimic-2/src/kernel/protocol/hybla.h \
+  /home/lorenzo/mimic-2/src/kernel/protocol/bbr.h \
   include/linux/inet_diag.h \
   include/uapi/linux/inet_diag.h \
   include/linux/inet.h \
-  /home/lorenzo/Desktop/mimic-2/src/kernel/protocol/vegas.h \
-  /home/lorenzo/Desktop/mimic-2/src/kernel/protocol/mimic.h \
+  /home/lorenzo/mimic-2/src/kernel/protocol/vegas.h \
+  /home/lorenzo/mimic-2/src/kernel/protocol/pcc.h \
+  /home/lorenzo/mimic-2/src/kernel/protocol/mimic.h \
 
-/home/lorenzo/Desktop/mimic-2/src/kernel/mimic.o: $(deps_/home/lorenzo/Desktop/mimic-2/src/kernel/mimic.o)
+/home/lorenzo/mimic-2/src/kernel/mimic.o: $(deps_/home/lorenzo/mimic-2/src/kernel/mimic.o)
 
-$(deps_/home/lorenzo/Desktop/mimic-2/src/kernel/mimic.o):
+$(deps_/home/lorenzo/mimic-2/src/kernel/mimic.o):
