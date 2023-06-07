@@ -85,6 +85,24 @@
             "path": "/home/lorenzo/Desktop/mimic-2/log/mab/trace/None.softmax_explorer.2023.05.25.10.03.18.csv",
             "timestamp": "2023.05.25.10.03.18",
             "trace_name": "None.softmax_explorer.2023.05.25.10.03.18.csv"
+        },
+        {
+            "model_name": "softmax_explorer.2023.05.23.15.04.15",
+            "path": "/home/lorenzo/mimic-2/log/mab/trace/None.softmax_explorer.2023.05.26.19.22.58.csv",
+            "timestamp": "2023.05.26.19.22.58",
+            "trace_name": "None.softmax_explorer.2023.05.26.19.22.58.csv"
+        },
+        {
+            "model_name": "softmax_explorer.2023.05.23.15.04.15",
+            "path": "/home/lorenzo/mimic-2/log/mab/trace/None.softmax_explorer.2023.05.26.19.24.09.csv",
+            "timestamp": "2023.05.26.19.24.09",
+            "trace_name": "None.softmax_explorer.2023.05.26.19.24.09.csv"
+        },
+        {
+            "model_name": "softmax_explorer.2023.05.23.15.04.15",
+            "path": "/home/lorenzo/mimic-2/log/mab/trace/None.softmax_explorer.2023.05.26.19.25.14.csv",
+            "timestamp": "2023.05.26.19.25.14",
+            "trace_name": "None.softmax_explorer.2023.05.26.19.25.14.csv"
         }
     ]
 }

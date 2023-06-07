@@ -99,5 +99,24 @@
             "training_time": 5941.615474939346
         }
     ],
-    "traces": []
+    "traces": [
+        {
+            "model_name": "bootstrapped_ts.2023.05.23.08.37.41",
+            "path": "/home/lorenzo/mimic-2/log/mab/trace/None.bootstrapped_ts.2023.05.26.20.14.10.csv",
+            "timestamp": "2023.05.26.20.14.10",
+            "trace_name": "None.bootstrapped_ts.2023.05.26.20.14.10.csv"
+        },
+        {
+            "model_name": "bootstrapped_ts.2023.05.23.08.37.41",
+            "path": "/home/lorenzo/mimic-2/log/mab/trace/None.bootstrapped_ts.2023.05.26.20.15.15.csv",
+            "timestamp": "2023.05.26.20.15.15",
+            "trace_name": "None.bootstrapped_ts.2023.05.26.20.15.15.csv"
+        },
+        {
+            "model_name": "bootstrapped_ts.2023.05.23.08.37.41",
+            "path": "/home/lorenzo/mimic-2/log/mab/trace/None.bootstrapped_ts.2023.05.26.20.16.20.csv",
+            "timestamp": "2023.05.26.20.16.20",
+            "trace_name": "None.bootstrapped_ts.2023.05.26.20.16.20.csv"
+        }
+    ]
 }
