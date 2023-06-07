@@ -60,7 +60,7 @@ def verify_trace(trace) -> list:
 
     if trace not in all_traces:
             sys.exit(
-            '%s is not a trace included in config/traces.yml' % t)
+            '%s is not a trace included in config/traces.yml' % trace)
 
     return all_traces
 

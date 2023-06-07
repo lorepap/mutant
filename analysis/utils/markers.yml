@@ -1,4 +1,8 @@
 schemes:
+  mimic: 
+    name: Mutant
+    color: red
+    marker: 'X'
   cubic:
     name: Cubic
     color: black
@@ -67,24 +71,20 @@ schemes:
     name: FillP-Sheep
     color: violet
     marker: 'D'
-  mimic: 
-    name: Mutant
+  mimic-2-arms:
+    name: 2-Arms 
     color: red
     marker: 'X'
-  mimic-2-arms:
-    name: 2-Arms Mutant
-    color: blue
-    marker: 'X'
   mimic-3-arms:
-    name: 3-Arms Mutant
+    name: 3-Arms 
     color: green
     marker: 'X'
   mimic-4-arms:
-    name: 4-Arms Mutant
+    name: 4-Arms 
     color: pink
     marker: 'X'
   mimic-5-arms:
-    name: 5-Arms Mutant
+    name: 5-Arms 
     color: coral
     marker: 'X'
   hybla:

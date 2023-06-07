@@ -6,23 +6,24 @@
 
 static __u32 actions[] = {0, -10, -3, -1, 1, 3, 10};
 
-void owl_init(struct sock *sk, struct arm *am)
-{
+// void owl_init(struct sock *sk, struct arm *am)
+// {
    
-}
+// }
 
-static void owl_acked(struct sock *sk, const struct ack_sample *sample, struct arm *ca)
-{
-}
+// static void owl_acked(struct sock *sk, const struct ack_sample *sample, struct arm *ca)
+// {
+// }
 
-static __u32 owl_cong_avoid(struct sock *sk, __u32 ack, __u32 acked, struct arm *am)
+static __u32 owl_cong_avoid(struct sock *sk, __u32 ack, __u32 acked, u32 action_id)
 {
     __u32 new_cwnd;
     __u8 action_id;
 
     struct tcp_sock *tp = tcp_sk(sk);
+    struct arm *am = inet_csk_ca(sk);
 
-    action_id = 6;
+    // action_id = 6;
     am->cnt = actions[action_id];
 
     new_cwnd = tp->snd_cwnd + am->cnt;

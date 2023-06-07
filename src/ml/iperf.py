@@ -11,13 +11,14 @@ from helper.subprocess_wrappers import call, check_output, Popen
 
 class IperfRunner():
 
-    def __init__(self, ip: str, time: int, log: str, pid_file: str, scheme: str, ) -> None:
+    def __init__(self, ip: str, time: int, log: str, pid_file: str, port: str, scheme: str) -> None:
         self.ip = ip
         self.time = time
         self.log = log
         self.scheme = scheme
         self.ps = None
         self.pid_file = pid_file
+        self.port = port
 
     def run(self) -> None:
 
@@ -34,7 +35,7 @@ class IperfRunner():
                     '-c',
                     self.ip,
                     '-p',
-                    '5201',
+                    str(self.port),
                     '-t',
                     str(self.time),
                     '-J',
@@ -77,8 +78,8 @@ class IperfRunner():
 
 
 def main():
-    scheme = None if len(sys.argv) == 5 else sys.argv[5]
-    runner = IperfRunner(sys.argv[1], str(sys.argv[2]), sys.argv[3], str(sys.argv[4]), scheme)
+    scheme = None if len(sys.argv) == 6 else sys.argv[6]
+    runner = IperfRunner(sys.argv[1], str(sys.argv[2]), sys.argv[3], str(sys.argv[4]), str(sys.argv[5]), scheme)
     runner.run()
 
 if __name__ == '__main__':

@@ -2,15 +2,19 @@ import subprocess
 import psutil
 
 class IperfServer:
-    def __init__(self, log_file):
+    def __init__(self, log_file, port=None):
         self._server_proc = None
         self._server_log_file = log_file
+        self._port = port
 
     def start(self):
         if self._server_proc is not None:
             raise Exception("Server already running")
         print("[SERVER] Server log:", self._server_log_file)
-        server_cmd = ["iperf3", "-s", "--logfile", self._server_log_file]
+        if self._port != None:
+            server_cmd = ["iperf3", "-s", "-p", str(self._port), "--logfile", self._server_log_file]
+        else:
+            server_cmd = ["iperf3", "-s", "-p", "5201", "--logfile", self._server_log_file]
         
         try:
         

@@ -5,6 +5,18 @@
             "prod_score": 7.012995000000001,
             "score": 7.012995000000001,
             "timestamp": "2023.05.20.16.29.01"
+        },
+        {
+            "name": "epsilon_greedy_decay.2023.05.26.18.02.56",
+            "prod_score": 20.973110000000002,
+            "score": 20.973110000000002,
+            "timestamp": "2023.05.27.15.37.27"
+        },
+        {
+            "name": "epsilon_greedy_decay.2023.05.27.17.54.39",
+            "prod_score": 7.978274999999966,
+            "score": 7.978274999999966,
+            "timestamp": "2023.05.27.21.11.50"
         }
     ],
     "runs": [
@@ -33,6 +45,97 @@
             "timestamp": "2023.05.20.16.29.01",
             "trace": null,
             "training_time": 5543.043244600296
+        },
+        {
+            "actions": 3,
+            "model_name": "epsilon_greedy_decay.2023.05.26.17.59.21",
+            "num_features": 8,
+            "num_kernel_fields": 11,
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/history/episode_hist_epsilon_greedy_decay.2023.05.26.17.59.21.2023.05.26.17.59.21.json",
+            "reward": "orca",
+            "step_wait": 0.5,
+            "steps_per_episode": 500,
+            "timestamp": "2023.05.26.17.59.21",
+            "trace": null,
+            "training_time": 16.346967458724976
+        },
+        {
+            "actions": 3,
+            "model_name": "epsilon_greedy_decay.2023.05.26.18.02.56",
+            "num_features": 8,
+            "num_kernel_fields": 11,
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/history/episode_hist_epsilon_greedy_decay.2023.05.26.18.02.56.2023.05.26.18.02.56.json",
+            "reward": "orca",
+            "step_wait": 0.5,
+            "steps_per_episode": 500,
+            "timestamp": "2023.05.26.18.02.56",
+            "trace": null,
+            "training_time": 72123.87109446526
+        },
+        {
+            "actions": 3,
+            "model_name": "epsilon_greedy_decay.2023.05.26.18.02.56",
+            "num_features": 8,
+            "num_kernel_fields": 11,
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/history/episode_hist_epsilon_greedy_decay.2023.05.26.18.02.56.2023.05.27.14.05.01.json",
+            "reward": "orca",
+            "step_wait": 0.5,
+            "steps_per_episode": 500,
+            "timestamp": "2023.05.27.14.05.01",
+            "trace": null,
+            "training_time": 5545.095204591751
+        },
+        {
+            "actions": 3,
+            "model_name": "epsilon_greedy_decay.2023.05.26.18.02.56",
+            "num_features": 8,
+            "num_kernel_fields": 11,
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/history/episode_hist_epsilon_greedy_decay.2023.05.26.18.02.56.2023.05.27.15.37.27.json",
+            "reward": "orca",
+            "step_wait": 0.5,
+            "steps_per_episode": 500,
+            "timestamp": "2023.05.27.15.37.27",
+            "trace": null,
+            "training_time": 5637.845910787582
+        },
+        {
+            "actions": 4,
+            "model_name": "epsilon_greedy_decay.2023.05.27.17.54.39",
+            "num_features": 8,
+            "num_kernel_fields": 11,
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/history/episode_hist_epsilon_greedy_decay.2023.05.27.17.54.39.2023.05.27.17.54.39.json",
+            "reward": "orca",
+            "step_wait": 0.5,
+            "steps_per_episode": 500,
+            "timestamp": "2023.05.27.17.54.39",
+            "trace": null,
+            "training_time": 6288.182879686356
+        },
+        {
+            "actions": 4,
+            "model_name": "epsilon_greedy_decay.2023.05.27.17.54.39",
+            "num_features": 8,
+            "num_kernel_fields": 11,
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/history/episode_hist_epsilon_greedy_decay.2023.05.27.17.54.39.2023.05.27.19.39.28.json",
+            "reward": "orca",
+            "step_wait": 0.5,
+            "steps_per_episode": 500,
+            "timestamp": "2023.05.27.19.39.28",
+            "trace": null,
+            "training_time": 5540.912464857101
+        },
+        {
+            "actions": 4,
+            "model_name": "epsilon_greedy_decay.2023.05.27.17.54.39",
+            "num_features": 8,
+            "num_kernel_fields": 11,
+            "path": "/home/lorenzo/Desktop/mimic-2/log/mab/history/episode_hist_epsilon_greedy_decay.2023.05.27.17.54.39.2023.05.27.21.11.50.json",
+            "reward": "orca",
+            "step_wait": 0.5,
+            "steps_per_episode": 500,
+            "timestamp": "2023.05.27.21.11.50",
+            "trace": null,
+            "training_time": 5668.792360782623
         }
     ],
     "traces": [

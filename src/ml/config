@@ -1,0 +1,4 @@
+mm-delay 20          # Delay in milliseconds
+mm-loss uplink 0.1   # Uplink packet loss rate (0.1 = 10%)
+mm-loss downlink 0.2 # Downlink packet loss rate (0.2 = 20%)
+mm-link-speed 10Mbps # Link speed (10 Mbps)

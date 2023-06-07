@@ -6,6 +6,7 @@ from typing import Any
 
 from helper import arg_parser, context, subprocess_wrappers, utils
 from model.mahimahi_trace import MahimahiTrace
+from iperf.iperf_server import IperfServer
 
 
 class HarmActor(threading.Thread):
@@ -56,6 +57,14 @@ class HarmRunner():
             f'{self.__args.trace}.cubic.{tag}.{now}.json'
         )
 
+        
+        base_path = os.path.join(context.entry_dir, "log", "iperf", "server")
+        filename = f'server_harm.log'
+        log_filename = f'{base_path}/{filename}'
+        os.makedirs(os.path.dirname(log_filename), exist_ok=True)
+        self.server = IperfServer(log_filename, port=5202)
+        self.server.start()
+
         iperf_cmd = [
             'python3',
             f'{context.ml_dir}/iperf.py',
@@ -63,7 +72,9 @@ class HarmRunner():
             self.__args.ip,
             str(self.__args.time),
             log_path,
-            'cubic'
+            os.path.join(context.ml_dir, "pid.txt"),
+            'cubic',
+            "5202"
         ]
 
         cmd = self.get_mahimahi_cmd() + iperf_cmd
@@ -80,12 +91,12 @@ class HarmRunner():
 
         cmd = [
             'python3',
-            f'{context.ml_dir}/predict.py',
-            '--all',
-            # f'--ip={self.__args.ip}',
-            f'--iperf_dir={self.__args.iperf_dir}',
-            f'--trace_dir={self.__args.trace_dir}',
-            f'-t={self.__args.trace}'
+            f'{context.ml_dir}/test.py',
+            f'-t', f'{self.__args.trace}',
+            f'-n', f'{self.__args.nchoices}',
+            f'-mN', f'{self.__args.model_name}',
+            f'-m', 'bootstrapped_ucb',
+            f"-x", f"{self.__args.ip}"
         ]
 
         hr = HarmActor(cmd)

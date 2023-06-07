@@ -1,0 +1,105 @@
+{
+	"start":	{
+		"connected":	[{
+				"socket":	5,
+				"local_host":	"100.64.0.2",
+				"local_port":	34312,
+				"remote_host":	"10.0.2.15",
+				"remote_port":	5201
+			}],
+		"version":	"iperf 3.1.3",
+		"system_info":	"Linux ubuntu-bionic 5.4.239 #2 SMP Tue Apr 4 21:06:07 CDT 2023 x86_64",
+		"timestamp":	{
+			"time":	"Sat, 22 Apr 2023 02:07:47 GMT",
+			"timesecs":	1682129267
+		},
+		"connecting_to":	{
+			"host":	"10.0.2.15",
+			"port":	5201
+		},
+		"cookie":	"ubuntu-bionic.1682129266.227855.7be7",
+		"tcp_mss_default":	1448,
+		"test_start":	{
+			"protocol":	"TCP",
+			"num_streams":	1,
+			"blksize":	131072,
+			"omit":	0,
+			"duration":	60,
+			"bytes":	0,
+			"blocks":	0,
+			"reverse":	0
+		}
+	},
+	"intervals":	[{
+			"streams":	[{
+					"socket":	5,
+					"start":	0,
+					"end":	0.100984,
+					"seconds":	0.100984,
+					"bytes":	66608,
+					"bits_per_second":	5276712.059874,
+					"retransmits":	0,
+					"snd_cwnd":	7240,
+					"rtt":	43482,
+					"omitted":	false
+				}],
+			"sum":	{
+				"start":	0,
+				"end":	0.100984,
+				"seconds":	0.100984,
+				"bytes":	66608,
+				"bits_per_second":	5276712.059874,
+				"retransmits":	0,
+				"omitted":	false
+			}
+		}],
+	"end":	{
+		"streams":	[{
+				"sender":	{
+					"socket":	5,
+					"start":	0,
+					"end":	0.100984,
+					"seconds":	0.100984,
+					"bytes":	66608,
+					"bits_per_second":	5276712.059874,
+					"retransmits":	0,
+					"max_snd_cwnd":	7240,
+					"max_rtt":	43482,
+					"min_rtt":	43482,
+					"mean_rtt":	43482
+				},
+				"receiver":	{
+					"socket":	5,
+					"start":	0,
+					"end":	0.100984,
+					"seconds":	0.100984,
+					"bytes":	0,
+					"bits_per_second":	0
+				}
+			}],
+		"sum_sent":	{
+			"start":	0,
+			"end":	0.100984,
+			"seconds":	0.100984,
+			"bytes":	66608,
+			"bits_per_second":	5276712.059874,
+			"retransmits":	0
+		},
+		"sum_received":	{
+			"start":	0,
+			"end":	0.100984,
+			"seconds":	0.100984,
+			"bytes":	0,
+			"bits_per_second":	0
+		},
+		"cpu_utilization_percent":	{
+			"host_total":	5.349668,
+			"host_user":	0,
+			"host_system":	5.349393,
+			"remote_total":	0,
+			"remote_user":	0,
+			"remote_system":	0
+		}
+	},
+	"error":	"interrupt - the client has terminated"
+}
