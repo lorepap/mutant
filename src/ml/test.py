@@ -36,6 +36,7 @@ class Tester(Base):
         self.train_episodes = int(self.train_config['train_episodes'])
         self.test_episodes = int(self.train_config['test_episodes'])
         self.steps_per_episode = int(self.train_config['steps_per_episode']) 
+        self.nchoices = args.nchoices
 
         print(f'We will be testing for {self.test_episodes} epochs\n')
 
@@ -47,6 +48,7 @@ class Tester(Base):
         
         self.debug_mode = debug.is_debug_on()
         print("DEBUG MODE", self.debug_mode)
+
 
     def init_runners(self) -> dict:
 
@@ -116,7 +118,7 @@ class Tester(Base):
         delta = float(self.train_config['delta'])
         lr = float(self.train_config['lr'])
         step_wait_seconds = float(self.train_config['step_wait_seconds'])
-        
+
         try:
             print(f'#{indexer}: running test for model: {model}')
 
@@ -168,4 +170,4 @@ def main():
 
 if __name__ == '__main__':
     main()
-    os._exit(1)
+    os._exit(0)

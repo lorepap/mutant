@@ -35,8 +35,41 @@ class Predictor(Base):
 
         self.model_runners = self.init_runners()
         self.manager: PredictorManager = None
+        self.nchoices: int = args.nchoices
 
     def init_runners(self) -> dict:
+
+        
+
+        runners = {
+
+            'active_explorer': ActiveExplorerRunner,
+
+            'adaptive_greedy_threshold': AdaptiveGreedyThresholdRunner,
+
+            'adaptive_greedy_weighted': AdaptiveGreedyWeightedRunner,
+
+            'adaptive_greedy_percentile': AdaptiveGreedyPercentileRunner,
+
+            'bootstrapped_ts': BootstrappedTSRunner,
+
+            'bootstrapped_ucb': BootstrappedUCBRunner, 
+
+            'epsilon_greedy_decay': EpsilonGreedyDecayRunner,
+            
+            'epsilon_greedy': EpsilonGreedyRunner,
+            
+            'explore_first': ExploreFirstRunner,
+
+            'separate_classifiers': SeparateClassifiersRunner,
+
+            'softmax_explorer': SoftmaxExplorerRunner,
+
+        }
+
+        return runners
+
+    def run(self) -> None:
 
         num_features = int(self.prod_config['num_features'])
         window_len = int(self.prod_config['window_len'])
@@ -47,36 +80,6 @@ class Predictor(Base):
         lr = float(self.prod_config['lr'])
         step_wait_seconds = float(self.prod_config['step_wait_seconds'])
 
-        runners = {
-            'owl': OwlRunner(self.nchoices, lr, num_features, window_len, num_fields_kernel, jiffies_per_state, steps_per_episode, delta, self.netlink_communicator, self.moderator),
-
-            'active_explorer': ActiveExplorerRunner(self.nchoices, lr, num_features, window_len, num_fields_kernel, jiffies_per_state, steps_per_episode, delta, step_wait_seconds, self.netlink_communicator, self.moderator),
-
-            'adaptive_greedy_threshold': AdaptiveGreedyThresholdRunner(self.nchoices, lr, num_features, window_len, num_fields_kernel, jiffies_per_state, steps_per_episode, delta, step_wait_seconds, self.netlink_communicator, self.moderator),
-
-            'adaptive_greedy_weighted': AdaptiveGreedyWeightedRunner(self.nchoices, lr, num_features, window_len, num_fields_kernel, jiffies_per_state, steps_per_episode, delta, step_wait_seconds, self.netlink_communicator, self.moderator),
-
-            'adaptive_greedy_percentile': AdaptiveGreedyPercentileRunner(self.nchoices, lr, num_features, window_len, num_fields_kernel, jiffies_per_state, steps_per_episode, delta, step_wait_seconds, self.netlink_communicator, self.moderator),
-
-            'bootstrapped_ts': BootstrappedTSRunner(self.nchoices, lr, num_features, window_len, num_fields_kernel, jiffies_per_state, steps_per_episode, delta, step_wait_seconds, self.netlink_communicator, self.moderator),
-
-            'bootstrapped_ucb': BootstrappedUCBRunner(self.nchoices, lr, num_features, window_len, num_fields_kernel, jiffies_per_state, steps_per_episode, delta, step_wait_seconds, self.netlink_communicator, self.moderator),
-
-            'epsilon_greedy_decay': EpsilonGreedyDecayRunner(self.nchoices, lr, num_features, window_len, num_fields_kernel, jiffies_per_state, steps_per_episode, delta, step_wait_seconds, self.netlink_communicator, self.moderator),
-
-            'epsilon_greedy': EpsilonGreedyRunner(self.nchoices, lr, num_features, window_len, num_fields_kernel, jiffies_per_state, steps_per_episode, delta, step_wait_seconds, self.netlink_communicator, self.moderator),
-
-            'explore_first': ExploreFirstRunner(self.nchoices, lr, num_features, window_len, num_fields_kernel, jiffies_per_state, steps_per_episode, delta, step_wait_seconds, self.netlink_communicator, self.moderator),
-
-            'separate_classifiers': SeparateClassifiersRunner(self.nchoices, lr, num_features, window_len, num_fields_kernel, jiffies_per_state, steps_per_episode, delta, step_wait_seconds, self.netlink_communicator, self.moderator),
-
-            'softmax_explorer': SoftmaxExplorerRunner(self.nchoices, lr, num_features, window_len, num_fields_kernel, jiffies_per_state, steps_per_episode, delta, step_wait_seconds, self.netlink_communicator, self.moderator)
-        }
-
-        return runners
-
-    def run(self) -> None:
-
         try:
 
             available_models = self.model_config['models'].keys()
@@ -85,14 +88,26 @@ class Predictor(Base):
             if self.args.all:
 
                 for model in available_models:
-                    runner: BaseRunner = self.model_runners[model]
+                    runner = self.model_runners[model](
+                        self.nchoices, lr, num_features, window_len, 
+                        num_fields_kernel, jiffies_per_state, 
+                        steps_per_episode, delta, step_wait_seconds, 
+                        self.netlink_communicator, self.moderator, 
+                        trace=self.trace, reward_name=self.args.reward, 
+                        model_name=self.args.model_name)                    
                     runners.append(runner)
 
             elif self.args.models and self.args.models is not None:
                 selected_models = self.args.models.split()
 
                 for model in selected_models:
-                    runner: BaseRunner = self.model_runners[model]
+                    runner = self.model_runners[model](
+                        self.nchoices, lr, num_features, window_len, 
+                        num_fields_kernel, jiffies_per_state, 
+                        steps_per_episode, delta, step_wait_seconds, 
+                        self.netlink_communicator, self.moderator, 
+                        trace=self.trace, reward_name=self.args.reward, 
+                        model_name=self.args.model_name)
                     runners.append(runner)
 
             else:
@@ -112,7 +127,7 @@ class Predictor(Base):
 
             self.manager = PredictorManager(runners, self.netlink_communicator, step_wait_seconds,
                                             num_fields_kernel, num_features, delta, log_range_steps, trace, self.moderator,
-                                            iperf_logfile, self.nprotocols, log_dir)
+                                            iperf_logfile, log_dir)
             self.manager.start()
             self.manager.join()
 

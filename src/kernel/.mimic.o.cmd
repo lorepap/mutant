@@ -1322,9 +1322,15 @@ deps_/home/lorenzo/mimic-2/src/kernel/mimic.o := \
   include/linux/inet_diag.h \
   include/uapi/linux/inet_diag.h \
   include/linux/inet.h \
+<<<<<<< HEAD
+  /home/lorenzo/Desktop/mimic-2/src/kernel/protocol/vegas.h \
+  /home/lorenzo/Desktop/mimic-2/src/kernel/protocol/pcc.h \
+  /home/lorenzo/Desktop/mimic-2/src/kernel/protocol/mimic.h \
+=======
   /home/lorenzo/mimic-2/src/kernel/protocol/vegas.h \
   /home/lorenzo/mimic-2/src/kernel/protocol/pcc.h \
   /home/lorenzo/mimic-2/src/kernel/protocol/mimic.h \
+>>>>>>> be8a8ec201dda079c8a10daab8e90c9d7771800d
 
 /home/lorenzo/mimic-2/src/kernel/mimic.o: $(deps_/home/lorenzo/mimic-2/src/kernel/mimic.o)
 

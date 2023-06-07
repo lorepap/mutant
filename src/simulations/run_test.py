@@ -26,7 +26,7 @@ def run_experiments(items):
         for i, trace_name in enumerate(items.traces):
 
             # generate command to execute for this trace
-            command = f"python3 {TEST_FILENAME} -m {model} -t {trace_name} -x {ip} -e {items.iperf_duration} -mN {items.model_name}"
+            command = f"python3 {TEST_FILENAME} -m {model} -t {trace_name} -x {ip} -e {items.iperf_duration} -mN {items.model_name} -n {items.nchoices}"
             
             subprocess.call(command, shell=True, stderr=sys.stderr)
             # except subprocess.CalledProcessError as e:
@@ -39,5 +39,6 @@ if __name__ == "__main__":
     parser.add_argument("--traces", "-t", nargs='+', help="Traces to test")
     parser.add_argument("--iperf_duration", "-id", help="Experiment duration", default=60)
     parser.add_argument("--model_name", "-mN", type=str, default=None)
+    parser.add_argument("--nchoices", "-n", type=int, default=5)
     args = parser.parse_args()
     run_experiments(items=args)

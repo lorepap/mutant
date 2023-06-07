@@ -18,7 +18,7 @@ class PredictorManager(BaseManager):
     def __init__(self, runners: list, comm: NetlinkCommunicator, wait_ts: float,
                  num_fields_kernel: int, num_features: int, delta: float,
                  log_range_steps: int, trace: str, moderator: Moderator,
-                 iperf_logfile: str, protocols: dict, log_dir: str):
+                 iperf_logfile: str, log_dir: str):
         super(PredictorManager, self).__init__(iperf_logfile)
 
         self.__moderator = moderator
@@ -39,7 +39,7 @@ class PredictorManager(BaseManager):
         self.last_rtt = 0
         self.timestamps: list = []
         self.trace = trace
-        self.protocol_labels: list = [*protocols]
+        # self.protocol_labels: list = [*protocols]
         self.__log_dir = log_dir
 
         self.current_runner: BaseRunner = None
@@ -68,7 +68,7 @@ class PredictorManager(BaseManager):
         self.__nl_comm.send_msg(msg)
 
         print(
-            f'Step {self.stepper}: Changed protocol to {protocol} - {self.protocol_labels[protocol]}')
+            f'Step {self.stepper}: Changed protocol to {protocol}')
 
     def update_rtt(self, rtt: float) -> None:
 
@@ -147,7 +147,7 @@ class PredictorManager(BaseManager):
 
             print(f'Step {self.stepper}: State has a size of {N}')
             print(
-                f'Step {self.stepper}: {self.current_runner.get_model().get_model_name()} predicted arm: {predicted_protocol} - {self.protocol_labels[predicted_protocol]}')
+                f'Step {self.stepper}: {self.current_runner.get_model().get_model_name()} predicted arm: {predicted_protocol}')
 
             self.change_cwnd(predicted_protocol)
 
