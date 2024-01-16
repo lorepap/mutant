@@ -27,8 +27,7 @@
 #include <linux/mm.h>
 #include <linux/module.h>
 #include <linux/math64.h>
-
-#include "mimic.h"
+#include <net/tcp.h>
 
 #define BICTCP_BETA_SCALE    1024	/* Scale factor beta calculation
 					 * max_cwnd = snd_cwnd * beta
@@ -82,26 +81,26 @@ module_param(hystart_ack_delta, int, 0644);
 MODULE_PARM_DESC(hystart_ack_delta, "spacing between ack's indicating train (msecs)");
 
 /* BIC TCP Parameters */
-// struct arm {
-// 	u32	cnt;		/* increase cwnd by 1 after ACKs */
-// 	u32	last_max_cwnd;	/* last maximum snd_cwnd */
-// 	u32	last_cwnd;	/* the last snd_cwnd */
-// 	u32	last_time;	/* time when updated last_cwnd */
-// 	u32	bic_origin_point;/* origin point of bic function */
-// 	u32	bic_K;		/* time to origin point
-// 				   from the beginning of the current epoch */
-// 	u32	delay_min;	/* min delay (msec << 3) */
-// 	u32	epoch_start;	/* beginning of an epoch */
-// 	u32	ack_cnt;	/* number of acks */
-// 	u32	tcp_cwnd;	/* estimated tcp cwnd */
-// 	u16	unused;
-// 	u8	sample_cnt;	/* number of samples to decide curr_rtt */
-// 	u8	found;		/* the exit point is found? */
-// 	u32	round_start;	/* beginning of each round */
-// 	u32	end_seq;	/* end_seq of the round */
-// 	u32	last_ack;	/* last time when the ACK spacing is close */
-// 	u32	curr_rtt;	/* the minimum rtt of current round */
-// };
+struct arm {
+	u32	cnt;		/* increase cwnd by 1 after ACKs */
+	u32	last_max_cwnd;	/* last maximum snd_cwnd */
+	u32	last_cwnd;	/* the last snd_cwnd */
+	u32	last_time;	/* time when updated last_cwnd */
+	u32	bic_origin_point;/* origin point of bic function */
+	u32	bic_K;		/* time to origin point
+				   from the beginning of the current epoch */
+	u32	delay_min;	/* min delay (msec << 3) */
+	u32	epoch_start;	/* beginning of an epoch */
+	u32	ack_cnt;	/* number of acks */
+	u32	tcp_cwnd;	/* estimated tcp cwnd */
+	u16	unused;
+	u8	sample_cnt;	/* number of samples to decide curr_rtt */
+	u8	found;		/* the exit point is found? */
+	u32	round_start;	/* beginning of each round */
+	u32	end_seq;	/* end_seq of the round */
+	u32	last_ack;	/* last time when the ACK spacing is close */
+	u32	curr_rtt;	/* the minimum rtt of current round */
+};
 
 static inline void bictcp_reset(struct arm *ca)
 {
@@ -458,7 +457,7 @@ static void bictcp_acked(struct sock *sk, const struct ack_sample *sample)
 		hystart_update(sk, delay);
 }
 
-static struct tcp_congestion_ops cubictcp __read_mostly = {
+static struct tcp_congestion_ops tcpmimic __read_mostly = {
 	.init		= bictcp_init,
 	.ssthresh	= bictcp_recalc_ssthresh,
 	.cong_avoid	= bictcp_cong_avoid,
@@ -467,7 +466,7 @@ static struct tcp_congestion_ops cubictcp __read_mostly = {
 	.cwnd_event	= bictcp_cwnd_event,
 	.pkts_acked     = bictcp_acked,
 	.owner		= THIS_MODULE,
-	.name		= "cubic",
+	.name		= "mimic",
 };
 
 static int __init cubictcp_register(void)
@@ -502,18 +501,18 @@ static int __init cubictcp_register(void)
 	/* divide by bic_scale and by constant Srtt (100ms) */
 	do_div(cube_factor, bic_scale * 10);
 
-	return tcp_register_congestion_control(&cubictcp);
+	return tcp_register_congestion_control(&tcpmimic);
 }
 
 static void __exit cubictcp_unregister(void)
 {
-	tcp_unregister_congestion_control(&cubictcp);
+	tcp_unregister_congestion_control(&tcpmimic);
 }
 
 module_init(cubictcp_register);
 module_exit(cubictcp_unregister);
 
-MODULE_AUTHOR("Sangtae Ha, Stephen Hemminger");
+MODULE_AUTHOR("Lorenzo Pappone");
 MODULE_LICENSE("GPL");
-MODULE_DESCRIPTION("CUBIC TCP");
-MODULE_VERSION("2.3");
+MODULE_DESCRIPTION("Mimic");
+MODULE_VERSION("1.0");

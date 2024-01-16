@@ -1,1 +1,0 @@
-cmd_/home/lorenzo/mimic-2/src/kernel/mimic.ko := ld -r  -EL  -maarch64elf -z noexecstack   --build-id  -T ./scripts/module-common.lds -T ./arch/arm64/kernel/module.lds -o /home/lorenzo/mimic-2/src/kernel/mimic.ko /home/lorenzo/mimic-2/src/kernel/mimic.o /home/lorenzo/mimic-2/src/kernel/mimic.mod.o;  true

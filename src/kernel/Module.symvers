@@ -1,8 +1,2 @@
-<<<<<<< HEAD
-=======
-0x4cbec03a	tcp_vegas_pkts_acked	/home/lorenzo/mimic-2/src/kernel/mimic	EXPORT_SYMBOL_GPL	
-0x810fe378	tcp_vegas_get_info	/home/lorenzo/mimic-2/src/kernel/mimic	EXPORT_SYMBOL_GPL	
-0x0861205b	tcp_vegas_state	/home/lorenzo/mimic-2/src/kernel/mimic	EXPORT_SYMBOL_GPL	
-0x8ba23112	tcp_vegas_init	/home/lorenzo/mimic-2/src/kernel/mimic	EXPORT_SYMBOL_GPL	
-0x1176ed28	tcp_vegas_cwnd_event	/home/lorenzo/mimic-2/src/kernel/mimic	EXPORT_SYMBOL_GPL	
->>>>>>> be8a8ec201dda079c8a10daab8e90c9d7771800d
+0x03b09270	tcp_mutant_pkts_acked	/home/lorenzo/Desktop/mutant/src/kernel/mutant	EXPORT_SYMBOL_GPL	
+0xe786658c	tcp_mutant_cong_avoid	/home/lorenzo/Desktop/mutant/src/kernel/mutant	EXPORT_SYMBOL_GPL	

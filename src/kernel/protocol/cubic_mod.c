@@ -27,8 +27,8 @@
 #include <linux/mm.h>
 #include <linux/module.h>
 #include <linux/math64.h>
+#include <net/tcp.h>
 
-#include "mimic.h"
 
 #define BICTCP_BETA_SCALE    1024	/* Scale factor beta calculation
 					 * max_cwnd = snd_cwnd * beta
@@ -82,28 +82,199 @@ module_param(hystart_ack_delta, int, 0644);
 MODULE_PARM_DESC(hystart_ack_delta, "spacing between ack's indicating train (msecs)");
 
 /* BIC TCP Parameters */
-// struct arm {
-// 	u32	cnt;		/* increase cwnd by 1 after ACKs */
-// 	u32	last_max_cwnd;	/* last maximum snd_cwnd */
-// 	u32	last_cwnd;	/* the last snd_cwnd */
-// 	u32	last_time;	/* time when updated last_cwnd */
-// 	u32	bic_origin_point;/* origin point of bic function */
-// 	u32	bic_K;		/* time to origin point
-// 				   from the beginning of the current epoch */
-// 	u32	delay_min;	/* min delay (msec << 3) */
-// 	u32	epoch_start;	/* beginning of an epoch */
-// 	u32	ack_cnt;	/* number of acks */
-// 	u32	tcp_cwnd;	/* estimated tcp cwnd */
-// 	u16	unused;
-// 	u8	sample_cnt;	/* number of samples to decide curr_rtt */
-// 	u8	found;		/* the exit point is found? */
-// 	u32	round_start;	/* beginning of each round */
-// 	u32	end_seq;	/* end_seq of the round */
-// 	u32	last_ack;	/* last time when the ACK spacing is close */
-// 	u32	curr_rtt;	/* the minimum rtt of current round */
-// };
+struct bictcp {
+	u32	cnt;		/* increase cwnd by 1 after ACKs */
+	u32	last_max_cwnd;	/* last maximum snd_cwnd */
+	u32	last_cwnd;	/* the last snd_cwnd */
+	u32	last_time;	/* time when updated last_cwnd */
+	u32	bic_origin_point;/* origin point of bic function */
+	u32	bic_K;		/* time to origin point
+				   from the beginning of the current epoch */
+	u32	delay_min;	/* min delay (msec << 3) */
+	u32	epoch_start;	/* beginning of an epoch */
+	u32	ack_cnt;	/* number of acks */
+	u32	tcp_cwnd;	/* estimated tcp cwnd */
+	u16	unused;
+	u8	sample_cnt;	/* number of samples to decide curr_rtt */
+	u8	found;		/* the exit point is found? */
+	u32	round_start;	/* beginning of each round */
+	u32	end_seq;	/* end_seq of the round */
+	u32	last_ack;	/* last time when the ACK spacing is close */
+	u32	curr_rtt;	/* the minimum rtt of current round */
+};
 
-static inline void bictcp_reset(struct arm *ca)
+//////////////// MOD: user-level connection functions //////////////////////
+static struct sock *socket = NULL;
+#define COMM_END 0
+#define COMM_BEGIN 1
+#define COMM_TEST_NATIVE_PROT 3
+static u32 socketId = -1;
+#define NETLINK_USER 25
+#define MAX_PAYLOAD 256 /* maximum payload size*/
+#define INIT_MSG 0
+#define END_MSG -1 
+bool sent = false;
+
+
+// Netlink comm APIs
+static void sendMessageToApplicationLayer(char *message, int socketId)
+{
+    int retryCounter = 0;
+    int messageSize;
+    int messageSentReponseCode;
+    struct sk_buff *socketMessage;
+    struct nlmsghdr *reply_nlh = NULL;
+
+
+    if (socketId == -1)
+    {
+        return;
+    }
+
+	// printk("Mutant | %s: Sending message to application layer | (PID = %d)\n", __FUNCTION__, socketId);
+    messageSize = strlen(message);
+
+    socketMessage = nlmsg_new(messageSize, 0);
+
+	// printk("socketMessage: %s", socket);
+
+    if (!socketMessage)
+    {
+        printk(KERN_ERR "Mutant | %s: Failed to allocate new skb | (PID = %d)\n", __FUNCTION__, socketId);
+        return;
+    }
+
+    reply_nlh = nlmsg_put(socketMessage, 0, 0, NLMSG_DONE, messageSize, 0);
+
+	// printk("reply_nlh: %s", reply_nlh);
+
+    NETLINK_CB(socketMessage).dst_group = 0; /* not in mcast group */
+
+    strncpy(NLMSG_DATA(reply_nlh), message, messageSize);
+
+	// printk("Message to send: %s\n, in function %s", message, __FUNCTION__)
+
+    messageSentReponseCode = nlmsg_unicast(socket, socketMessage, socketId);
+
+	 if (messageSentReponseCode < 0)
+    {
+        printk(KERN_ERR "Mutant | %s: Error while sending message | (PID = %d) | (Error = %d) | (Count = %d)\n", __FUNCTION__, socketId, messageSentReponseCode, retryCounter);
+    }
+}
+
+static void onConnectionStarted(struct nlmsghdr *nlh)
+{
+	printk(KERN_INFO "User-kernel communication initialized");
+    char message[MAX_PAYLOAD - 1];
+
+    socketId = nlh->nlmsg_pid;
+
+	// Inform application layer of the number of protocols available
+	snprintf(message, MAX_PAYLOAD - 1, "%d", INIT_MSG);
+	printk("[DEBUG] Message to send: %s\n, in function %s", message, __FUNCTION__);
+    sendMessageToApplicationLayer(message, socketId);
+}
+
+static void onConnectionEnded(struct nlmsghdr *nlh)
+{
+	printk(KERN_INFO "User-kernel communication initialized");
+    char message[MAX_PAYLOAD - 1];
+
+    socketId = nlh->nlmsg_pid;
+
+	// Inform application layer of the number of protocols available
+	snprintf(message, MAX_PAYLOAD - 1, "%d", END_MSG);
+	printk("[DEBUG] Message to send: %s\n, in function %s", message, __FUNCTION__);
+    sendMessageToApplicationLayer(message, socketId);
+}
+
+static void onMessageReceivedFromApplicationLayer(struct sk_buff *skb)
+{
+    struct nlmsghdr *nlh = NULL;
+
+    if (skb == NULL)
+    {
+        printk(KERN_ERR "mimic | %s: skb is NULL\n", __FUNCTION__);
+        return;
+    }
+
+    nlh = (struct nlmsghdr *)skb->data;
+
+    switch (nlh->nlmsg_flags)
+    {
+    case COMM_END:
+		onConnectionEnded(nlh);
+        socketId = -1;
+        break;
+
+    case COMM_BEGIN:
+		printk("COMM_BEGIN");
+        onConnectionStarted(nlh);
+        break;
+
+    case 3: // = 3 if testing
+        break;
+    }
+}
+
+
+// static void onStartSingleProtocol(struct nlmsghdr *nlh)
+// {
+// 	printk(KERN_INFO "MODE SINGLE PROTOCOL ON: User-kernel communication initialized");
+// 	char message[MAX_PAYLOAD - 1];
+
+// 	socketId = nlh->nlmsg_pid;
+
+// 	snprintf(message, MAX_PAYLOAD - 1, "%u;%s", 1, INIT_MSG);
+//     sendMessageToApplicationLayer(message, socketId);
+
+// }
+
+/**
+ * @brief Handles incoming messages from the application layer
+ * 
+ * @param skb 
+ */
+static void onMessageRecievedFromApplicationLayer(struct sk_buff *skb)
+{
+    struct nlmsghdr *nlh = NULL;
+
+    if (skb == NULL)
+    {
+        printk(KERN_ERR "mutant | %s: skb is NULL\n", __FUNCTION__);
+        return;
+    }
+
+    nlh = (struct nlmsghdr *)skb->data;
+
+	if (nlh == NULL) 
+	{
+		printk(KERN_ERR "mutant | %s: nlh is NULL\n", __FUNCTION__);
+		return;
+	}
+	
+    switch (nlh->nlmsg_flags)
+    {
+    case COMM_END:
+
+        socketId = -1;
+        break;
+
+    case COMM_BEGIN:
+		printk("COMM_BEGIN");
+        onConnectionStarted(nlh);
+        break;
+
+    default: // testing
+		printk(KERN_INFO "Test message received!");
+        break;
+    }
+}
+
+
+//////////////////////////////////////////////////////////////////////////////////
+
+static inline void bictcp_reset(struct bictcp *ca)
 {
 	ca->cnt = 0;
 	ca->last_max_cwnd = 0;
@@ -130,7 +301,7 @@ static inline u32 bictcp_clock(void)
 static inline void bictcp_hystart_reset(struct sock *sk)
 {
 	struct tcp_sock *tp = tcp_sk(sk);
-	struct arm *ca = inet_csk_ca(sk);
+	struct bictcp *ca = inet_csk_ca(sk);
 
 	ca->round_start = ca->last_ack = bictcp_clock();
 	ca->end_seq = tp->snd_nxt;
@@ -140,7 +311,7 @@ static inline void bictcp_hystart_reset(struct sock *sk)
 
 static void bictcp_init(struct sock *sk)
 {
-	struct arm *ca = inet_csk_ca(sk);
+	struct bictcp *ca = inet_csk_ca(sk);
 
 	bictcp_reset(ca);
 
@@ -154,7 +325,7 @@ static void bictcp_init(struct sock *sk)
 static void bictcp_cwnd_event(struct sock *sk, enum tcp_ca_event event)
 {
 	if (event == CA_EVENT_TX_START) {
-		struct arm *ca = inet_csk_ca(sk);
+		struct bictcp *ca = inet_csk_ca(sk);
 		u32 now = tcp_jiffies32;
 		s32 delta;
 
@@ -223,7 +394,7 @@ static u32 cubic_root(u64 a)
 /*
  * Compute congestion window to use.
  */
-static inline void bictcp_update(struct arm *ca, u32 cwnd, u32 acked)
+static inline void bictcp_update(struct bictcp *ca, u32 cwnd, u32 acked)
 {
 	u32 delta, bic_target, max_cnt;
 	u64 offs, t;
@@ -336,14 +507,12 @@ tcp_friendliness:
 static void bictcp_cong_avoid(struct sock *sk, u32 ack, u32 acked)
 {
 	struct tcp_sock *tp = tcp_sk(sk);
-	struct arm *ca = inet_csk_ca(sk);
+	struct bictcp *ca = inet_csk_ca(sk);
 
 	if (!tcp_is_cwnd_limited(sk))
 		return;
 
 	if (tcp_in_slow_start(tp)) {
-		if (hystart && after(ack, ca->end_seq))
-			bictcp_hystart_reset(sk);
 		acked = tcp_slow_start(tp, acked);
 		if (!acked)
 			return;
@@ -355,7 +524,7 @@ static void bictcp_cong_avoid(struct sock *sk, u32 ack, u32 acked)
 static u32 bictcp_recalc_ssthresh(struct sock *sk)
 {
 	const struct tcp_sock *tp = tcp_sk(sk);
-	struct arm *ca = inet_csk_ca(sk);
+	struct bictcp *ca = inet_csk_ca(sk);
 
 	ca->epoch_start = 0;	/* end of epoch */
 
@@ -380,10 +549,13 @@ static void bictcp_state(struct sock *sk, u8 new_state)
 static void hystart_update(struct sock *sk, u32 delay)
 {
 	struct tcp_sock *tp = tcp_sk(sk);
-	struct arm *ca = inet_csk_ca(sk);
+	struct bictcp *ca = inet_csk_ca(sk);
 
 	if (ca->found & hystart_detect)
 		return;
+
+	if (after(tp->snd_una, ca->end_seq))
+		bictcp_hystart_reset(sk);
 
 	if (hystart_detect & HYSTART_ACK_TRAIN) {
 		u32 now = bictcp_clock();
@@ -433,7 +605,7 @@ static void hystart_update(struct sock *sk, u32 delay)
 static void bictcp_acked(struct sock *sk, const struct ack_sample *sample)
 {
 	const struct tcp_sock *tp = tcp_sk(sk);
-	struct arm *ca = inet_csk_ca(sk);
+	struct bictcp *ca = inet_csk_ca(sk);
 	u32 delay;
 
 	/* Some calls are for duplicates without timetamps */
@@ -456,9 +628,32 @@ static void bictcp_acked(struct sock *sk, const struct ack_sample *sample)
 	if (hystart && tcp_in_slow_start(tp) &&
 	    tp->snd_cwnd >= hystart_low_window)
 		hystart_update(sk, delay);
+
+
+	//  MOD: send parameters to user level
+	char msg[MAX_PAYLOAD - 1]; // Max payload
+    u32 cwnd = tp->snd_cwnd;
+    u32 rtt = tp->srtt_us;
+    u32 rtt_dev = tp->mdev_us;
+    u16 MSS = tp->advmss;
+    u32 delivered = tp->delivered;
+    u32 lost = tp->lost_out;\
+    u32 in_flight = tp->packets_out;
+    u32 retransmitted = tp->retrans_out;
+    u32 now = tcp_jiffies32;
+
+    // if (user_space_app_pid > 0)
+    // {
+	snprintf(msg, MAX_PAYLOAD - 1, "%u;%u;%u;%u;%u;%u;%u;%u;%u;",
+				now, cwnd, rtt, rtt_dev, MSS, delivered, lost,
+				in_flight, retransmitted);
+
+	// printk("[DEBUG] Message to send: %s\n, in function %s", msg, __FUNCTION__);
+	sendMessageToApplicationLayer(msg, socketId); // DEBUG: send only one message
+    // }
 }
 
-static struct tcp_congestion_ops cubictcp __read_mostly = {
+static struct tcp_congestion_ops cubictcp_mod __read_mostly = {
 	.init		= bictcp_init,
 	.ssthresh	= bictcp_recalc_ssthresh,
 	.cong_avoid	= bictcp_cong_avoid,
@@ -467,12 +662,23 @@ static struct tcp_congestion_ops cubictcp __read_mostly = {
 	.cwnd_event	= bictcp_cwnd_event,
 	.pkts_acked     = bictcp_acked,
 	.owner		= THIS_MODULE,
-	.name		= "cubic",
+	.name		= "cubic_mod",
 };
 
 static int __init cubictcp_register(void)
 {
-	BUILD_BUG_ON(sizeof(struct arm) > ICSK_CA_PRIV_SIZE);
+
+    /* MOD: Initialize Netlink Socket */ 
+	struct netlink_kernel_cfg cfg = {
+            .input = onMessageReceivedFromApplicationLayer,
+    };
+
+    socket = netlink_kernel_create(&init_net, NETLINK_USER, &cfg);
+	/*
+	*
+	*/
+	
+	BUILD_BUG_ON(sizeof(struct bictcp) > ICSK_CA_PRIV_SIZE);
 
 	/* Precompute a bunch of the scaling factors that are used per-packet
 	 * based on SRTT of 100ms
@@ -502,18 +708,24 @@ static int __init cubictcp_register(void)
 	/* divide by bic_scale and by constant Srtt (100ms) */
 	do_div(cube_factor, bic_scale * 10);
 
-	return tcp_register_congestion_control(&cubictcp);
+	return tcp_register_congestion_control(&cubictcp_mod);
 }
 
 static void __exit cubictcp_unregister(void)
 {
-	tcp_unregister_congestion_control(&cubictcp);
+	/* Release Netlink Socket */
+    if (socket)
+    {
+        sock_release(socket->sk_socket);
+    }
+
+	tcp_unregister_congestion_control(&cubictcp_mod);
 }
 
 module_init(cubictcp_register);
 module_exit(cubictcp_unregister);
 
-MODULE_AUTHOR("Sangtae Ha, Stephen Hemminger");
+MODULE_AUTHOR("Lorenzo Pappone");
 MODULE_LICENSE("GPL");
-MODULE_DESCRIPTION("CUBIC TCP");
+MODULE_DESCRIPTION("CUBIC TCP MOD");
 MODULE_VERSION("2.3");

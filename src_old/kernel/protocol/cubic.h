@@ -458,62 +458,62 @@ static void bictcp_acked(struct sock *sk, const struct ack_sample *sample)
 		hystart_update(sk, delay);
 }
 
-static struct tcp_congestion_ops cubictcp __read_mostly = {
-	.init		= bictcp_init,
-	.ssthresh	= bictcp_recalc_ssthresh,
-	.cong_avoid	= bictcp_cong_avoid,
-	.set_state	= bictcp_state,
-	.undo_cwnd	= tcp_reno_undo_cwnd,
-	.cwnd_event	= bictcp_cwnd_event,
-	.pkts_acked     = bictcp_acked,
-	.owner		= THIS_MODULE,
-	.name		= "cubic",
-};
+// static struct tcp_congestion_ops cubictcp __read_mostly = {
+// 	.init		= bictcp_init,
+// 	.ssthresh	= bictcp_recalc_ssthresh,
+// 	.cong_avoid	= bictcp_cong_avoid,
+// 	.set_state	= bictcp_state,
+// 	.undo_cwnd	= tcp_reno_undo_cwnd,
+// 	.cwnd_event	= bictcp_cwnd_event,
+// 	.pkts_acked     = bictcp_acked,
+// 	.owner		= THIS_MODULE,
+// 	.name		= "cubic",
+// };
 
-static int __init cubictcp_register(void)
-{
-	BUILD_BUG_ON(sizeof(struct arm) > ICSK_CA_PRIV_SIZE);
+// static int __init cubictcp_register(void)
+// {
+// 	BUILD_BUG_ON(sizeof(struct arm) > ICSK_CA_PRIV_SIZE);
 
-	/* Precompute a bunch of the scaling factors that are used per-packet
-	 * based on SRTT of 100ms
-	 */
+// 	/* Precompute a bunch of the scaling factors that are used per-packet
+// 	 * based on SRTT of 100ms
+// 	 */
 
-	beta_scale = 8*(BICTCP_BETA_SCALE+beta) / 3
-		/ (BICTCP_BETA_SCALE - beta);
+// 	beta_scale = 8*(BICTCP_BETA_SCALE+beta) / 3
+// 		/ (BICTCP_BETA_SCALE - beta);
 
-	cube_rtt_scale = (bic_scale * 10);	/* 1024*c/rtt */
+// 	cube_rtt_scale = (bic_scale * 10);	/* 1024*c/rtt */
 
-	/* calculate the "K" for (wmax-cwnd) = c/rtt * K^3
-	 *  so K = cubic_root( (wmax-cwnd)*rtt/c )
-	 * the unit of K is bictcp_HZ=2^10, not HZ
-	 *
-	 *  c = bic_scale >> 10
-	 *  rtt = 100ms
-	 *
-	 * the following code has been designed and tested for
-	 * cwnd < 1 million packets
-	 * RTT < 100 seconds
-	 * HZ < 1,000,00  (corresponding to 10 nano-second)
-	 */
+// 	/* calculate the "K" for (wmax-cwnd) = c/rtt * K^3
+// 	 *  so K = cubic_root( (wmax-cwnd)*rtt/c )
+// 	 * the unit of K is bictcp_HZ=2^10, not HZ
+// 	 *
+// 	 *  c = bic_scale >> 10
+// 	 *  rtt = 100ms
+// 	 *
+// 	 * the following code has been designed and tested for
+// 	 * cwnd < 1 million packets
+// 	 * RTT < 100 seconds
+// 	 * HZ < 1,000,00  (corresponding to 10 nano-second)
+// 	 */
 
-	/* 1/c * 2^2*bictcp_HZ * srtt */
-	cube_factor = 1ull << (10+3*BICTCP_HZ); /* 2^40 */
+// 	/* 1/c * 2^2*bictcp_HZ * srtt */
+// 	cube_factor = 1ull << (10+3*BICTCP_HZ); /* 2^40 */
 
-	/* divide by bic_scale and by constant Srtt (100ms) */
-	do_div(cube_factor, bic_scale * 10);
+// 	/* divide by bic_scale and by constant Srtt (100ms) */
+// 	do_div(cube_factor, bic_scale * 10);
 
-	return tcp_register_congestion_control(&cubictcp);
-}
+// 	return tcp_register_congestion_control(&cubictcp);
+// }
 
-static void __exit cubictcp_unregister(void)
-{
-	tcp_unregister_congestion_control(&cubictcp);
-}
+// static void __exit cubictcp_unregister(void)
+// {
+// 	tcp_unregister_congestion_control(&cubictcp);
+// }
 
-module_init(cubictcp_register);
-module_exit(cubictcp_unregister);
+// module_init(cubictcp_register);
+// module_exit(cubictcp_unregister);
 
-MODULE_AUTHOR("Sangtae Ha, Stephen Hemminger");
-MODULE_LICENSE("GPL");
-MODULE_DESCRIPTION("CUBIC TCP");
-MODULE_VERSION("2.3");
+// MODULE_AUTHOR("Sangtae Ha, Stephen Hemminger");
+// MODULE_LICENSE("GPL");
+// MODULE_DESCRIPTION("CUBIC TCP");
+// MODULE_VERSION("2.3");

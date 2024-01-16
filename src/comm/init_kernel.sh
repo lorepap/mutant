@@ -1,16 +1,20 @@
 #!/bin/bash
 
 base_path=$(pwd)/src
+# # Build kernel header file
+# echo '--- Building kernel header file ---'
+# echo ''
+# cd $base_path/kernel && bash init.sh || exit 1
+
+
 cd $base_path/kernel
 echo ''
 
 # Build and insert kernel module
 echo '--- Building and inserting kernel module file ---'
 echo ''
-sudo make clean
-sudo make
-sudo /usr/src/linux-$(uname -r)/scripts/sign-file sha256 ./key/MOK.priv ./key/MOK.der mimic.ko
-sudo insmod mimic.ko
+sh build.sh || exit 1
+
 
 echo ''
 # Set mimic as congestion control protocol
