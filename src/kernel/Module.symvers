@@ -1,2 +1,0 @@
-0x03b09270	tcp_mutant_pkts_acked	/home/lorenzo/Desktop/mutant/src/kernel/mutant	EXPORT_SYMBOL_GPL	
-0xe786658c	tcp_mutant_cong_avoid	/home/lorenzo/Desktop/mutant/src/kernel/mutant	EXPORT_SYMBOL_GPL	

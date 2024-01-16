@@ -104,10 +104,10 @@ class CommManager():
 
         print("Communication initiated")
 
-        total_choices, total_prots = utils.get_number_of_actions(
-            self.netlink_communicator)
+        # total_choices, total_prots = utils.get_number_of_actions(
+        #     self.netlink_communicator)
 
-        print(f'\n\n----- Number of protocols available in kernel is {total_choices} ----- \n\n')
+        # print(f'\n\n----- Number of protocols available in kernel is {total_choices} ----- \n\n')
 
     def close_kernel_communication(self) -> None:
 

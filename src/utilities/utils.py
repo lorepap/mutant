@@ -68,7 +68,7 @@ def np_encoder(self, object):
             return object.item()
 
 def get_number_of_actions(comm: NetlinkCommunicator) -> int:
-    response = comm.recv_msg()
+    response = comm.receive_msg()
     data = comm.read_netlink_msg(response)
     data_decoded = data.decode('utf-8')
     split_data = data_decoded.split(';')

@@ -51,13 +51,12 @@ class MabRunner():
         self.model_dir = "log/mab/model"
         self.make_paths()
 
-
     def setup_communication(self):
         # Set up iperf client-server communication
         # Now a single flow between client and server is running
         # We can now set up the runner and start training the RL model    
         self.cm.init_kernel_communication()
-        self.cm.start_communication(tag='test')
+        self.cm.start_communication(client_tag='test')
 
     def stop_communication(self):
         self.cm.stop_communication()

@@ -271,9 +271,8 @@ class MabEnvironment(gym.Env):
 
         self.last_cwnd = cwnd
 
-        self.log_traces = f'{self.log_traces}\n {action}, {cwnd}, {rtt}, {rtt_dev}, 
-            {delivered}, {delivered_diff}, {lost}, {in_flight}, {retrans}, {cwnd_diff}, 
-            {step}, {round(self.curr_reward, 4)}, {round(reward, 4)}'
+        self.log_traces = f'{self.log_traces}\n {action}, {cwnd}, {rtt}, {rtt_dev}, {delivered}, {delivered_diff}, {lost}, {in_flight}, {retrans}, {cwnd_diff}, ' \
+                 f'{step}, {round(self.curr_reward, 4)}, {round(reward, 4)}'
 
     def step(self, action):
         self._change_cca(int(action))

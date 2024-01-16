@@ -9,11 +9,11 @@ echo '--- Building and inserting kernel module file ---'
 echo ''
 sudo make clean
 sudo make
-sudo /usr/src/linux-$(uname -r)/scripts/sign-file sha256 ./key/MOK.priv ./key/MOK.der mimic.ko
-sudo insmod mimic.ko
+# sudo /usr/src/linux-$(uname -r)/scripts/sign-file sha256 ./key/MOK.priv ./key/MOK.der mimic.ko
+sudo insmod mutant.ko
 
 echo ''
-# Set mimic as congestion control protocol
-echo '-- Set mimic as congestion control protocol'
+# Set mutant as congestion control protocol
+echo '-- Set mutant as congestion control protocol'
 echo ''
-sudo sysctl net.ipv4.tcp_congestion_control=mimic || exit 1
+sudo sysctl net.ipv4.tcp_congestion_control=mutant || exit 1
