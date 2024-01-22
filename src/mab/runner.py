@@ -59,7 +59,7 @@ class MabRunner():
         self.cm.start_communication(client_tag='test')
 
     def stop_communication(self):
-        self.cm.stop_communication()
+        self.cm.stop_iperf_communication()
 
     def make_paths(self):
         os.makedirs(self.history_dir, exist_ok=True)

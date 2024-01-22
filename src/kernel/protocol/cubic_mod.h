@@ -29,7 +29,6 @@
 #include <linux/math64.h>
 #include <net/tcp.h>
 
-
 #define BICTCP_BETA_SCALE    1024	/* Scale factor beta calculation
 					 * max_cwnd = snd_cwnd * beta
 					 */
@@ -103,177 +102,6 @@ struct bictcp {
 	u32	curr_rtt;	/* the minimum rtt of current round */
 };
 
-//////////////// MOD: user-level connection functions //////////////////////
-static struct sock *socket = NULL;
-#define COMM_END 0
-#define COMM_BEGIN 1
-#define COMM_TEST_NATIVE_PROT 3
-static u32 socketId = -1;
-#define NETLINK_USER 25
-#define MAX_PAYLOAD 256 /* maximum payload size*/
-#define INIT_MSG 0
-#define END_MSG -1 
-bool sent = false;
-
-
-// Netlink comm APIs
-static void sendMessageToApplicationLayer(char *message, int socketId)
-{
-    int retryCounter = 0;
-    int messageSize;
-    int messageSentReponseCode;
-    struct sk_buff *socketMessage;
-    struct nlmsghdr *reply_nlh = NULL;
-
-
-    if (socketId == -1)
-    {
-        return;
-    }
-
-	// printk("Mutant | %s: Sending message to application layer | (PID = %d)\n", __FUNCTION__, socketId);
-    messageSize = strlen(message);
-
-    socketMessage = nlmsg_new(messageSize, 0);
-
-	// printk("socketMessage: %s", socket);
-
-    if (!socketMessage)
-    {
-        printk(KERN_ERR "Mutant | %s: Failed to allocate new skb | (PID = %d)\n", __FUNCTION__, socketId);
-        return;
-    }
-
-    reply_nlh = nlmsg_put(socketMessage, 0, 0, NLMSG_DONE, messageSize, 0);
-
-	// printk("reply_nlh: %s", reply_nlh);
-
-    NETLINK_CB(socketMessage).dst_group = 0; /* not in mcast group */
-
-    strncpy(NLMSG_DATA(reply_nlh), message, messageSize);
-
-	// printk("Message to send: %s\n, in function %s", message, __FUNCTION__)
-
-    messageSentReponseCode = nlmsg_unicast(socket, socketMessage, socketId);
-
-	 if (messageSentReponseCode < 0)
-    {
-        printk(KERN_ERR "Mutant | %s: Error while sending message | (PID = %d) | (Error = %d) | (Count = %d)\n", __FUNCTION__, socketId, messageSentReponseCode, retryCounter);
-    }
-}
-
-static void onConnectionStarted(struct nlmsghdr *nlh)
-{
-	printk(KERN_INFO "User-kernel communication initialized");
-    char message[MAX_PAYLOAD - 1];
-
-    socketId = nlh->nlmsg_pid;
-
-	// Inform application layer of the number of protocols available
-	snprintf(message, MAX_PAYLOAD - 1, "%d", INIT_MSG);
-	printk("[DEBUG] Message to send: %s\n, in function %s", message, __FUNCTION__);
-    sendMessageToApplicationLayer(message, socketId);
-}
-
-static void onConnectionEnded(struct nlmsghdr *nlh)
-{
-	printk(KERN_INFO "User-kernel communication initialized");
-    char message[MAX_PAYLOAD - 1];
-
-    socketId = nlh->nlmsg_pid;
-
-	// Inform application layer of the number of protocols available
-	snprintf(message, MAX_PAYLOAD - 1, "%d", END_MSG);
-	printk("[DEBUG] Message to send: %s\n, in function %s", message, __FUNCTION__);
-    sendMessageToApplicationLayer(message, socketId);
-}
-
-static void onMessageReceivedFromApplicationLayer(struct sk_buff *skb)
-{
-    struct nlmsghdr *nlh = NULL;
-
-    if (skb == NULL)
-    {
-        printk(KERN_ERR "mimic | %s: skb is NULL\n", __FUNCTION__);
-        return;
-    }
-
-    nlh = (struct nlmsghdr *)skb->data;
-
-    switch (nlh->nlmsg_flags)
-    {
-    case COMM_END:
-		onConnectionEnded(nlh);
-        socketId = -1;
-        break;
-
-    case COMM_BEGIN:
-		printk("COMM_BEGIN");
-        onConnectionStarted(nlh);
-        break;
-
-    case 3: // = 3 if testing
-        break;
-    }
-}
-
-
-// static void onStartSingleProtocol(struct nlmsghdr *nlh)
-// {
-// 	printk(KERN_INFO "MODE SINGLE PROTOCOL ON: User-kernel communication initialized");
-// 	char message[MAX_PAYLOAD - 1];
-
-// 	socketId = nlh->nlmsg_pid;
-
-// 	snprintf(message, MAX_PAYLOAD - 1, "%u;%s", 1, INIT_MSG);
-//     sendMessageToApplicationLayer(message, socketId);
-
-// }
-
-/**
- * @brief Handles incoming messages from the application layer
- * 
- * @param skb 
- */
-static void onMessageRecievedFromApplicationLayer(struct sk_buff *skb)
-{
-    struct nlmsghdr *nlh = NULL;
-
-    if (skb == NULL)
-    {
-        printk(KERN_ERR "mutant | %s: skb is NULL\n", __FUNCTION__);
-        return;
-    }
-
-    nlh = (struct nlmsghdr *)skb->data;
-
-	if (nlh == NULL) 
-	{
-		printk(KERN_ERR "mutant | %s: nlh is NULL\n", __FUNCTION__);
-		return;
-	}
-	
-    switch (nlh->nlmsg_flags)
-    {
-    case COMM_END:
-
-        socketId = -1;
-        break;
-
-    case COMM_BEGIN:
-		printk("COMM_BEGIN");
-        onConnectionStarted(nlh);
-        break;
-
-    default: // testing
-		printk(KERN_INFO "Test message received!");
-        break;
-    }
-}
-
-
-//////////////////////////////////////////////////////////////////////////////////
-
 static inline void bictcp_reset(struct bictcp *ca)
 {
 	ca->cnt = 0;
@@ -311,6 +139,8 @@ static inline void bictcp_hystart_reset(struct sock *sk)
 
 static void bictcp_init(struct sock *sk)
 {
+
+	printk("bictcp_init\n");
 	struct bictcp *ca = inet_csk_ca(sk);
 
 	bictcp_reset(ca);
@@ -396,6 +226,8 @@ static u32 cubic_root(u64 a)
  */
 static inline void bictcp_update(struct bictcp *ca, u32 cwnd, u32 acked)
 {
+
+	printk("bictcp_update\n");
 	u32 delta, bic_target, max_cnt;
 	u64 offs, t;
 
@@ -506,13 +338,29 @@ tcp_friendliness:
 
 static void bictcp_cong_avoid(struct sock *sk, u32 ack, u32 acked)
 {
+
+	printk("bictcp_cong_avoid\n");
+	// Handle potential null pointer dereference
+	if (!sk){
+		printk("sk is null\n");
+		return;
+	}
 	struct tcp_sock *tp = tcp_sk(sk);
 	struct bictcp *ca = inet_csk_ca(sk);
 
-	if (!tcp_is_cwnd_limited(sk))
+	// Handle potential null ca
+	if (!ca){
+		printk("ca is null\n");
 		return;
+	}
+
+	if (!tcp_is_cwnd_limited(sk)){
+		printk("tcp_is_cwnd_limited\n");
+		return;
+	}
 
 	if (tcp_in_slow_start(tp)) {
+		printk("tcp_in_slow_start\n");
 		acked = tcp_slow_start(tp, acked);
 		if (!acked)
 			return;
@@ -628,29 +476,6 @@ static void bictcp_acked(struct sock *sk, const struct ack_sample *sample)
 	if (hystart && tcp_in_slow_start(tp) &&
 	    tp->snd_cwnd >= hystart_low_window)
 		hystart_update(sk, delay);
-
-
-	//  MOD: send parameters to user level
-	char msg[MAX_PAYLOAD - 1]; // Max payload
-    u32 cwnd = tp->snd_cwnd;
-    u32 rtt = tp->srtt_us;
-    u32 rtt_dev = tp->mdev_us;
-    u16 MSS = tp->advmss;
-    u32 delivered = tp->delivered;
-    u32 lost = tp->lost_out;\
-    u32 in_flight = tp->packets_out;
-    u32 retransmitted = tp->retrans_out;
-    u32 now = tcp_jiffies32;
-
-    // if (user_space_app_pid > 0)
-    // {
-	snprintf(msg, MAX_PAYLOAD - 1, "%u;%u;%u;%u;%u;%u;%u;%u;%u;",
-				now, cwnd, rtt, rtt_dev, MSS, delivered, lost,
-				in_flight, retransmitted);
-
-	// printk("[DEBUG] Message to send: %s\n, in function %s", msg, __FUNCTION__);
-	sendMessageToApplicationLayer(msg, socketId); // DEBUG: send only one message
-    // }
 }
 
 static struct tcp_congestion_ops cubictcp_mod __read_mostly = {
@@ -664,68 +489,52 @@ static struct tcp_congestion_ops cubictcp_mod __read_mostly = {
 	.owner		= THIS_MODULE,
 	.name		= "cubic_mod",
 };
+// EXPORT_SYMBOL_GPL(cubictcp);
 
-static int __init cubictcp_register(void)
-{
+// static int __init cubictcp_register(void)
+// {
+// 	BUILD_BUG_ON(sizeof(struct bictcp) > ICSK_CA_PRIV_SIZE);
 
-    /* MOD: Initialize Netlink Socket */ 
-	struct netlink_kernel_cfg cfg = {
-            .input = onMessageReceivedFromApplicationLayer,
-    };
+// 	/* Precompute a bunch of the scaling factors that are used per-packet
+// 	 * based on SRTT of 100ms
+// 	 */
 
-    socket = netlink_kernel_create(&init_net, NETLINK_USER, &cfg);
-	/*
-	*
-	*/
-	
-	BUILD_BUG_ON(sizeof(struct bictcp) > ICSK_CA_PRIV_SIZE);
+// 	beta_scale = 8*(BICTCP_BETA_SCALE+beta) / 3
+// 		/ (BICTCP_BETA_SCALE - beta);
 
-	/* Precompute a bunch of the scaling factors that are used per-packet
-	 * based on SRTT of 100ms
-	 */
+// 	cube_rtt_scale = (bic_scale * 10);	/* 1024*c/rtt */
 
-	beta_scale = 8*(BICTCP_BETA_SCALE+beta) / 3
-		/ (BICTCP_BETA_SCALE - beta);
+// 	/* calculate the "K" for (wmax-cwnd) = c/rtt * K^3
+// 	 *  so K = cubic_root( (wmax-cwnd)*rtt/c )
+// 	 * the unit of K is bictcp_HZ=2^10, not HZ
+// 	 *
+// 	 *  c = bic_scale >> 10
+// 	 *  rtt = 100ms
+// 	 *
+// 	 * the following code has been designed and tested for
+// 	 * cwnd < 1 million packets
+// 	 * RTT < 100 seconds
+// 	 * HZ < 1,000,00  (corresponding to 10 nano-second)
+// 	 */
 
-	cube_rtt_scale = (bic_scale * 10);	/* 1024*c/rtt */
+// 	/* 1/c * 2^2*bictcp_HZ * srtt */
+// 	cube_factor = 1ull << (10+3*BICTCP_HZ); /* 2^40 */
 
-	/* calculate the "K" for (wmax-cwnd) = c/rtt * K^3
-	 *  so K = cubic_root( (wmax-cwnd)*rtt/c )
-	 * the unit of K is bictcp_HZ=2^10, not HZ
-	 *
-	 *  c = bic_scale >> 10
-	 *  rtt = 100ms
-	 *
-	 * the following code has been designed and tested for
-	 * cwnd < 1 million packets
-	 * RTT < 100 seconds
-	 * HZ < 1,000,00  (corresponding to 10 nano-second)
-	 */
+// 	/* divide by bic_scale and by constant Srtt (100ms) */
+// 	do_div(cube_factor, bic_scale * 10);
 
-	/* 1/c * 2^2*bictcp_HZ * srtt */
-	cube_factor = 1ull << (10+3*BICTCP_HZ); /* 2^40 */
+// 	return tcp_register_congestion_control(&cubictcp);
+// }
 
-	/* divide by bic_scale and by constant Srtt (100ms) */
-	do_div(cube_factor, bic_scale * 10);
+// static void __exit cubictcp_unregister(void)
+// {
+// 	tcp_unregister_congestion_control(&cubictcp);
+// }
 
-	return tcp_register_congestion_control(&cubictcp_mod);
-}
+// module_init(cubictcp_register);
+// module_exit(cubictcp_unregister);
 
-static void __exit cubictcp_unregister(void)
-{
-	/* Release Netlink Socket */
-    if (socket)
-    {
-        sock_release(socket->sk_socket);
-    }
-
-	tcp_unregister_congestion_control(&cubictcp_mod);
-}
-
-module_init(cubictcp_register);
-module_exit(cubictcp_unregister);
-
-MODULE_AUTHOR("Lorenzo Pappone");
-MODULE_LICENSE("GPL");
-MODULE_DESCRIPTION("CUBIC TCP MOD");
-MODULE_VERSION("2.3");
+// MODULE_AUTHOR("Sangtae Ha, Stephen Hemminger");
+// MODULE_LICENSE("GPL");
+// MODULE_DESCRIPTION("CUBIC TCP");
+// MODULE_VERSION("2.3");

@@ -19,8 +19,8 @@ diff -Naur linux-5.4.234-base/include/net/tcp.h linux-5.4.234-patched/include/ne
  	 * after all the ca_state processing. (optional)
  	 */
  	void (*cong_control)(struct sock *sk, const struct rate_sample *rs);
-+	/* mimic custom congestion control for bbr support */
-+	void (*mimic_cong_control)(struct sock *sk, const struct rate_sample *rs, u32 ack, u32 acked, int flag);
++	/* Mutant custom congestion control for bbr support */
++	void (*mutant_cong_control)(struct sock *sk, const struct rate_sample *rs, u32 ack, u32 acked, int flag);
  	/* get info for inet_diag (optional) */
  	size_t (*get_info)(struct sock *sk, u32 ext, int *attr,
  			   union tcp_cc_info *info);
@@ -31,9 +31,9 @@ diff -Naur linux-5.4.234-base/net/ipv4/tcp_input.c linux-5.4.234-patched/net/ipv
  {
  	const struct inet_connection_sock *icsk = inet_csk(sk);
  
-+	/* if Mimic congestion control is selected */
-+	if (icsk->icsk_ca_ops->mimic_cong_control) {
-+		icsk->icsk_ca_ops->mimic_cong_control(sk, rs, ack, acked_sacked, flag);
++	/* if Mutant congestion control is selected */
++	if (icsk->icsk_ca_ops->mutant_cong_control) {
++		icsk->icsk_ca_ops->mutant_cong_control(sk, rs, ack, acked_sacked, flag);
 +		return;
 +	}
 +

@@ -185,6 +185,8 @@ __pycache__
 **/*.log
 log/mab/history
 log/mab/trace
+log/collection
+log/test_switching
 !log/iperf
 log/mab/mahimahi
 # analysis/

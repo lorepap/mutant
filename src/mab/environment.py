@@ -116,11 +116,11 @@ class MabEnvironment(gym.Env):
         # Compute thr and loss rate from kernel statistics
         rtt = rtt if rtt > 0 else 1e-5
         thr = cwnd * self.mss / (rtt/self.nb)
-        loss_rate = lost / (lost + delivered)
+        loss_rate = 0 if (lost + delivered) == 0 else lost / (lost + delivered)
 
         # print(f"[DEBUG] {delivered}, {self.mss}, {cwnd}, {rtt}, {thr}, {cwnd*self.mss/(rtt/self.nb)}")
 
-        print("[DEBUG] current CWND=", cwnd)
+        print("[ENVIRONMENT] current CWND=", cwnd)
 
         delivered_diff = delivered - self.last_delivered
         self.last_delivered = delivered
@@ -156,11 +156,10 @@ class MabEnvironment(gym.Env):
             # thruput bit/s
             rtt = rtt if rtt > 0 else 1e-5
             thr = (cwnd * self.mss) / (rtt/self.nb)
-            loss_rate = lost / (lost + delivered)
+            loss_rate = 0 if (lost + delivered) == 0 else lost / (lost + delivered)
           
             # print(f"[DEBUG] {delivered}, {self.mss}, {cwnd}, {rtt}, {thr}, {cwnd*self.mss/(rtt/self.nb)}")
             
-
             delivered_diff = delivered - self.last_delivered
             self.last_delivered = delivered
             self.update_rtt(rtt)

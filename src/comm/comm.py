@@ -38,7 +38,7 @@ class CommManager():
 
         protocol = res.strip().decode('utf-8')
 
-        return protocol == 'mimic'
+        return protocol == 'mutant'
 
     def init_proto(self):
 
@@ -46,7 +46,7 @@ class CommManager():
             print('Kernel has already been initialized\n')
             return
 
-        cmd = os.path.join(context.entry_dir, 'scripts/init_kernel.sh')
+        cmd = os.path.join(context.entry_dir, 'scripts/init_kernel.sh') 
 
         # make script runnable
         res = call(['chmod', '755', cmd])

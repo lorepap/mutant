@@ -44,13 +44,10 @@ class NetlinkCommunicator():
     def receive_msg(self):
         try:
             return self.socket.recv(1024)
-            # return self.socket.recv()
         except Exception as err:
             print('\n')
             print(traceback.format_exc())
-
             # clear buffer
-            # self.socket.
             return None
 
     def read_netlink_msg(self, msg):

@@ -16,7 +16,7 @@ class KernelRequest(threading.Thread):
     def run(self):
         while True:
             try:
-                # print("[KERNEL THREAD] Waiting for message...")
+                print("[KERNEL THREAD] Waiting for message...")
                 msg = self.comm.receive_msg()
                 # print("[KERNEL THREAD] Received message:", msg)
                 if msg:
@@ -27,12 +27,12 @@ class KernelRequest(threading.Thread):
                         # Received "0" as a notification of completed setup
                         print("[KERNEL THREAD] Communication setup completed.")
                     elif data_decoded == "-1":
-                        # Received "-1" as a notification of error
                         print("[KERNEL THREAD] Communication terminated")
                         break
                     else:
                         split_data = data_decoded.split(';')[:self.num_fields_kernel]
                         entry = list(map(int, split_data))
+                        print("[KERNEL THREAD] Data received:", entry)
                         self.queue.put(entry)
                         # print("[KERNEL THREAD] Queue contents:", list(self.queue.queue))
                 else:
