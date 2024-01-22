@@ -7,6 +7,7 @@ ACTION_FLAG = 2
 CUBIC = 0
 HYBLA = 1
 BBR = 2
+WESTWOOD = 3
 
 class SwitchingTestRunner():
     """ Collector class
@@ -78,7 +79,7 @@ class SwitchingTestRunner():
 
         collected_data = {}
         switch = False
-        cca_list = [CUBIC, HYBLA, BBR]  # Add more CCAs if needed
+        cca_list = [CUBIC, HYBLA, BBR, WESTWOOD]  # Add more CCAs if needed
         current_cca_index = 0
         start = time.time()
         while time.time()-start < self.running_time:

@@ -16,9 +16,19 @@
 struct sock *nl_sk = NULL;
 static u32 socketId = -1;
 static u32 selected_proto_id = CUBIC;
-static u32 prev_proto_id = 0;
+static u32 prev_proto_id = CUBIC;
 static bool switching_flag = false;
 
+struct mutant_state {
+    struct bictcp *cubic_state;
+    struct hybla *hybla_state;
+    struct bbr *bbr_state;
+    struct westwood *westwood_state;
+    // Add more pointers for other congestion control schemes as needed
+};
+
+// Global variable to store the state
+static struct mutant_state *saved_states;
 
 
 // Netlink comm APIs
@@ -73,6 +83,9 @@ static void send_msg(char *message, int socketId)
 static void start_connection(struct nlmsghdr *nlh)
 {
 
+    // Initialize saved_states
+    init_saved_states();
+
 	printk(KERN_INFO "User-kernel communication initialized");
     char message[MAX_PAYLOAD - 1];
 
@@ -91,6 +104,23 @@ static void end_connection(struct nlmsghdr *nlh)
     // Send application layer a message to inform that the connection has ended
     snprintf(message, MAX_PAYLOAD - 1, "%u", -1);
     send_msg(message, socketId);
+
+    // free all the memory allocated for the saved states
+    if (saved_states) {
+        if (saved_states->cubic_state) {
+            kfree(saved_states->cubic_state);
+        }
+        if (saved_states->hybla_state) {
+            kfree(saved_states->hybla_state);
+        }
+        if (saved_states->bbr_state) {
+            kfree(saved_states->bbr_state);
+        }
+        if (saved_states->westwood_state) {
+            kfree(saved_states->westwood_state);
+        }
+        kfree(saved_states);
+    }
     
     socketId = -1;
 }
@@ -126,7 +156,7 @@ static void receive_msg(struct sk_buff *skb)
             switching_flag = true;
             prev_proto_id = selected_proto_id;
             selected_proto_id = nlh->nlmsg_seq; 
-            printk("%s: received switching signal (id:%d)", __FUNCTION__, selected_proto_id);
+            printk("%s: received switching signal (id: %d->%d)", __FUNCTION__, prev_proto_id, selected_proto_id);
         }
         break;
     default: // testing
@@ -157,18 +187,6 @@ static void __exit netlink_exit(void)
     netlink_kernel_release(nl_sk);
     printk(KERN_INFO "Netlink socket released.\n");
 }
-
-
-struct mutant_state {
-    struct bictcp *cubic_state;
-    struct hybla *hybla_state;
-    struct tcp_bbr_cong_ops *bbr_state;
-    struct westwood *westwood_state;
-    // Add more pointers for other congestion control schemes as needed
-};
-
-// Global variable to store the state
-static struct mutant_state *saved_states;
 
 
 static void init_saved_states(void) {
@@ -258,6 +276,7 @@ static void save_state(struct sock *sk) {
         pr_err("saved_states not initialized\n");
         return;
     }
+    printk("Saving state of %d", prev_proto_id);
     // Save state of the current congestion control protocol
     if (prev_proto_id == CUBIC) {
         if (saved_states->cubic_state) {
@@ -378,7 +397,7 @@ static void load_state(struct sock *sk){
 }
 
 // Swicthing congestion control function
-void mutant_switch_congestion_control(struct sock *sk) {
+void mutant_switch_congestion_control(void) {
 
     switch (selected_proto_id)
     {
@@ -492,7 +511,7 @@ static void mutant_tcp_pkts_acked(struct sock *sk, const struct ack_sample *samp
     if (switching_flag) {
         printk("%s: Switching flag ON", __FUNCTION__);
         save_state(sk);
-        mutant_switch_congestion_control(selected_proto_id);
+        mutant_switch_congestion_control();
         load_state(sk);
         switching_flag = false;
     }
@@ -553,7 +572,7 @@ static struct tcp_congestion_ops mutant_cong_ops __read_mostly = {
     .undo_cwnd  = mutant_tcp_undo_cwnd,
     .cwnd_event = mutant_tcp_cwnd_event,
     .pkts_acked = mutant_tcp_pkts_acked,
-    .in_ack_event	= tcp_westwood_ack,
+    .in_ack_event	= mutant_tcp_ack_event,
     .sndbuf_expand = mutant_tcp_sndbuf_expand,
     .min_tso_segs = mutant_tcp_min_tso_segs,
     .get_info   = mutant_tcp_get_info,

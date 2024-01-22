@@ -114,6 +114,8 @@ static int netlink_init(void);
 static void netlink_exit(void);
 
 // Mutant state initialization and management
+static void save_state(struct sock *sk);
+static void load_state(struct sock *sk);
 static void init_saved_states(void);
 static void print_bictcp(struct bictcp *cubic);
 static void print_hybla(struct hybla *hybla);
@@ -121,7 +123,7 @@ static void print_bbr(struct bbr *bbr);
 static void print_mutant_state(struct sock *sk);
 
 // Methods for TCP congestion control
-static void mutant_switch_congestion_control(struct sock *sk);
+static void mutant_switch_congestion_control(void);
 static void send_net_params(struct tcp_sock *tp, int socketId);
 static void mutant_tcp_init(struct sock *sk);
 static void mutant_tcp_cong_avoid(struct sock *sk, u32 ack, u32 acked);
