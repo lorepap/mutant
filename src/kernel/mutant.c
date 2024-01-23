@@ -19,11 +19,38 @@ static u32 selected_proto_id = CUBIC;
 static u32 prev_proto_id = CUBIC;
 static bool switching_flag = false;
 
+// Wrapper struct to call the tcp_congestion_ops of the selected policy
+struct tcp_mutant_wrapper {
+    struct tcp_congestion_ops *current_ops;
+};
+
+static struct tcp_mutant_wrapper mutant_wrapper;
+extern struct tcp_congestion_ops cubictcp;
+extern struct tcp_congestion_ops tcp_hybla;
+extern struct tcp_congestion_ops tcp_bbr_cong_ops;
+extern struct tcp_congestion_ops tcp_westwood;
+extern struct tcp_congestion_ops tcp_veno;
+extern struct tcp_congestion_ops tcp_vegas;
+extern struct tcp_congestion_ops tcp_yeah;
+extern struct tcp_congestion_ops tcp_cdg;
+extern struct tcp_congestion_ops bic;
+extern struct tcp_congestion_ops htcp;
+extern struct tcp_congestion_ops tcp_highspeed;
+extern struct tcp_congestion_ops tcp_illinois;
+
 struct mutant_state {
     struct bictcp *cubic_state;
     struct hybla *hybla_state;
     struct bbr *bbr_state;
     struct westwood *westwood_state;
+    struct veno *veno_state;
+    struct vegas *vegas_state;
+    struct yeah *yeah_state;
+    struct cdg *cdg_state;
+    struct bic *bic_state;
+    struct htcp *htcp_state;
+    struct hstcp *highspeed_state;
+    struct illinois *illinois_state;
     // Add more pointers for other congestion control schemes as needed
 };
 
@@ -119,8 +146,32 @@ static void end_connection(struct nlmsghdr *nlh)
         if (saved_states->westwood_state) {
             kfree(saved_states->westwood_state);
         }
+        if (saved_states->veno_state) {
+            kfree(saved_states->veno_state);
+        }
+        if (saved_states->vegas_state) {
+            kfree(saved_states->vegas_state);
+        }
+        if (saved_states->yeah_state) {
+            kfree(saved_states->yeah_state);
+        }
+        if (saved_states->cdg_state) {
+            kfree(saved_states->cdg_state);
+        }
+        if (saved_states->htcp_state) {
+            kfree(saved_states->htcp_state);
+        }
+        if (saved_states->highspeed_state) {
+            kfree(saved_states->highspeed_state);
+        }
+        if (saved_states->illinois_state) {
+            kfree(saved_states->illinois_state);
+        }
         kfree(saved_states);
     }
+
+    // Reset the current_ops to the default
+    mutant_wrapper.current_ops = &cubictcp;
     
     socketId = -1;
 }
@@ -143,7 +194,6 @@ static void receive_msg(struct sk_buff *skb)
     case COMM_END:
         printk(KERN_INFO "%s: End connection signal received.", __FUNCTION__);
         end_connection(nlh);
-        socketId = -1;
         break;
 
     case COMM_BEGIN:
@@ -201,6 +251,13 @@ static void init_saved_states(void) {
     saved_states->hybla_state = NULL;
     saved_states->bbr_state = NULL;
     saved_states->westwood_state = NULL;
+    saved_states->veno_state = NULL;
+    saved_states->vegas_state = NULL;
+    saved_states->yeah_state = NULL;
+    saved_states->cdg_state = NULL;
+    saved_states->htcp_state = NULL;
+    saved_states->highspeed_state = NULL;
+    saved_states->illinois_state = NULL;
     // Initialize other pointers as needed
 }
 
@@ -257,17 +314,6 @@ static void print_mutant_state(struct sock *sk) {
     // Add more conditions for other congestion control schemes as needed
 }
 ////////////////////////////////////////////////
-
-// Wrapper struct to call the tcp_congestion_ops of the selected policy
-struct tcp_mutant_wrapper {
-    struct tcp_congestion_ops *current_ops;
-};
-
-static struct tcp_mutant_wrapper mutant_wrapper;
-extern struct tcp_congestion_ops cubictcp;
-extern struct tcp_congestion_ops tcp_hybla;
-extern struct tcp_congestion_ops tcp_bbr_cong_ops;
-extern struct tcp_congestion_ops tcp_westwood;
     
 
 // Function to save the state of a specific congestion control scheme
@@ -278,46 +324,142 @@ static void save_state(struct sock *sk) {
     }
     printk("Saving state of %d", prev_proto_id);
     // Save state of the current congestion control protocol
-    if (prev_proto_id == CUBIC) {
-        if (saved_states->cubic_state) {
-            kfree(saved_states->cubic_state);
-        }
-        saved_states->cubic_state = kmalloc(sizeof(struct bictcp), GFP_KERNEL);
-        if (saved_states->cubic_state) {
-            memcpy(saved_states->cubic_state, inet_csk_ca(sk), sizeof(struct bictcp));
-        } else {
-            pr_err("Failed to allocate memory for cubic_state\n");
-        }
-    } else if (prev_proto_id == HYBLA) {
-        if (saved_states->hybla_state) {
-            kfree(saved_states->hybla_state);
-        }
-        saved_states->hybla_state = kmalloc(sizeof(struct hybla), GFP_KERNEL);
-        if (saved_states->hybla_state) {
-            memcpy(saved_states->hybla_state, inet_csk_ca(sk), sizeof(struct hybla));
-        } else {
-            pr_err("Failed to allocate memory for hybla_state\n");
-        }
-    } else if (prev_proto_id == BBR) {
-        if (saved_states->bbr_state) {
-            kfree(saved_states->bbr_state);
-        }
-        saved_states->bbr_state = kmalloc(sizeof(struct bbr), GFP_KERNEL);
-        if (saved_states->bbr_state) {
-            memcpy(saved_states->hybla_state, inet_csk_ca(sk), sizeof(struct bbr));
-        } else {
-            pr_err("Failed to allocate memory for bbr_state\n");
-        }
-    } else if(prev_proto_id == WESTWOOD) {
-        if (saved_states->westwood_state) {
-            kfree(saved_states->westwood_state);
-        }
-        saved_states->westwood_state = kmalloc(sizeof(struct westwood), GFP_KERNEL);
-        if (saved_states->westwood_state) {
-            memcpy(saved_states->westwood_state, inet_csk_ca(sk), sizeof(struct westwood));
-        } else {
-            pr_err("Failed to allocate memory for westwood_state\n");
-        }
+    switch (prev_proto_id)
+    {
+        case CUBIC:
+            if (saved_states->cubic_state) {
+                kfree(saved_states->cubic_state);
+            }
+            saved_states->cubic_state = kmalloc(sizeof(struct bictcp), GFP_KERNEL);
+            if (saved_states->cubic_state) {
+                memcpy(saved_states->cubic_state, inet_csk_ca(sk), sizeof(struct bictcp));
+            } else {
+                pr_err("Failed to allocate memory for cubic_state\n");
+            }
+            break;
+        case HYBLA:
+            if (saved_states->hybla_state) {
+                kfree(saved_states->hybla_state);
+            }
+            saved_states->hybla_state = kmalloc(sizeof(struct hybla), GFP_KERNEL);
+            if (saved_states->hybla_state) {
+                memcpy(saved_states->hybla_state, inet_csk_ca(sk), sizeof(struct hybla));
+            } else {
+                pr_err("Failed to allocate memory for hybla_state\n");
+            }
+            break;
+        case BBR:
+            if (saved_states->bbr_state) {
+                kfree(saved_states->bbr_state);
+            }
+            saved_states->bbr_state = kmalloc(sizeof(struct bbr), GFP_KERNEL);
+            if (saved_states->bbr_state) {
+                memcpy(saved_states->bbr_state, inet_csk_ca(sk), sizeof(struct bbr));
+            } else {
+                pr_err("Failed to allocate memory for bbr_state\n");
+            }
+            break;
+        case WESTWOOD:
+            if (saved_states->westwood_state) {
+                kfree(saved_states->westwood_state);
+            }
+            saved_states->westwood_state = kmalloc(sizeof(struct westwood), GFP_KERNEL);
+            if (saved_states->westwood_state) {
+                memcpy(saved_states->westwood_state, inet_csk_ca(sk), sizeof(struct westwood));
+            } else {
+                pr_err("Failed to allocate memory for westwood_state\n");
+            }
+            break;
+        case VENO:
+            if (saved_states->veno_state) {
+                kfree(saved_states->veno_state);
+            }
+            saved_states->veno_state = kmalloc(sizeof(struct veno), GFP_KERNEL);
+            if (saved_states->veno_state) {
+                memcpy(saved_states->veno_state, inet_csk_ca(sk), sizeof(struct veno));
+            } else {
+                pr_err("Failed to allocate memory for veno_state\n");
+            }
+            break;
+        case VEGAS:
+            if (saved_states->vegas_state) {
+                kfree(saved_states->vegas_state);
+            }
+            saved_states->vegas_state = kmalloc(sizeof(struct vegas), GFP_KERNEL);
+            if (saved_states->vegas_state) {
+                memcpy(saved_states->vegas_state, inet_csk_ca(sk), sizeof(struct vegas));
+            } else {
+                pr_err("Failed to allocate memory for vegas_state\n");
+            }
+            break;
+        case YEAH:
+            if (saved_states->yeah_state) {
+                kfree(saved_states->yeah_state);
+            }
+            saved_states->yeah_state = kmalloc(sizeof(struct yeah), GFP_KERNEL);
+            if (saved_states->yeah_state) {
+                memcpy(saved_states->yeah_state, inet_csk_ca(sk), sizeof(struct yeah));
+            } else {
+                pr_err("Failed to allocate memory for yeah_state\n");
+            }
+            break;
+        case CDG:
+            if (saved_states->cdg_state) {
+                kfree(saved_states->cdg_state);
+            }
+            saved_states->cdg_state = kmalloc(sizeof(struct cdg), GFP_KERNEL);
+            if (saved_states->cdg_state) {
+                memcpy(saved_states->cdg_state, inet_csk_ca(sk), sizeof(struct cdg));
+            } else {
+                pr_err("Failed to allocate memory for cdg_state\n");
+            }
+            break;
+        case BIC:
+            if (saved_states->bic_state) {
+                kfree(saved_states->bic_state);
+            }
+            saved_states->bic_state = kmalloc(sizeof(struct bic), GFP_KERNEL);
+            if (saved_states->bic_state) {
+                memcpy(saved_states->bic_state, inet_csk_ca(sk), sizeof(struct bic));
+            } else {
+                pr_err("Failed to allocate memory for bic_state\n");
+            }
+            break;
+        case HTCP:
+            if (saved_states->htcp_state) {
+                kfree(saved_states->htcp_state);
+            }
+            saved_states->htcp_state = kmalloc(sizeof(struct htcp), GFP_KERNEL);
+            if (saved_states->htcp_state) {
+                memcpy(saved_states->htcp_state, inet_csk_ca(sk), sizeof(struct htcp));
+            } else {
+                pr_err("Failed to allocate memory for htcp_state\n");
+            }
+            break;
+        case HIGHSPEED:
+            if (saved_states->highspeed_state) {
+                kfree(saved_states->highspeed_state);
+            }
+            saved_states->highspeed_state = kmalloc(sizeof(struct hstcp), GFP_KERNEL);
+            if (saved_states->highspeed_state) {
+                memcpy(saved_states->highspeed_state, inet_csk_ca(sk), sizeof(struct hstcp));
+            } else {
+                pr_err("Failed to allocate memory for highspeed_state\n");
+            }
+            break;
+        case ILLINOIS:
+            if (saved_states->illinois_state) {
+                kfree(saved_states->illinois_state);
+            }
+            saved_states->illinois_state = kmalloc(sizeof(struct illinois), GFP_KERNEL);
+            if (saved_states->illinois_state) {
+                memcpy(saved_states->illinois_state, inet_csk_ca(sk), sizeof(struct illinois));
+            } else {
+                pr_err("Failed to allocate memory for illinois_state\n");
+            }
+            break;
+        default:
+            break;
     }
 }
 
@@ -327,21 +469,44 @@ static void load_state(struct sock *sk){
     struct tcp_congestion_ops *hybla;
     struct tcp_congestion_ops *bbr;
     struct tcp_congestion_ops *westwood;
+    struct tcp_congestion_ops *veno;
+    struct tcp_congestion_ops *vegas;
+    struct tcp_congestion_ops *yeah;
+    struct tcp_congestion_ops *cdg;
+    struct tcp_congestion_ops *tcp_bic;
+    struct tcp_congestion_ops *tcp_htcp;
+    struct tcp_congestion_ops *highspeed;
+    struct tcp_congestion_ops *illinois;
     cubic = &cubictcp;
     hybla = &tcp_hybla;
     bbr = &tcp_bbr_cong_ops;
     westwood = &tcp_westwood;
+    veno = &tcp_veno;
+    vegas = &tcp_vegas;
+    yeah = &tcp_yeah;
+    cdg = &tcp_cdg;
+    tcp_bic = &bic;
+    tcp_htcp = &htcp;
+    highspeed = &tcp_highspeed;
+    illinois = &tcp_illinois;
 
     if (!saved_states) {
         pr_err("saved_states not initialized\n");
         return;
     }
 
+    // printk("%s: [DEBUG] Hybla state before loading", __FUNCTION__);
+    // if (saved_states->hybla_state) {
+    //     print_hybla(saved_states->hybla_state);
+    // } else {
+    //     printk("%s: [DEBUG] Hybla state is NULL", __FUNCTION__);
+    // }
+
     switch (selected_proto_id)
     {
     case CUBIC:
         if (saved_states->cubic_state) {
-            printk("%s: Saving Cubic state.", __FUNCTION__);
+            printk("%s: Loading Cubic state.", __FUNCTION__);
             memcpy(inet_csk_ca(sk), saved_states->cubic_state, sizeof(struct bictcp));
         }
         else{
@@ -354,8 +519,12 @@ static void load_state(struct sock *sk){
         break;
     case HYBLA:
         if (saved_states->hybla_state) {
-            printk("%s: Saving Hybla state.", __FUNCTION__);
+            printk("%s: Loading Hybla state.", __FUNCTION__);
+            // printk("%s: printing saved_states->hybla_state", __FUNCTION__);
+            // print_hybla(saved_states->hybla_state);
             memcpy(inet_csk_ca(sk), saved_states->hybla_state, sizeof(struct hybla));
+            // printk("%s: printing hybla inet_csk_ca(sk)", __FUNCTION__);
+            // print_hybla(inet_csk_ca(sk));
         }
         else{
             printk("%s: Initializing Hybla state", __FUNCTION__);
@@ -367,7 +536,7 @@ static void load_state(struct sock *sk){
         break;
      case BBR:
         if (saved_states->bbr_state) {
-            printk("%s: Saving BBR state.", __FUNCTION__);
+            printk("%s: Loading BBR state.", __FUNCTION__);
             memcpy(inet_csk_ca(sk), saved_states->bbr_state, sizeof(struct bbr));
         }
         else{
@@ -380,7 +549,7 @@ static void load_state(struct sock *sk){
         break;
     case WESTWOOD:
         if (saved_states->westwood_state) {
-            printk("%s: Saving Westwood state.", __FUNCTION__);
+            printk("%s: Loading Westwood state.", __FUNCTION__);
             memcpy(inet_csk_ca(sk), saved_states->westwood_state, sizeof(struct westwood));
         }
         else{
@@ -389,6 +558,110 @@ static void load_state(struct sock *sk){
             memcpy(inet_csk_ca(sk), saved_states->westwood_state, sizeof(struct westwood));
             westwood->init(sk);
             memcpy(saved_states->westwood_state, inet_csk_ca(sk), sizeof(struct westwood));
+        }
+        break;
+    case VENO:
+        if (saved_states->veno_state) {
+            printk("%s: Loading Veno state.", __FUNCTION__);
+            memcpy(inet_csk_ca(sk), saved_states->veno_state, sizeof(struct veno));
+        }
+        else{
+            printk("%s: Initializing Veno state", __FUNCTION__);
+            saved_states->veno_state = kmalloc(sizeof(struct veno), GFP_KERNEL);
+            memcpy(inet_csk_ca(sk), saved_states->veno_state, sizeof(struct veno));
+            veno->init(sk);
+            memcpy(saved_states->veno_state, inet_csk_ca(sk), sizeof(struct veno));
+        }
+        break;
+    case VEGAS:
+        if (saved_states->vegas_state) {
+            printk("%s: Loading Vegas state.", __FUNCTION__);
+            memcpy(inet_csk_ca(sk), saved_states->vegas_state, sizeof(struct vegas));
+        }
+        else{
+            printk("%s: Initializing Vegas state", __FUNCTION__);
+            saved_states->vegas_state = kmalloc(sizeof(struct vegas), GFP_KERNEL);
+            memcpy(inet_csk_ca(sk), saved_states->vegas_state, sizeof(struct vegas));
+            vegas->init(sk);
+            memcpy(saved_states->vegas_state, inet_csk_ca(sk), sizeof(struct vegas));
+        }
+        break;
+    case YEAH:
+        if (saved_states->yeah_state) {
+            printk("%s: Loading Yeah state.", __FUNCTION__);
+            memcpy(inet_csk_ca(sk), saved_states->yeah_state, sizeof(struct yeah));
+        }
+        else{
+            printk("%s: Initializing Yeah state", __FUNCTION__);
+            saved_states->yeah_state = kmalloc(sizeof(struct yeah), GFP_KERNEL);
+            memcpy(inet_csk_ca(sk), saved_states->yeah_state, sizeof(struct yeah));
+            yeah->init(sk);
+            memcpy(saved_states->yeah_state, inet_csk_ca(sk), sizeof(struct yeah));
+        }
+        break;
+    case CDG:
+        if (saved_states->cdg_state) {
+            printk("%s: Loading CDG state.", __FUNCTION__);
+            memcpy(inet_csk_ca(sk), saved_states->cdg_state, sizeof(struct cdg));
+        }
+        else{
+            printk("%s: Initializing CDG state", __FUNCTION__);
+            saved_states->cdg_state = kmalloc(sizeof(struct cdg), GFP_KERNEL);
+            memcpy(inet_csk_ca(sk), saved_states->cdg_state, sizeof(struct cdg));
+            cdg->init(sk);
+            memcpy(saved_states->cdg_state, inet_csk_ca(sk), sizeof(struct cdg));
+        }
+        break;
+    case BIC:
+        if (saved_states->bic_state) {
+            printk("%s: Loading BIC state.", __FUNCTION__);
+            memcpy(inet_csk_ca(sk), saved_states->bic_state, sizeof(struct bic));
+        }
+        else{
+            printk("%s: Initializing BIC state", __FUNCTION__);
+            saved_states->bic_state = kmalloc(sizeof(struct bic), GFP_KERNEL);
+            memcpy(inet_csk_ca(sk), saved_states->bic_state, sizeof(struct bic));
+            tcp_bic->init(sk);
+            memcpy(saved_states->bic_state, inet_csk_ca(sk), sizeof(struct bic));
+        }
+        break;
+    case HTCP:
+        if (saved_states->htcp_state) {
+            printk("%s: Loading HTCP state.", __FUNCTION__);
+            memcpy(inet_csk_ca(sk), saved_states->htcp_state, sizeof(struct htcp));
+        }
+        else{
+            printk("%s: Initializing HTCP state", __FUNCTION__);
+            saved_states->htcp_state = kmalloc(sizeof(struct htcp), GFP_KERNEL);
+            memcpy(inet_csk_ca(sk), saved_states->htcp_state, sizeof(struct htcp));
+            tcp_htcp->init(sk);
+            memcpy(saved_states->htcp_state, inet_csk_ca(sk), sizeof(struct htcp));
+        }
+        break;
+    case HIGHSPEED:
+        if (saved_states->highspeed_state) {
+            printk("%s: Loading Highspeed state.", __FUNCTION__);
+            memcpy(inet_csk_ca(sk), saved_states->highspeed_state, sizeof(struct hstcp));
+        }
+        else{
+            printk("%s: Initializing Highspeed state", __FUNCTION__);
+            saved_states->highspeed_state = kmalloc(sizeof(struct hstcp), GFP_KERNEL);
+            memcpy(inet_csk_ca(sk), saved_states->highspeed_state, sizeof(struct hstcp));
+            highspeed->init(sk);
+            memcpy(saved_states->highspeed_state, inet_csk_ca(sk), sizeof(struct hstcp));
+        }
+        break;
+    case ILLINOIS:
+        if (saved_states->illinois_state) {
+            printk("%s: Loading Illinois state.", __FUNCTION__);
+            memcpy(inet_csk_ca(sk), saved_states->illinois_state, sizeof(struct illinois));
+        }
+        else{
+            printk("%s: Initializing Illinois state", __FUNCTION__);
+            saved_states->illinois_state = kmalloc(sizeof(struct illinois), GFP_KERNEL);
+            memcpy(inet_csk_ca(sk), saved_states->illinois_state, sizeof(struct illinois));
+            illinois->init(sk);
+            memcpy(saved_states->illinois_state, inet_csk_ca(sk), sizeof(struct illinois));
         }
         break;
     default:
@@ -416,6 +689,38 @@ void mutant_switch_congestion_control(void) {
     case WESTWOOD:
         printk(KERN_INFO "Switching to Westwood (ID: %d)", selected_proto_id);
         mutant_wrapper.current_ops = &tcp_westwood;
+        break;
+    case VENO:
+        printk(KERN_INFO "Switching to Veno (ID: %d)", selected_proto_id);
+        mutant_wrapper.current_ops = &tcp_veno;
+        break;
+    case VEGAS:
+        printk(KERN_INFO "Switching to Vegas (ID: %d)", selected_proto_id);
+        mutant_wrapper.current_ops = &tcp_vegas;
+        break;
+    case YEAH:
+        printk(KERN_INFO "Switching to Yeah (ID: %d)", selected_proto_id);
+        mutant_wrapper.current_ops = &tcp_yeah;
+        break;
+    case CDG:
+        printk(KERN_INFO "Switching to CDG (ID: %d)", selected_proto_id);
+        mutant_wrapper.current_ops = &tcp_cdg;
+        break;
+    case BIC:
+        printk(KERN_INFO "Switching to BIC (ID: %d)", selected_proto_id);
+        mutant_wrapper.current_ops = &bic;
+        break;
+    case HTCP:
+        printk(KERN_INFO "Switching to HTCP (ID: %d)", selected_proto_id);
+        mutant_wrapper.current_ops = &htcp;
+        break;
+    case HIGHSPEED:
+        printk(KERN_INFO "Switching to Highspeed (ID: %d)", selected_proto_id);
+        mutant_wrapper.current_ops = &tcp_highspeed;
+        break;
+    case ILLINOIS:
+        printk(KERN_INFO "Switching to Illinois (ID: %d)", selected_proto_id);
+        mutant_wrapper.current_ops = &tcp_illinois;
         break;
     default:
         printk(KERN_INFO "Switching to default (Cubic)");
@@ -506,6 +811,9 @@ static void mutant_tcp_pkts_acked(struct sock *sk, const struct ack_sample *samp
     }
     // Send network features every ack (for now)    
     struct tcp_sock *tp = tcp_sk(sk);
+    if (socketId == -1) {
+        return;
+    }
     send_net_params(tp, socketId);
     // Switching operation
     if (switching_flag) {
@@ -536,7 +844,7 @@ static u32 mutant_tcp_cong_control(struct sock *sk, const struct rate_sample *rs
 static u32 mutant_tcp_sndbuf_expand(struct sock *sk) {
     if (mutant_wrapper.current_ops && mutant_wrapper.current_ops->sndbuf_expand){
         return mutant_wrapper.current_ops->sndbuf_expand(sk);
-        printk("Mutant %s: sndbuf_expand %s", __FUNCTION__, mutant_wrapper.current_ops->name);
+        // printk("Mutant %s: sndbuf_expand %s", __FUNCTION__, mutant_wrapper.current_ops->name);
     }
     // printk("Mutant %s: sndbuf_expand %s", __FUNCTION__, mutant_wrapper.current_ops->name);
     return 2;
@@ -545,7 +853,7 @@ static u32 mutant_tcp_sndbuf_expand(struct sock *sk) {
 static u32 mutant_tcp_min_tso_segs(struct sock *sk) {
     if (mutant_wrapper.current_ops && mutant_wrapper.current_ops->min_tso_segs){
         return mutant_wrapper.current_ops->min_tso_segs(sk);
-        printk("Mutant %s: min_tso_segs %s", __FUNCTION__, mutant_wrapper.current_ops->name);
+        // printk("Mutant %s: min_tso_segs %s", __FUNCTION__, mutant_wrapper.current_ops->name);
     }
     // printk("Mutant %s: min_tso_segs %s", __FUNCTION__, mutant_wrapper.current_ops->name);
     return 2;
@@ -557,6 +865,11 @@ static size_t mutant_tcp_get_info(struct sock *sk, u32 ext, int *attr,
         return mutant_wrapper.current_ops->get_info(sk, ext, attr, info);
     else
         return 0; // or some other default value
+}
+
+static void mutant_tcp_release(struct sock *sk) {
+    if (mutant_wrapper.current_ops && mutant_wrapper.current_ops->release)
+        mutant_wrapper.current_ops->release(sk);
 }
 
 
@@ -577,6 +890,7 @@ static struct tcp_congestion_ops mutant_cong_ops __read_mostly = {
     .min_tso_segs = mutant_tcp_min_tso_segs,
     .get_info   = mutant_tcp_get_info,
     .mutant_tcp_cong_control = mutant_tcp_cong_control,
+    .release = mutant_tcp_release,
     .owner      = THIS_MODULE,
     .name       = "mutant",
 };

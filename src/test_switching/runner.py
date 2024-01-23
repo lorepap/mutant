@@ -1,13 +1,23 @@
 import yaml
 import time
+import random
 from test_switching.kernel_comm import TestCommManager
 from comm.kernel_thread import KernelRequest
 
 ACTION_FLAG = 2
+
 CUBIC = 0
 HYBLA = 1
 BBR = 2
 WESTWOOD = 3
+VENO = 4
+VEGAS = 5
+YEAH = 6
+CDG = 7
+BIC = 8
+HTCP = 9
+HIGH_SPEED = 10
+ILLINOIS = 11
 
 class SwitchingTestRunner():
     """ Collector class
@@ -78,13 +88,12 @@ class SwitchingTestRunner():
         """
 
         collected_data = {}
-        switch = False
-        cca_list = [CUBIC, HYBLA, BBR, WESTWOOD]  # Add more CCAs if needed
+        cca_list = [CUBIC, HYBLA, BBR, WESTWOOD, VENO, VEGAS, YEAH, CDG, BIC, HTCP, HIGH_SPEED, ILLINOIS]
         current_cca_index = 0
         start = time.time()
         while time.time()-start < self.running_time:
-            # Every time we send a different action: Cubic, Hybla, BBR in a cyclic manner
-            current_cca = cca_list[current_cca_index]
+            # Every time we send a random protocol
+            current_cca = random.choice(cca_list)
             print(f"Switch to {current_cca}")
             msg = self.cm.netlink_communicator.create_netlink_msg(
                 'SENDING ACTION', msg_flags=ACTION_FLAG, msg_seq=current_cca)
@@ -94,7 +103,7 @@ class SwitchingTestRunner():
             current_cca_index = (current_cca_index + 1) % len(cca_list)
 
             # Sleep 2 seconds between each switch
-            time.sleep(3)
+            time.sleep(2)
 
             # data = self._read_data()
 

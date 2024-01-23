@@ -16,7 +16,18 @@
 #define HYBLA 1
 #define BBR 2
 #define WESTWOOD 3
+#define VENO 4
+#define VEGAS 5
+#define YEAH 6
+#define CDG  7
+#define BIC 8
+#define HTCP 9
+#define HIGHSPEED 10
+#define ILLINOIS 11
 
+// Struct for saving state of TCP congestion control
+
+// Cubic variables
 struct bictcp {
 	u32	cnt;		/* increase cwnd by 1 after ACKs */
 	u32	last_max_cwnd;	/* last maximum snd_cwnd */
@@ -105,6 +116,124 @@ struct westwood {
 	u8     reset_rtt_min;    /* Reset RTT min to next RTT sample*/
 };
 
+struct veno {
+	u8 doing_veno_now;	/* if true, do veno for this rtt */
+	u16 cntrtt;		/* # of rtts measured within last rtt */
+	u32 minrtt;		/* min of rtts measured within last rtt (in usec) */
+	u32 basertt;		/* the min of all Veno rtt measurements seen (in usec) */
+	u32 inc;		/* decide whether to increase cwnd */
+	u32 diff;		/* calculate the diff rate */
+};
+
+/* Vegas variables */
+struct vegas {
+	u32	beg_snd_nxt;	/* right edge during last RTT */
+	u32	beg_snd_una;	/* left edge  during last RTT */
+	u32	beg_snd_cwnd;	/* saves the size of the cwnd */
+	u8	doing_vegas_now;/* if true, do vegas for this RTT */
+	u16	cntRTT;		/* # of RTTs measured within last RTT */
+	u32	minRTT;		/* min of RTTs measured within last RTT (in usec) */
+	u32	baseRTT;	/* the min of all Vegas RTT measurements seen (in usec) */
+};
+
+/* Yeah variables */
+/* YeAH variables */
+struct yeah {
+	struct vegas vegas;	/* must be first */
+
+	/* YeAH */
+	u32 lastQ;
+	u32 doing_reno_now;
+
+	u32 reno_count;
+	u32 fast_count;
+
+	u32 pkts_acked;
+};
+
+/* CDG variables */
+struct cdg_minmax {
+	union {
+		struct {
+			s32 min;
+			s32 max;
+		};
+		u64 v64;
+	};
+};
+
+struct cdg {
+	struct cdg_minmax rtt;
+	struct cdg_minmax rtt_prev;
+	struct cdg_minmax *gradients;
+	struct cdg_minmax gsum;
+	bool gfilled;
+	u8  tail;
+	u8  state;
+	u8  delack;
+	u32 rtt_seq;
+	u32 shadow_wnd;
+	u16 backoff_cnt;
+	u16 sample_cnt;
+	s32 delay_min;
+	u32 last_ack;
+	u32 round_start;
+};
+
+/* BIC TCP variables */
+struct bic {
+	u32	cnt;		/* increase cwnd by 1 after ACKs */
+	u32	last_max_cwnd;	/* last maximum snd_cwnd */
+	u32	last_cwnd;	/* the last snd_cwnd */
+	u32	last_time;	/* time when updated last_cwnd */
+	u32	epoch_start;	/* beginning of an epoch */
+#define ACK_RATIO_SHIFT	4
+	u32	delayed_ack;	/* estimate the ratio of Packets/ACKs << 4 */
+};
+
+/* HTCP variables */
+struct htcp {
+	u32	alpha;		/* Fixed point arith, << 7 */
+	u8	beta;           /* Fixed point arith, << 7 */
+	u8	modeswitch;	/* Delay modeswitch
+				   until we had at least one congestion event */
+	u16	pkts_acked;
+	u32	packetcount;
+	u32	minRTT;
+	u32	maxRTT;
+	u32	last_cong;	/* Time since last congestion event end */
+	u32	undo_last_cong;
+
+	u32	undo_maxRTT;
+	u32	undo_old_maxB;
+
+	/* Bandwidth estimation */
+	u32	minB;
+	u32	maxB;
+	u32	old_maxB;
+	u32	Bi;
+	u32	lasttime;
+};
+
+/* High Speed TCP variables */
+struct hstcp {
+	u32	ai;
+};
+
+/* Illinois TCP variables */
+struct illinois {
+	u64	sum_rtt;	/* sum of rtt's measured within last rtt */
+	u16	cnt_rtt;	/* # of rtts measured within last rtt */
+	u32	base_rtt;	/* min of all rtt in usec */
+	u32	max_rtt;	/* max of all rtt in usec */
+	u32	end_seq;	/* right edge of current RTT */
+	u32	alpha;		/* Additive increase */
+	u32	beta;		/* Muliplicative decrease */
+	u16	acked;		/* # packets acked by current ACK */
+	u8	rtt_above;	/* average rtt has gone above threshold */
+	u8	rtt_low;	/* # of rtts measurements below threshold */
+};
+
 // Netlink comm APIs
 static void send_msg(char *message, int socketId);
 static void start_connection(struct nlmsghdr *nlh);
@@ -136,7 +265,7 @@ static u32 mutant_tcp_cong_control(struct sock *sk, const struct rate_sample *rs
 static u32 mutant_tcp_sndbuf_expand(struct sock *sk);
 static u32 mutant_tcp_min_tso_segs(struct sock *sk);
 static size_t mutant_tcp_get_info(struct sock *sk, u32 ext, int *attr, union tcp_cc_info *info);
-
+static void mutant_tcp_release(struct sock *sk);
 
 
 #endif /* MUTANT_H */
