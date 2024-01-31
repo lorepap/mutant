@@ -23,13 +23,17 @@ import subprocess
 
 class IperfClient(threading.Thread):
 
-    def __init__(self, time=10000, log_file=None) -> None:
+    def __init__(self, time=86400, log_file=None, rtt=20, bw=12, q_size=100) -> None:
         threading.Thread.__init__(self)
 
         self.ip = self._get_private_ip()
         self.time = time
         self.log_file = log_file
         self.ps = None
+        self.rtt = rtt
+        self.bw = bw
+        # self.bdp_mult = bdp_mult
+        self.q_size = q_size
         # self._pid_file = "src/tmp/pid.txt"
         # os.makedirs(self._pid_file, exist_ok=True)
 
@@ -76,10 +80,21 @@ class IperfClient(threading.Thread):
 
     def _get_mahimahi_cmd(self):
 
-        #TODO: mahimahi command; remove traces and play with network params
-        cmd = ['mm-delay', '20', 'mm-link', 
-               '/usr/share/mahimahi/traces/Verizon-LTE-short.up',
-               '/usr/share/mahimahi/traces/Verizon-LTE-short.down']
+        # bdp = int((self.rtt/2 * self.bw)/8) # Convert bits to bytes
+        # Compute the queue size in packets (1500 is the MTU; the bdp is expressed in bytes)
+        # q_size = (self.bdp_mult * bdp) // 1500
+        # Print client comm parameters
+        print(f"[IPERF CLIENT] Mahimahi network scenario:\n rtt(ms) = {self.rtt}\n bw(Mbps) = {self.bw}\n q_size (pkts) = {self.q_size}")
+        cmd = ['mm-delay', str(int(self.rtt/2)),
+               'mm-link', 
+               f'/home/lorenzo/Desktop/mutant/traces/wired{int(self.bw)}',
+               f'/home/lorenzo/Desktop/mutant/traces/wired{int(self.bw)}',
+                '--uplink-queue=droptail',
+                f'--uplink-queue-args="packets={self.q_size}"',
+                '--downlink-queue=droptail', 
+                f'--downlink-queue-args="packets={self.q_size}"'
+               ]
+        print(cmd)
         return cmd
 
     def _get_iperf_cmd(self):

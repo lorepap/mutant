@@ -1,4 +1,5 @@
 import os
+import sys
 import traceback
 from typing import Any
 from subprocess_wrappers import call, Popen, check_output, print_output
@@ -18,15 +19,20 @@ END_COMM_FLAG = 0
 # Base class for Trainer
 class CommManager():
 
-    def __init__(self, log_dir_name='log/iperf', client_time=None) -> None:
+    def __init__(self, log_dir_name='log/iperf', client_time=None, rtt=20, bw=12, bdp_mult=10) -> None:
         
         self.time = client_time if client_time else 86400
         self.log_dir = log_dir_name
+        self.min_rtt = rtt
+        self.bw = bw
+        # Compute the q_size (n. of packets)
+        bdp = bw * rtt # Mbits
+        mss = 1488 # bytes
+        self.q_size = int(bdp_mult * bdp * 10**3 / (8*mss)) # packets
 
         self.init_proto()
 
         self.netlink_communicator = NetlinkCommunicator()
-
         self.client: IperfClient = None
         self.server: IperfServer = None
         # self.moderator: Moderator = Moderator(self.args.iperf == 1)
@@ -73,11 +79,18 @@ class CommManager():
 
         filename = f'{tag}.{utils.time_to_str()}.json'
         
-        log_filename = f'{base_path}/{filename}'
+        log_filename = f'{base_path}/json/{filename}'
+        os.makedirs(os.path.dirname(log_filename), exist_ok=True)
 
-        self.client = IperfClient(self.time, log_filename)
+        self.client = IperfClient(self.time, log_filename, self.min_rtt, self.bw, self.q_size)
 
-        self.client.start()
+        try:
+            self.client.start()
+        # Continue with the main program logic here
+        except RuntimeError as e:
+            print(f"Error in IperfClient thread: {e}")
+            # Terminate the main program or perform necessary cleanup
+            sys.exit(1)
         return log_filename
     
     

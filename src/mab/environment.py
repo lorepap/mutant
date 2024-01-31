@@ -13,6 +13,7 @@ from comm.kernel_thread import KernelRequest
 from comm.netlink_communicator import NetlinkCommunicator
 from mab.moderator import Moderator
 from comm.comm import ACTION_FLAG
+import math
 
 
 class MabEnvironment(gym.Env):
@@ -42,11 +43,12 @@ class MabEnvironment(gym.Env):
         self.step_counter = 0
 
         # Keep current state
-        self.curr_state = np.zeros((self.height_state, self.width_state))
+        # self.curr_state = np.zeros((self.height_state, self.width_state))
+        # print( "[DEBUG] self.curr_state.shape: ", self.curr_state.shape)
 
         # Reward
         self.rws = dict() # list of rws for each step
-        self.delta = config['delta']
+        # self.delta = config['delta']
         self.curr_reward = 0
         self.last_rtt = 0
         self.min_thr = 0
@@ -55,10 +57,12 @@ class MabEnvironment(gym.Env):
         self.epoch = -1
         self.allow_save = False
         self.step_wait = config['step_wait_seconds']
+        self.zeta = config['reward']['zeta']
+        self.kappa = config['reward']['kappa']
         self.mss = None
         self.max_bw = 0.0
         self.num_features_tmp = self.width_state + 2 # all features to be normalized (this is not the state dimension)
-        self.normalizer = Normalizer(self.num_features_tmp)
+        # self.normalizer = Normalizer(self.num_features_tmp)
         self.cwnd = []
 
 
@@ -97,7 +101,8 @@ class MabEnvironment(gym.Env):
         binary_rws: as above but the reward values are binary (1 if improved w.r.t the previous step, 0 o.w.)
         """
         s_tmp = np.array([])
-        state_n = np.array([])
+        # state_n = np.array([])
+        state = np.array([])
         received_jiffies = 0
 
         # Callbacks data
@@ -105,38 +110,41 @@ class MabEnvironment(gym.Env):
         rws = []
         binary_rws = []
 
-        
+
         if self.with_kernel_thread:
             print("[DEBUG] reading data from kernel...")
-            timestamp, cwnd, rtt, rtt_dev, rtt_min, self.mss, delivered, lost, in_flight, retrans, action = self._read_data()
+            timestamp, cwnd, rtt, rtt_dev, rtt_min, self.mss, delivered, lost, in_flight, retrans, action,  = self._read_data()
         else:
             timestamp, cwnd, rtt, rtt_dev, rtt_min, self.mss, delivered, lost, in_flight, retrans, action = self._recv_data()
 
-        
+
         # Compute thr and loss rate from kernel statistics
         rtt = rtt if rtt > 0 else 1e-5
-        thr = cwnd * self.mss / (rtt/self.nb)
+        # thr = cwnd * self.mss / (rtt/self.nb)
         loss_rate = 0 if (lost + delivered) == 0 else lost / (lost + delivered)
 
         # print(f"[DEBUG] {delivered}, {self.mss}, {cwnd}, {rtt}, {thr}, {cwnd*self.mss/(rtt/self.nb)}")
 
-        print("[ENVIRONMENT] current CWND=", cwnd)
+        # Print kernel statistics
+        print(f"[DEBUG] cwnd: {cwnd}, rtt: {rtt}, rtt_dev: {rtt_dev}, rtt_min: {rtt_min}, \
+              mss: {self.mss}, delivered: {delivered}, lost: {lost}, in_flight: {in_flight}, \
+              retrans: {retrans}, action: {action}, thruput: {thr}")
 
         delivered_diff = delivered - self.last_delivered
         self.last_delivered = delivered
         self.update_rtt(rtt)
 
-        # to ms
-        rtt = rtt/1000
-        rtt_dev = rtt_dev/1000
-        rtt_min = rtt_min/1000
+        # to ms TODO: check this value (kernel rtt should be in ms so it's already correct)
+        # rtt = rtt/1000
+        # rtt_dev = rtt_dev/1000
+        # rtt_min = rtt_min/1000
 
         curr_kernel_features = np.array(
-            [cwnd, rtt, rtt_dev, delivered, delivered_diff, loss_rate, in_flight, retrans, thr, rtt_min])
+            [cwnd, rtt, rtt_dev, rtt_min, delivered, delivered_diff, loss_rate, in_flight, retrans, thr])
         
         self.features.append(curr_kernel_features)
         
-        # Number of total features which will be extracted during the step_wait time (switching time) 
+        # Number of total features which will be extracted during the step_wait time (switching time)
         num_features_tmp = self.num_features_tmp
 
         curr_timestamp = timestamp
@@ -147,28 +155,20 @@ class MabEnvironment(gym.Env):
 
         # Read and record data for step_wait seconds
         while float(time.time() - start) <= float(self.step_wait):
-
             if self.with_kernel_thread:
-                timestamp, cwnd, rtt, rtt_dev, rtt_min, self.mss, delivered, lost, in_flight, retrans, action = self._read_data()
+                timestamp, cwnd, rtt, rtt_dev, rtt_min, self.mss, delivered, lost, in_flight, retrans, action, thr = self._read_data()
             else:
-                timestamp, cwnd, rtt, rtt_dev, rtt_min, self.mss, delivered, lost, in_flight, retrans, action = self._recv_data()
+                timestamp, cwnd, rtt, rtt_dev, rtt_min, self.mss, delivered, lost, in_flight, retrans, action, thr = self._recv_data()
 
             # thruput bit/s
             rtt = rtt if rtt > 0 else 1e-5
-            thr = (cwnd * self.mss) / (rtt/self.nb)
+            # thr = (cwnd * self.mss) / (rtt/self.nb)
             loss_rate = 0 if (lost + delivered) == 0 else lost / (lost + delivered)
-          
-            # print(f"[DEBUG] {delivered}, {self.mss}, {cwnd}, {rtt}, {thr}, {cwnd*self.mss/(rtt/self.nb)}")
+
             
             delivered_diff = delivered - self.last_delivered
             self.last_delivered = delivered
             self.update_rtt(rtt)
-
-            # To ms
-            rtt = rtt/1000
-            rtt_dev = rtt/1000
-            rtt_min = rtt_min/1000
-
 
             if timestamp != curr_timestamp:
                 curr_kernel_features = np.divide(curr_kernel_features, num_msg)
@@ -178,10 +178,12 @@ class MabEnvironment(gym.Env):
                         1, num_features_tmp)
                 else:
                     s_tmp = np.vstack(
-                        (s_tmp, np.array(curr_kernel_features).reshape(1, num_features_tmp)))
+                        (s_tmp, np.array(curr_kernel_features).reshape(1, num_features_tmp))
+                    )
 
                 curr_kernel_features = np.array(
-                    [cwnd, rtt, rtt_dev, delivered, delivered_diff, loss_rate, in_flight, retrans, thr, rtt_min])
+                    [cwnd, rtt, rtt_dev, rtt_min, delivered, delivered_diff, loss_rate, in_flight, retrans, thr]
+                    )
                 
                 curr_timestamp = timestamp
 
@@ -192,76 +194,41 @@ class MabEnvironment(gym.Env):
             else:
                 # sum new reading to existing readings
                 curr_kernel_features = np.add(curr_kernel_features,
-                            np.array([cwnd, rtt, rtt_dev, delivered, delivered_diff, loss_rate, in_flight, retrans, thr, rtt_min]))
+                            np.array([cwnd, rtt, rtt_dev, rtt_min, delivered, delivered_diff, loss_rate, in_flight, retrans, thr]))
                 num_msg += 1
 
         # Kernel features for callbacks
         self.features = s_tmp
 
-        # Normalize the state (from ORCA) -> normalization is relative to the entire session
-        for s in s_tmp:
-            self.normalizer.observe(s)
-            s_n = self.normalizer.normalize(s)
-            min_ = self.normalizer.stats()
-
-            # print("[DEBUG] s_n", s_n)
-            # print("[DEBUG] min", min_)
-
-            cwnd_n_min = s_n[0] - min_[0]
-            rtt_ms_n_min = s_n[1] - min_[1]
-            rtt_ms_dev_n_min = s_n[2] - min_[2]
-            delivered_n_min = s_n[3] - min_[3]
-            delivered_diff_n_min = s_n[4] - min_[4]
-            loss_rate_n_min = s_n[5] - min_[5]
-            in_flight_n_min = s_n[6] - min_[6]
-            retrans_n_min = s_n[7] - min_[7]
-            thr_n_min = s_n[8] - min_[8]
-            min_rtt_min = s_n[9] - min_[9]
-
-            if self.max_bw<thr_n_min:
-                self.max_bw=thr_n_min
-
-            # cwnd, rtt, rtt_dev, delivered, delivered_diff, loss_rate, in_flight, retrans
-            kernel_feat_n = np.array(
-                [cwnd_n_min, rtt_ms_n_min, rtt_ms_dev_n_min, delivered_n_min, delivered_diff_n_min, loss_rate_n_min,
-                    in_flight_n_min, retrans_n_min])
-
-            # TODO: check min_rtt_min time unit (has to be ms)
-            if min_rtt_min*1.25 < rtt_ms_n_min:
-                delay_metric=(min_rtt_min*1.25)/rtt_ms_n_min
-            else:
-                delay_metric=1            
-
-            # Compute the reward for each observation
-            if self.max_bw!=0:
-                rw = (thr_n_min-5*loss_rate_n_min)/self.max_bw*delay_metric
-            else:
-                rw = 0.0
+        # Compute the mean of rewards
+        for _, k_features in enumerate(s_tmp):
+            # Extract individual features
+            cwnd, rtt, rtt_dev, rtt_min, delivered, delivered_diff, loss_rate, in_flight, retrans, thr = k_features
+            rw = self.compute_reward(thr, loss_rate, rtt)
             rws.append(rw)
             binary_rw = 0 if rw <= self.curr_reward else 1
             binary_rws.append(binary_rw)
 
-            if state_n.shape[0] == 0:
-                state_n = np.array(kernel_feat_n).reshape(
-                        1, self.width_state)
-            else:
-                state_n =  np.vstack(
-                        (state_n, np.array(kernel_feat_n).reshape(1, self.width_state)))
-
         # TODO: mean of rewards; could we do better?
         # The following aggregated value refers to the mean of the rewards computed during step_wait (switching time) within the step
         reward = np.mean(rws)
-        self.curr_reward = reward
-        self.curr_state = state_n
-        return (state_n, action, rws, binary_rws)
+        self.curr_reward = reward # current reward
+        self.curr_state = self.features
+        return (self.curr_state, action, rws, binary_rws)
+
+    
+    def compute_reward(self, thr: float, loss_rate: float, rtt: float):
+        # TODO: this is single-flow reward, no friendliness. Multi-flow scenario to be considered.
+        reward_base = (thr - self.zeta * loss_rate) / rtt # rtt should never be 0 since min_rtt is set to be > 0
+        reward = pow(abs(reward_base), self.kappa) 
+        return reward
 
     def update_rtt(self, rtt: float) -> None:
         if rtt > 0:
             self.last_rtt = rtt
     
-
     def record(self, state, reward, step, action):
-        cwnd, rtt, rtt_dev, delivered, delivered_diff, lost, in_flight, retrans = state
+        cwnd, rtt, rtt_dev, rtt_min, delivered, delivered_diff, lost, in_flight, retrans, thr= state
 
         if cwnd == 0:
             return
@@ -270,7 +237,7 @@ class MabEnvironment(gym.Env):
 
         self.last_cwnd = cwnd
 
-        self.log_traces = f'{self.log_traces}\n {action}, {cwnd}, {rtt}, {rtt_dev}, {delivered}, {delivered_diff}, {lost}, {in_flight}, {retrans}, {cwnd_diff}, ' \
+        self.log_traces = f'{self.log_traces}\n {action}, {cwnd}, {rtt}, {rtt_dev}, {delivered}, {delivered_diff}, {lost}, {in_flight}, {retrans}, {cwnd_diff}, {thr}' \
                  f'{step}, {round(self.curr_reward, 4)}, {round(reward, 4)}'
 
     def step(self, action):
@@ -283,24 +250,29 @@ class MabEnvironment(gym.Env):
         avg_reward = round(np.mean(rewards), 4)
         avg_binary_reward = np.bincount(binary_rewards).argmax()
 
-        info = {'reward': avg_reward}
-        data = {'rewards': binary_rewards, 'normalized_rewards': rewards, "features": self.features, 'obs': observation}
+        info = {'avg_reward': avg_reward}
+        data = {'binary_rewards': binary_rewards, 
+                'rewards': rewards, 
+                "features": self.features, 
+                'obs': observation}
 
-        print(
-            f'\nStep: {self.step_counter} \t Sent Action: {action} \t Received Action: {observed_action} \t Epoch: {self.epoch} | Reward: {avg_reward} ({np.mean(avg_binary_reward)})  | Data Size: {observation.shape[0]}')
+        print(f'\nStep: {self.step_counter} \t 
+              Sent Action: {action} \t 
+              Received Action: {observed_action} \t 
+              Epoch: {self.epoch} | Reward: {avg_reward} ({np.mean(avg_binary_reward)})  | Data Size: {observation.shape[0]}')
 
         counter = self.step_counter if self.step_counter != 0 else self.steps_per_episode
 
         step = self.epoch * self.steps_per_episode + counter
 
-        just_observed = np.mean(observation, axis=0)
+        obs_mean = np.mean(observation, axis=0)
 
         if self.allow_save:
-            self.record(just_observed, avg_binary_reward,
+            self.record(obs_mean, avg_binary_reward,
                         step, observed_action)
 
-        if not self.moderator.can_start() and step > 1:
-            done = True
+        # if not self.moderator.can_start() and step > 1:
+        #     done = True
 
         return data, avg_reward, done, info
 
@@ -380,47 +352,47 @@ class MabEnvironment(gym.Env):
 
 
 
-class Normalizer():
-    def __init__(self, input_dim):
-        # self.params = params
-        # self.config = config
-        self.n = 1e-5
-        num_inputs = input_dim
-        self.mean = np.zeros(num_inputs)
-        self.mean_diff = np.zeros(num_inputs)
-        self.var = np.zeros(num_inputs)
-        self.dim = num_inputs
-        self.min = np.zeros(num_inputs)
+# class Normalizer():
+#     def __init__(self, input_dim):
+#         # self.params = params
+#         # self.config = config
+#         self.n = 1e-5
+#         num_inputs = input_dim
+#         self.mean = np.zeros(num_inputs)
+#         self.mean_diff = np.zeros(num_inputs)
+#         self.var = np.zeros(num_inputs)
+#         self.dim = num_inputs
+#         self.min = np.zeros(num_inputs)
 
-    def observe(self, x):
-        self.n += 1
-        last_mean = np.copy(self.mean)
-        self.mean += (x-self.mean)/self.n
-        self.mean_diff += (x-last_mean)*(x-self.mean)
-        self.var = self.mean_diff/self.n
-        # Check for zero standard deviation and set it to a small value
-        for i in range(self.dim):
-            if self.var[i] == 0:
-                self.var[i] = 1e-5
+#     def observe(self, x):
+#         self.n += 1
+#         last_mean = np.copy(self.mean)
+#         self.mean += (x-self.mean)/self.n
+#         self.mean_diff += (x-last_mean)*(x-self.mean)
+#         self.var = self.mean_diff/self.n
+#         # Check for zero standard deviation and set it to a small value
+#         for i in range(self.dim):
+#             if self.var[i] == 0:
+#                 self.var[i] = 1e-5
 
-    def normalize(self, inputs):
-        obs_std = np.sqrt(self.var)
-        a=np.zeros(self.dim)
-        if self.n > 2:
-            a=(inputs - self.mean)/obs_std
-            for i in range(0,self.dim):
-                if a[i] < self.min[i]:
-                    self.min[i] = a[i]
-            return a
-        else:
-            return np.zeros(self.dim)
+#     def normalize(self, inputs):
+#         obs_std = np.sqrt(self.var)
+#         a=np.zeros(self.dim)
+#         if self.n > 2:
+#             a=(inputs - self.mean)/obs_std
+#             for i in range(0,self.dim):
+#                 if a[i] < self.min[i]:
+#                     self.min[i] = a[i]
+#             return a
+#         else:
+#             return np.zeros(self.dim)
 
-    def normalize_delay(self,delay):
-        obs_std = math.sqrt(self.var[0])
-        if self.n > 2:
-            return (delay - self.mean[0])/obs_std
-        else:
-            return 0
+#     def normalize_delay(self,delay):
+#         obs_std = math.sqrt(self.var[0])
+#         if self.n > 2:
+#             return (delay - self.mean[0])/obs_std
+#         else:
+#             return 0
 
-    def stats(self):
-        return self.min    
+#     def stats(self):
+#         return self.min    

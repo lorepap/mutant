@@ -1,6 +1,5 @@
 #include <asm-generic/errno.h>
 #include <asm-generic/errno-base.h>
-#include <net/tcp.h>
 #include "mutant.h"
 
 #define NETLINK_USER 25
@@ -18,6 +17,8 @@ static u32 socketId = -1;
 static u32 selected_proto_id = CUBIC;
 static u32 prev_proto_id = CUBIC;
 static bool switching_flag = false;
+
+
 
 // Wrapper struct to call the tcp_congestion_ops of the selected policy
 struct tcp_mutant_wrapper {
@@ -169,6 +170,7 @@ static void end_connection(struct nlmsghdr *nlh)
         }
         kfree(saved_states);
     }
+
 
     // Reset the current_ops to the default
     mutant_wrapper.current_ops = &cubictcp;
@@ -730,25 +732,37 @@ void mutant_switch_congestion_control(void) {
 }
 
 
-static void send_net_params(struct tcp_sock *tp, int socketId)
+static void send_net_params(struct tcp_sock *tp, struct sock *sk, int socketId)
 {
     // message vars
     char message[MAX_PAYLOAD - 1];
 
-    __u32 now = tcp_jiffies32;
-    __u32 cwnd = tp->snd_cwnd;
-    __u32 rtt = tp->srtt_us;
-    __u32 rtt_dev = tp->mdev_us;
-	__u32 rtt_min = tcp_min_rtt(tp);
-    __u16 MSS = tp->advmss;
-    __u32 delivered = tp->delivered;
-    __u32 lost = tp->lost_out;
-    __u32 in_flight = tp->packets_out;
-    __u32 retransmitted = tp->retrans_out;
+    u32 now = tcp_jiffies32;
+    u32 cwnd = tp->snd_cwnd;
+    u32 rtt = tp->srtt_us;
+    u32 rtt_dev = tp->mdev_us;
+	u32 rtt_min = tcp_min_rtt(tp);
+    u16 MSS = tp->advmss;
+    u32 delivered = tp->delivered;
+    u32 lost = tp->lost_out;
+    u32 in_flight = tp->packets_out;
+    u32 retransmitted = tp->retrans_out;
+    u64 thruput = 0;
 
-    snprintf(message, MAX_PAYLOAD - 1, "%u;%u;%u;%u;%u;%u;%u;%u;%u;%u;%u",
+    // Throughput (see tcp.c:tcp_compute_delivery_rate)
+    // USEC_PER_SEC=1e6; 8 to convert to bits (MSS is in bytes); throughput is in bps
+    u32 rate = READ_ONCE(tp->rate_delivered);
+	u32 intv = READ_ONCE(tp->rate_interval_us);
+    if (rate && intv) {
+        thruput = (u64)rate * tp->mss_cache * USEC_PER_SEC * 8;
+        // Print mss and thruput
+        // printk("Mutant %s: MSS: %u, thruput: %llu, USEC_PER_SEC: %u", __FUNCTION__, tp->mss_cache, thruput, USEC_PER_SEC);
+        do_div(thruput, tp->rate_interval_us);
+    }
+
+    snprintf(message, MAX_PAYLOAD - 1, "%u;%u;%u;%u;%u;%u;%u;%u;%u;%u;%u;%llu",
              now, cwnd, rtt, rtt_dev, rtt_min, MSS, delivered, lost,
-             in_flight, retransmitted, selected_proto_id);
+             in_flight, retransmitted, selected_proto_id, thruput);
     
     // printk("Mutant %s: Sending message to user: %s", __FUNCTION__, message);
 
@@ -762,7 +776,7 @@ static void mutant_tcp_init(struct sock *sk) {
     // Initialize the selected protocol
     if (mutant_wrapper.current_ops->init){
         mutant_wrapper.current_ops->init(sk);
-        printk("Mutant %s: init %s", __FUNCTION__, mutant_wrapper.current_ops->name);
+        // printk("Mutant %s: init %s", __FUNCTION__, mutant_wrapper.current_ops->name);
     }
 }
 
@@ -814,7 +828,7 @@ static void mutant_tcp_pkts_acked(struct sock *sk, const struct ack_sample *samp
     if (socketId == -1) {
         return;
     }
-    send_net_params(tp, socketId);
+    send_net_params(tp, sk, socketId);
     // Switching operation
     if (switching_flag) {
         printk("%s: Switching flag ON", __FUNCTION__);

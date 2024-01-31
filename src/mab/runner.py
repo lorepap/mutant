@@ -3,7 +3,6 @@ import os
 import time
 from typing import Any
 
-
 import numpy as np
 from utilities import context, utils
 from utilities.callbacks import TrainingCallback
@@ -13,19 +12,20 @@ from mab.environment import MabEnvironment
 from comm.comm import CommManager
 
 from tensorflow.python.keras.optimizer_v2 import optimizer_v2
+from tensorflow.keras.callbacks import ModelCheckpoint
 from mab.moderator import Moderator
 import yaml
 
 
 class MabRunner():
-    def __init__(self):
+    def __init__(self, checkpoint_filepath: str = None):
 
-        # Set up communication with kernel
-        self.cm = CommManager(log_dir_name='log/iperf') #iperf_dir, time
-        
         # running params
         with open('config/train.yml', 'r') as file:
             config = yaml.safe_load(file)
+        
+        # Set up communication with kernel
+        self.cm = CommManager(log_dir_name='log/iperf', rtt=config['min_rtt'], bw=config['bw'], bdp_mult=config['bdp_mult']) #iperf_dir, time
 
         self.nchoices = config['num_actions']
         self.lr = config['lr']
@@ -40,7 +40,14 @@ class MabRunner():
         self.step_wait_time = config['step_wait_seconds']
         self.steps_per_episode = config['steps_per_episode']
         self.num_fields_kernel = config['num_fields_kernel']
+        
         self.model = MabAgent(self.nchoices, self.moderator)
+        
+        # TODO: checkpoint filepath to be changed for a better naming convention
+        if not checkpoint_filepath:
+            self.checkpoint_filepath = os.path.join(
+                context.entry_dir, f'{self.model_path}.{self.model.get_model_name()}.h5')
+            self.model.set_model_name(name=f'mab.{self.nchoices}actions.{self.training_steps}steps.{self.now}')
 
         self.environment = MabEnvironment(self.cm, self.moderator, config)
         self.training_steps = config['train_episodes'] * self.steps_per_episode
@@ -56,7 +63,7 @@ class MabRunner():
         # Now a single flow between client and server is running
         # We can now set up the runner and start training the RL model    
         self.cm.init_kernel_communication()
-        self.cm.start_communication(client_tag='test')
+        self.cm.start_communication(client_tag=f'mab.{self.nchoices}actions.{self.training_steps}steps')
 
     def stop_communication(self):
         self.cm.stop_iperf_communication()
@@ -68,18 +75,25 @@ class MabRunner():
     def train(self) -> Any:
         now = self.now
 
+        checkpoint_callback = ModelCheckpoint(
+            filepath=self.checkpoint_filepath,
+            save_best_only=False,
+            verbose=1
+        )
+
         cb: TrainingCallback = TrainingCallback(
             log_file_path=os.path.join(
                 context.entry_dir, 
                 self.history_dir,
-                f'{self.model.get_model_name()}.{now}.json'
-                )
+                f'{self.model.get_model_name()}.json'
             )
+        )
 
         start = time.time()
 
-        self.model.compile(optimizer=None, metrics=None)
-        self.train_res = self.model.fit(self.environment, nb_steps=self.training_steps, callbacks=[cb],
+        self.model.compile()
+        self.train_res = self.model.fit(self.environment, nb_steps=self.training_steps, 
+                    callbacks=[cb, checkpoint_callback],
             visualize=False, verbose=2)
 
         self.training_time = time.time() - start

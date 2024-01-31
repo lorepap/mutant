@@ -4,6 +4,7 @@ import warnings
 from copy import deepcopy
 import pickle
 from sklearn.linear_model import SGDClassifier
+from xgboost import XGBClassifier
 from contextualbandits.online import BootstrappedUCB, _BasePolicy
 
 import numpy as np
@@ -13,6 +14,7 @@ from utilities import utils
 from rl.core import Agent
 from tensorflow.keras.callbacks import History
 from mab.moderator import Moderator
+import statistics
 
 
 from rl.callbacks import (
@@ -30,8 +32,8 @@ class MabAgent(Agent):
         # TODO: build id string for model
         self.now = utils.time_to_str()
         self.moderator = moderator
-        self.model_name = 'mab' # TODO: renaming ?
         self.nchoices = nchoices
+        self.base_algorithm = SGDClassifier(loss='log', max_iter=1000, tol=1e-3, shuffle=False, verbose=0)
         self.model = self.get_policy()
 
     def get_model(self) -> _BasePolicy:
@@ -39,12 +41,9 @@ class MabAgent(Agent):
 
     def get_policy(self) -> _BasePolicy:
 
-        base_algorithm = SGDClassifier(
-            random_state=123, loss='log', warm_start=False)
-
         beta_prior = ((3./self.nchoices, 4.), 2)
 
-        return BootstrappedUCB(deepcopy(base_algorithm), nchoices=self.nchoices, 
+        return BootstrappedUCB(deepcopy(self.base_algorithm), nchoices=self.nchoices, 
                                beta_prior=beta_prior, batch_train=True)
 
 
@@ -59,10 +58,9 @@ class MabAgent(Agent):
             pickle.dump(self.model, file)
 
     def reset_states(self) -> None:
-        self.recent_action = None
         self.recent_observation = None
 
-    def compile(self, optimizer, metrics=[]) -> None: # TODO: optimizer? metrics?
+    def compile(self) -> None: # TODO: optimizer? metrics?
         self.compiled = True
 
     def forward(self, observation) -> np.ndarray:
@@ -73,20 +71,22 @@ class MabAgent(Agent):
 
         # Select an action.
         actions = self.model.predict(observation['obs']).astype('uint8')
-        # print("[DEBUG] actions: ", actions)
         N = len(actions)
         # print("[DEBUG] length actions:", N)
 
-        # print(f'Observation: {observation["obs"].shape}')
+        print(f'Observation: {observation["obs"].shape}')
+        print("[DEBUG] actions: ", actions)
 
         # Book-keeping.
         self.recent_observation = observation
-        self.recent_action = actions[N-1]
         self.actions = actions
         # self.counter += 1
         self.prev_action = actions[N-1]
 
-        return actions[N-1]
+        # Last predicted action
+        action = actions[N-1]
+
+        return action
 
     def backward(self, reward, terminal) -> None:
 

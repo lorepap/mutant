@@ -10,7 +10,7 @@ def run():
     # TODO: handle the params with a config file
     # Runner does not need the netlink comm channel for runtime communication anymore
     # Runner declare and passes the comm channel obj to the environment class
-    runner = MabRunner()
+    runner = MabRunner() # pass the last checkpoint filepath to continue training
     runner.setup_communication()
     runner.train()
     runner.stop_communication()

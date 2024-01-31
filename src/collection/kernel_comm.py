@@ -6,9 +6,9 @@ from utilities import context
 INIT_COMM_FLAG = 1
 
 class CollectionCommManager(CommManager):
-    def __init__(self, protocol, log_dir_name='log/iperf', client_time=None):
-        self.proto = protocol
-        super().__init__(log_dir_name=log_dir_name, client_time=client_time)
+    def __init__(self, log_dir_name='log/iperf', client_time=None, rtt=20, bw=12, bdp_mult=1):
+        super().__init__(log_dir_name=log_dir_name, client_time=client_time, 
+                         rtt=rtt, bw=bw, bdp_mult=bdp_mult)
 
 
     def init_kernel_communication(self):
@@ -21,24 +21,3 @@ class CollectionCommManager(CommManager):
         self.netlink_communicator.send_msg(msg)
 
         print("[COLLECTION MANAGER] Communication initiated")
-
-    def init_proto(self):
-
-        if self.is_kernel_initialized():
-            print('Kernel module has already been initialized\n')
-            return
-
-        # Convert the input protocol name to lowercas and append "_mod"
-        # protocol_mod = self.proto.lower() + '_mod' 
-        # no need to append _mod since its handled in the insert_proto script
-
-        cmd = os.path.join(context.collection_dir, 'insert_proto.sh')
-
-        # make script runnable
-        res = call(['chmod', '755', cmd])
-        if res != 0:
-            raise Exception('Unable to set run permission\n')
-
-        res = call([cmd, self.proto])
-        if res != 0:
-            raise Exception(f'Unable to init {self.proto} \n')

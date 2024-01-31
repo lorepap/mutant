@@ -30,7 +30,7 @@ class SwitchingTestRunner():
     """
 
     def __init__(self, protocol='mutant', running_time=10):
-        self.cm = TestCommManager(protocol, 'log/test_switching') #iperf_dir, time
+        self.cm = TestCommManager(protocol, 'log/test_switching', client_time=running_time) #iperf_dir, time
         self.proto = protocol
         self.running_time = running_time
         # TODO: handle the params with a config file
@@ -90,8 +90,7 @@ class SwitchingTestRunner():
         collected_data = {}
         cca_list = [CUBIC, HYBLA, BBR, WESTWOOD, VENO, VEGAS, YEAH, CDG, BIC, HTCP, HIGH_SPEED, ILLINOIS]
         current_cca_index = 0
-        start = time.time()
-        while time.time()-start < self.running_time:
+        while True:
             # Every time we send a random protocol
             current_cca = random.choice(cca_list)
             print(f"Switch to {current_cca}")
@@ -100,10 +99,10 @@ class SwitchingTestRunner():
             self.cm.netlink_communicator.send_msg(msg)
 
             # Update the index for the next iteration
-            current_cca_index = (current_cca_index + 1) % len(cca_list)
+            # current_cca_index = (current_cca_index + 1) % len(cca_list)
 
             # Sleep 2 seconds between each switch
-            time.sleep(2)
+            time.sleep(3)
 
             # data = self._read_data()
 

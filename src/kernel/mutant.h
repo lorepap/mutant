@@ -4,6 +4,8 @@
 #include <linux/netlink.h>
 #include <net/tcp.h>
 
+
+
 #define MAX_PAYLOAD 256
 
 // Netlink communication flags
@@ -24,6 +26,7 @@
 #define HTCP 9
 #define HIGHSPEED 10
 #define ILLINOIS 11
+
 
 // Struct for saving state of TCP congestion control
 
@@ -234,6 +237,7 @@ struct illinois {
 	u8	rtt_low;	/* # of rtts measurements below threshold */
 };
 
+
 // Netlink comm APIs
 static void send_msg(char *message, int socketId);
 static void start_connection(struct nlmsghdr *nlh);
@@ -253,7 +257,7 @@ static void print_mutant_state(struct sock *sk);
 
 // Methods for TCP congestion control
 static void mutant_switch_congestion_control(void);
-static void send_net_params(struct tcp_sock *tp, int socketId);
+static void send_net_params(struct tcp_sock *tp, struct sock *sk, int socketId);
 static void mutant_tcp_init(struct sock *sk);
 static void mutant_tcp_cong_avoid(struct sock *sk, u32 ack, u32 acked);
 static u32 mutant_tcp_ssthresh(struct sock *sk);

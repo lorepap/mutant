@@ -8,7 +8,6 @@ def run(args):
     runner = SwitchingTestRunner(running_time=args.time)
     # Setup connection with the kernel and setup client-server communication (iperf + mahimahi)
     runner.setup_communication()
-    
     # Collect data
     runner.run_collection()
     # Stop communication
