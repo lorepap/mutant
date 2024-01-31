@@ -200,3 +200,4 @@ pid.txt
 # analysis/plots/kernel_features
 # analysis/plots/thruput_vs_rtt
 **/*/debug_*
+traces/
